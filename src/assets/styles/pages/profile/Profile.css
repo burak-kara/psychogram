@@ -1,0 +1,27 @@
+.profile-info {
+    background-color: #c2d1c8;
+}
+
+.profile-icon {
+    font-size: 20px;
+}
+
+.name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.username {
+    font-size: 16px;
+    font-weight: inherit;
+}
+
+.status-icon {
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.profile-details {
+    background-color: #98a69e;
+}
+
