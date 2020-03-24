@@ -1,0 +1,39 @@
+{
+  "user": {
+    "id": 0,
+    "name": "Burak",
+    "surname": "Kara",
+    "username": "kibitzer",
+    "birthday": "25.05.1990",
+    "location": "Istanbul, Turkey",
+    "mail": "burak.kara@gmail.com",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    "meetings": [
+      {
+        "id": 11,
+        "doctor": "House M.D",
+        "clinic": "https://www.hellozdrowie.pl/wp-content/uploads/2019/03/psycholog-1140x761.jpeg",
+        "notes": "Aliquam dolor mi, iaculis quis justo nec, semper tristique leo. Vestibulum rhoncus placerat mi non hendrerit. Etiam vehicula euismod tortor, quis aliquam enim ornare a. "
+      },
+      {
+        "id": 12,
+        "doctor": "Doctor Who",
+        "clinic": "https://www.hellozdrowie.pl/wp-content/uploads/2019/03/psycholog-1140x761.jpeg",
+        "notes": "Aliquam dolor mi, iaculis quis justo nec, semper tristique leo. Vestibulum rhoncus placerat mi non hendrerit. Etiam vehicula euismod tortor, quis aliquam enim ornare a. Aliquam dolor mi, iaculis quis justo nec, semper tristique leo. Vestibulum rhoncus placerat mi non hendrerit. Etiam vehicula euismod tortor, quis aliquam enim ornare a. "
+      },
+      {
+        "id": 13,
+        "doctor": "Aasd ASDasffd",
+        "clinic": "https://www.hellozdrowie.pl/wp-content/uploads/2019/03/psycholog-1140x761.jpeg",
+        "notes": "Aliquam dolor mi, iaculis quis justo nec, semper tristique leo. Vestibulum rhoncus placerat mi non hendrerit. Etiam vehicula euismod tortor, quis aliquam enim ornare a. "
+      },
+      {
+        "id": 14,
+        "doctor": "Aewtgs asdasd",
+        "clinic": "https://www.hellozdrowie.pl/wp-content/uploads/2019/03/psycholog-1140x761.jpeg",
+        "notes": "Aliquam dolor mi, iaculis quis justo nec, semper tristique leo. Vestibulum rhoncus placerat mi non hendrerit. Etiam vehicula euismod tortor, quis aliquam enim ornare a. "
+      }
+    ],
+    "fav_docs": {}
+  }
+}
