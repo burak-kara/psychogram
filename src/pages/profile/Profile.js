@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import profile_pic from "../../assets/demo_data/profile/profile_pic.jpg";
 import data from "../../assets/demo_data/profile/data";
 import {GoLocation, MdInsertEmoticon, GoMail, GoCalendar} from "react-icons/all";
+import CardContainer from "../../components/CardContainer";
 
 export default class Profile extends Component {
     render() {
@@ -12,7 +13,7 @@ export default class Profile extends Component {
                 </div>
                 <div className="container-fluid h-auto">
                     <div className="row h-auto">
-                        <div className="col-lg-3 pl-5 pr-5 pt-2 profile-info">
+                        <div className="col-lg-3 pl-5 pr-5 pt-2 pb-4 profile-info">
                             <div className="col-md-12 h-auto text-center">
                                 <img src={profile_pic} className="img-fluid rounded-circle"/>
                             </div>
@@ -72,191 +73,21 @@ export default class Profile extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-9 pl-5 pr-5 profile-details">
-                            <div className="row mt-4">
-                                <div className="col-12">
-                                    <span className="row border-bottom font-weight-bold">
-                                        Son Görüşmeler
-                                    </span>
-                                    <div className="container-fluid border mt-2">
-                                        <div className="row">
-                                            <div className="col-6 card">
-                                                <div className="card-body">
-                                                    <h5 className="card-title">Card title</h5>
-                                                    <p className="card-text">
-                                                        Some quick example text to build on the
-                                                        card title and make up the bulk of the card's content.
-                                                    </p>
-                                                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                            <div className="col-6 card">
-                                                <div className="card-body">
-                                                    <h5 className="card-title">Card title</h5>
-                                                    <p className="card-text">
-                                                        Some quick example text to build on the
-                                                        card title and make up the bulk of the card's content.
-                                                    </p>
-                                                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                            <div className="col-6 card">
-                                                <div className="card-body">
-                                                    <h5 className="card-title">Card title</h5>
-                                                    <p className="card-text">
-                                                        Some quick example text to build on the
-                                                        card title and make up the bulk of the card's content.
-                                                    </p>
-                                                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                            <div className="col-6 card">
-                                                <div className="card-body">
-                                                    <h5 className="card-title">Card title</h5>
-                                                    <p className="card-text">
-                                                        Some quick example text to build on the
-                                                        card title and make up the bulk of the card's content.
-                                                    </p>
-                                                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row mt-4">
-                                <div className="col-12">
-                                    <span className="row border-bottom font-weight-bold">
-                                        Favori Doktorlarım
-                                    </span>
-                                    <div className="container-fluid border mt-2">
-                                        <div className="row">
-                                            <div className="col-6 card">
-                                                <div className="card-body">
-                                                    <h5 className="card-title">Card title</h5>
-                                                    <p className="card-text">
-                                                        Some quick example text to build on the
-                                                        card title and make up the bulk of the card's content.
-                                                    </p>
-                                                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                            <div className="col-6 card">
-                                                <div className="card-body">
-                                                    <h5 className="card-title">Card title</h5>
-                                                    <p className="card-text">
-                                                        Some quick example text to build on the
-                                                        card title and make up the bulk of the card's content.
-                                                    </p>
-                                                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                            <div className="col-6 card">
-                                                <div className="card-body">
-                                                    <h5 className="card-title">Card title</h5>
-                                                    <p className="card-text">
-                                                        Some quick example text to build on the
-                                                        card title and make up the bulk of the card's content.
-                                                    </p>
-                                                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                            <div className="col-6 card">
-                                                <div className="card-body">
-                                                    <h5 className="card-title">Card title</h5>
-                                                    <p className="card-text">
-                                                        Some quick example text to build on the
-                                                        card title and make up the bulk of the card's content.
-                                                    </p>
-                                                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row mt-4">
-                                <div className="col-12">
-                                    <span className="row border-bottom font-weight-bold">
-                                        Favori Makalelerim
-                                    </span>
-                                    <div className="container-fluid border mt-2">
-                                        <div className="row">
-                                            <div className="col-6 card">
-                                                <div className="card-body">
-                                                    <h5 className="card-title">Card title</h5>
-                                                    <p className="card-text">
-                                                        Some quick example text to build on the
-                                                        card title and make up the bulk of the card's content.
-                                                    </p>
-                                                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                            <div className="col-6 card">
-                                                <div className="card-body">
-                                                    <h5 className="card-title">Card title</h5>
-                                                    <p className="card-text">
-                                                        Some quick example text to build on the
-                                                        card title and make up the bulk of the card's content.
-                                                    </p>
-                                                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                            <div className="col-6 card">
-                                                <div className="card-body">
-                                                    <h5 className="card-title">Card title</h5>
-                                                    <p className="card-text">
-                                                        Some quick example text to build on the
-                                                        card title and make up the bulk of the card's content.
-                                                    </p>
-                                                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                            <div className="col-6 card">
-                                                <div className="card-body">
-                                                    <h5 className="card-title">Card title</h5>
-                                                    <p className="card-text">
-                                                        Some quick example text to build on the
-                                                        card title and make up the bulk of the card's content.
-                                                    </p>
-                                                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row mt-4">
-                                <div className="col-12">
-                                    <span className="row border-bottom font-weight-bold">
-                                        Ödeme Yöntemlerim
-                                    </span>
-                                    <div className="container-fluid border mt-2">
-                                        <div className="row">
-                                            <div className="col-6 card">
-                                                <div className="card-body">
-                                                    <h5 className="card-title">Card title</h5>
-                                                    <p className="card-text">
-                                                        Some quick example text to build on the
-                                                        card title and make up the bulk of the card's content.
-                                                    </p>
-                                                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                            <div className="col-6 card">
-                                                <div className="card-body">
-                                                    <h5 className="card-title">Card title</h5>
-                                                    <p className="card-text">
-                                                        Some quick example text to build on the
-                                                        card title and make up the bulk of the card's content.
-                                                    </p>
-                                                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div className="col-lg-9 profile-details">
+                            <CardContainer
+                                title="Son Görüşmeler"
+                                seeAll={() => alert("see all meetings")}
+                                data={data.user.meetings}
+                            />
+                            <CardContainer
+                                title="Favori Doktorlarım"
+                            />
+                            <CardContainer
+                                title="Favori Makalelerim"
+                            />
+                            <CardContainer
+                                title="Ödeme Yöntemlerim"
+                            />
                         </div>
                     </div>
                     <div className="row text-center">
