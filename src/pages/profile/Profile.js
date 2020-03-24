@@ -53,40 +53,50 @@ export default class Profile extends Component {
                             <div className="row mt-2">
                                 <div className="col-12">
                                     <div className="row text-capitalize">
-                                        <span className="profile-icon">
-                                            <GoLocation/>
+                                        <span>
+                                            <GoLocation className="profile-icon"/>
                                             {` ${data.user.location}`}
                                         </span>
                                     </div>
                                     <div className="row">
-                                        <span className="profile-icon">
-                                            <GoMail/>
+                                        <span>
+                                            <GoMail className="profile-icon"/>
                                             {` ${data.user.mail}`}
                                         </span>
                                     </div>
                                     <div className="row">
-                                        <span className="profile-icon">
-                                            <GoCalendar/>
+                                        <span>
+                                            <GoCalendar className="profile-icon"/>
                                             {` ${data.user.birthday}`}
                                         </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-9 profile-details">
+                        <div className="col-lg-9 pb-4 profile-details">
                             <CardContainer
                                 title="Son Görüşmeler"
                                 seeAll={() => alert("see all meetings")}
                                 data={data.user.meetings}
+                                type={"meetings"}
                             />
                             <CardContainer
                                 title="Favori Doktorlarım"
+                                seeAll={() => alert("see all fav docs")}
+                                data={data.user.favDocs}
+                                type={"favDocs"}
                             />
                             <CardContainer
                                 title="Favori Makalelerim"
+                                seeAll={() => alert("see all fav articles")}
+                                data={data.user.favArticles}
+                                type={"favArticles"}
                             />
                             <CardContainer
                                 title="Ödeme Yöntemlerim"
+                                seeAll={() => alert("see all payment methods")}
+                                data={data.user.paymentMethods}
+                                type={"payment"}
                             />
                         </div>
                     </div>

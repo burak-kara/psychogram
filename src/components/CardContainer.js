@@ -1,76 +1,91 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect} from 'react';
 
+const cardTypes = {
+    MEETING: "meetings",
+    FAVORITE_DOCTORS: "favDocs",
+    FAVORITE_ARTICLES: "favArticles",
+    PAYMENT_METHODS: "payment"
+};
 
-export default class CardContainer extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <div className="row card-container">
-                <div className="col-12">
-                    <div className="row card-container-title-row border-bottom">
-                        <div className="col-6 h-50 d-inline-block card-container-title-row-title">
-                            {this.props.title}
+const CardContainer = (props) => {
+    const renderCardBody = () => {
+        const data = props.data;
+        if (!data) {
+            return (
+                <div>
+                    Nothing to show
+                </div>
+            );
+        }
+        console.log(data);
+        return data.map((item) => {
+            let fields = setObjectFields(item);
+            return (
+                <div className="col-sm-6 mb-2">
+                    <div className="card">
+                        <div className="card-body" key={item.id}>
+                            <h5 className="card-title">{fields[0]}</h5>
+                            <p className="card-text">
+                                {fields[1]}
+                            </p>
                         </div>
-                        <div className="col-6 h-50 d-inline-block text-right">
+                        <div className="card-footer text-right bg-transparent border-secondary">
+                            <a href="#" className="btn card-btn">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            );
+        })
+    };
+
+    const setObjectFields = (item) => {
+        let fields = [];
+        switch (props.type) {
+            case cardTypes.MEETING:
+                fields.push(item.doctor);
+                fields.push(item.notes);
+                break;
+            case cardTypes.FAVORITE_DOCTORS:
+                fields.push(`${item.name} ${item.surname}`);
+                fields.push(item.notes);
+                break;
+            case cardTypes.FAVORITE_ARTICLES:
+                fields.push(`${item.title}, ${item.year}`);
+                fields.push(item.abstract);
+                break;
+            case cardTypes.PAYMENT_METHODS:
+                fields.push(item.type);
+                fields.push(item.abstract);
+                break;
+        }
+        return fields
+    };
+
+    return (
+        <div className="row card-container">
+            <div className="col-12">
+                <div className="row card-container-title-row border-bottom">
+                    <div className="col-6 h-50 d-inline-block card-container-title-row-title">
+                        {props.title}
+                    </div>
+                    <div className="col-6 h-50 d-inline-block text-right">
                             <span
                                 className="card-container-title-row-clickable"
                                 onClick={() => {
-                                    this.props.seeAll()
+                                    props.seeAll()
                                 }}
                             >
                                 Hepsini Gör
                             </span>
-                        </div>
-                    </div>
-                    <div className="container-fluid border mt-2 card-container-body">
-                        <div className="row justify-content-between">
-                            <div className="col-6 card">
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">
-                                        Some quick example text to build on the
-                                        card title and make up the bulk of the card's content.
-                                    </p>
-                                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                            <div className="col-6 card">
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">
-                                        Some quick example text to build on the
-                                        card title and make up the bulk of the card's content.
-                                    </p>
-                                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                            <div className="col-5 card">
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">
-                                        Some quick example text to build on the
-                                        card title and make up the bulk of the card's content.
-                                    </p>
-                                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                            <div className="col-5 card">
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">
-                                        Some quick example text to build on the
-                                        card title and make up the bulk of the card's content.
-                                    </p>
-                                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
+                <div className="row mt-2 pt-2">
+                    {renderCardBody()}
+                </div>
             </div>
-        );
-    }
-}
+        </div>
+    );
+
+};
+
+export default CardContainer;
