@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 
 const cardTypes = {
     MEETING: "meetings",
@@ -8,35 +8,32 @@ const cardTypes = {
 };
 
 const CardContainer = (props) => {
-    const renderCardBody = () => {
-        const data = props.data;
-        if (!data) {
-            return (
-                <div>
-                    Nothing to show
-                </div>
-            );
-        }
-        console.log(data);
-        return data.map((item) => {
-            let fields = setObjectFields(item);
-            return (
-                <div className="col-sm-6 mb-2">
-                    <div className="card">
-                        <div className="card-body" key={item.id}>
-                            <h5 className="card-title">{fields[0]}</h5>
-                            <p className="card-text">
-                                {fields[1]}
-                            </p>
-                        </div>
-                        <div className="card-footer text-right bg-transparent border-secondary">
-                            <a href="#" className="btn card-btn">Go somewhere</a>
+    const renderCardBody = () =>
+        props.data ? (
+            props.data.map((item) => {
+                let fields = setObjectFields(item);
+                return (
+                    <div className="col-sm-6 mb-2">
+                        <div className="card">
+                            <div className="card-body" key={item.id}>
+                                <h5 className="card-title">{fields[0]}</h5>
+                                <p className="card-text">
+                                    {fields[1]}
+                                </p>
+                            </div>
+                            <div className="card-footer text-right bg-transparent border-secondary">
+                                <a href="#" className="btn card-btn">Go somewhere</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            );
-        })
-    };
+                );
+            })
+        ) : (
+            <div>
+                Nothing to show
+            </div>
+        );
+
 
     const setObjectFields = (item) => {
         let fields = [];
@@ -69,14 +66,14 @@ const CardContainer = (props) => {
                         {props.title}
                     </div>
                     <div className="col-6 h-50 d-inline-block text-right">
-                            <span
-                                className="card-container-title-row-clickable"
-                                onClick={() => {
-                                    props.seeAll()
-                                }}
-                            >
-                                Hepsini Gör
-                            </span>
+                        <span
+                            className="card-container-title-row-clickable"
+                            onClick={() => {
+                                props.seeAll()
+                            }}
+                        >
+                            Hepsini Gör
+                        </span>
                     </div>
                 </div>
                 <div className="row mt-2 pt-2">

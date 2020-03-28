@@ -1,28 +1,29 @@
-.profile-info {
+.patient-profile {
+  .profile-info {
     background-color: #cae8d5;
-}
+  }
 
-.profile-icon {
+  .profile-icon {
     font-size: 20px;
-}
+  }
 
-.name {
+  .name {
     font-size: 20px;
     font-weight: bold;
-}
+  }
 
-.username {
+  .username {
     font-size: 16px;
     font-weight: inherit;
-}
+  }
 
-.status-icon {
+  .status-icon {
     font-size: 30px;
     cursor: pointer;
-}
+  }
 
-.profile-details {
+  .profile-details {
     /*background-color: #84a9ac;*/
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.30);
+  }
 }
-
