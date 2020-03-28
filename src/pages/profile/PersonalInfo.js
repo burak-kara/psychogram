@@ -4,11 +4,13 @@ import {GoCalendar, GoLocation, GoMail, MdInsertEmoticon} from "react-icons/all"
 
 const PersonalInfo = (props) => {
     return (
-        <div className="col-lg-3 pl-5 pr-5 pt-2 pb-4 profile-info">
-            <div className="col-md-12 h-auto text-center">
-                <img src={profile_pic} className="img-fluid rounded-circle"/>
+        <div className="col-lg-3 col-md-3 col-sm-12 col-12 pl-5 pr-5 pt-2 pb-4 profile-info">
+            <div className="row d-flex justify-content-center">
+                <div className="col-lg-12 col-md-12 col-sm-6 col-6 h-auto text-center">
+                    <img src={profile_pic} className="img-fluid rounded-circle"/>
+                </div>
             </div>
-            <div className="row mt-4">
+            <div className="row mt-2">
                 <div className="col-lg-9 col-9">
                     <div className="row name">
                         <span>
@@ -21,7 +23,7 @@ const PersonalInfo = (props) => {
                         </span>
                     </div>
                 </div>
-                <div className="col-lg-3 col-3 text-center">
+                <div className="col-lg-3 col-3 text-right pr-0">
                     <span className="status-icon" onClick={() => alert("change status")}>
                         <MdInsertEmoticon/>
                     </span>
