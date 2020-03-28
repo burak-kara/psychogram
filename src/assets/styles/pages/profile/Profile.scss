@@ -1,6 +1,7 @@
 .patient-profile {
   .profile-info {
     background-color: #cae8d5;
+    padding: 10px 30px !important;
   }
 
   .profile-icon {
@@ -14,7 +15,8 @@
 
   .username {
     font-size: 16px;
-    font-weight: inherit;
+    font-weight: lighter;
+    font-style: italic;
   }
 
   .status-icon {

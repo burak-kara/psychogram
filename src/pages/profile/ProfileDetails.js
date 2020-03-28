@@ -3,7 +3,7 @@ import CardContainer from "../../components/CardContainer";
 
 const ProfileDetails = (props) => {
     return (
-        <div className="col-lg-9 pb-2 profile-details">
+        <div className="col-lg-9 col-md-9 col-sm-12 pb-2 profile-details">
             <CardContainer
                 title="Son Görüşmeler"
                 seeAll={() => alert("see all meetings")}
