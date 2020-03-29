@@ -1,6 +1,10 @@
+@import "src/utility/colors";
+
 .patient-profile {
+  color: $color-green-3;
+
   .profile-info {
-    background-color: #cae8d5;
+    background-color: $background-color-1;
     padding: 10px 30px !important;
   }
 
@@ -25,7 +29,6 @@
   }
 
   .profile-details {
-    /*background-color: #84a9ac;*/
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.30);
+    box-shadow: $box-shadow;
   }
 }
