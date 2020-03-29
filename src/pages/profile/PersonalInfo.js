@@ -38,7 +38,7 @@ const PersonalInfo = (props) => {
                 <button
                     className="btn btn-secondary btn-block"
                     type="button"
-                    onClick={() => alert("go to settings")}
+                    onClick={props.openSettings}
                 >
                     Settings
                 </button>
