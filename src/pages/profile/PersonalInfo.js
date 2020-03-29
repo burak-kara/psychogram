@@ -7,7 +7,7 @@ const PersonalInfo = (props) => {
         <div className="col-lg-3 col-md-3 col-sm-12 col-12 pl-5 pr-5 pt-2 pb-4 profile-info">
             <div className="row d-flex justify-content-center">
                 <div className="col-lg-12 col-md-12 col-sm-6 col-6 h-auto text-center">
-                    <img src={profile_pic} className="img-fluid rounded-circle"/>
+                    <img src={profile_pic} className="img-fluid rounded-circle" alt=""/>
                 </div>
             </div>
             <div className="row mt-2">
@@ -40,7 +40,7 @@ const PersonalInfo = (props) => {
                     type="button"
                     onClick={props.openSettings}
                 >
-                    Settings
+                    Profili Düzenle
                 </button>
             </div>
             <div className="row mt-2">
