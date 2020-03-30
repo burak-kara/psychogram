@@ -1,0 +1,96 @@
+{
+  "user": {
+    "id": 0,
+    "name": "Burak",
+    "surname": "Kara",
+    "username": "kibitzer",
+    "birthday": "25.05.1990",
+    "location": "Istanbul, Turkey",
+    "mail": "burak.kara@gmail.com",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    "meetings": [
+      {
+        "id": 11,
+        "doctor": "House M.D",
+        "clinic": "https://www.hellozdrowie.pl/wp-content/uploads/2019/03/psycholog-1140x761.jpeg",
+        "notes": "Aliquam dolor mi, iaculis quis justo nec, semper tristique leo. Vestibulum rhoncus placerat mi non hendrerit. Etiam vehicula euismod tortor, quis aliquam enim ornare a. "
+      },
+      {
+        "id": 12,
+        "doctor": "Doctor Who",
+        "clinic": "https://www.hellozdrowie.pl/wp-content/uploads/2019/03/psycholog-1140x761.jpeg",
+        "notes": "Aliquam dolor mi, iaculis quis justo nec, semper tristique leo. Vestibulum rhoncus placerat mi non hendrerit. Etiam vehicula euismod tortor, quis aliquam enim ornare a. Aliquam dolor mi, iaculis quis justo nec, semper tristique leo. Vestibulum rhoncus placerat mi non hendrerit. Etiam vehicula euismod tortor, quis aliquam enim ornare a. "
+      },
+      {
+        "id": 13,
+        "doctor": "Burak Kara",
+        "clinic": "https://www.hellozdrowie.pl/wp-content/uploads/2019/03/psycholog-1140x761.jpeg",
+        "notes": "Aliquam dolor mi, iaculis quis justo nec, semper tristique leo. Vestibulum rhoncus placerat mi non hendrerit. Etiam vehicula euismod tortor, quis aliquam enim ornare a. "
+      },
+      {
+        "id": 14,
+        "doctor": "Can Akgul",
+        "clinic": "https://www.hellozdrowie.pl/wp-content/uploads/2019/03/psycholog-1140x761.jpeg",
+        "notes": "Aliquam dolor mi, iaculis quis justo nec, semper tristique leo. Vestibulum rhoncus placerat mi non hendrerit. Etiam vehicula euismod tortor, quis aliquam enim ornare a. "
+      }
+    ],
+    "favDocs": [
+      {
+        "id": 100,
+        "name": "Gregory",
+        "surname": "House ",
+        "notes": "Aliquam dolor mi, iaculis quis justo nec, semper tristique leo. Vestibulum rhoncus placerat mi non hendrerit. Etiam vehicula euismod tortor, quis aliquam enim ornare a. "
+      },
+      {
+        "id": 101,
+        "name": "Doctor",
+        "surname": "House ",
+        "notes": "Aliquam dolor mi, iaculis quis justo nec, semper tristique leo. Vestibulum rhoncus placerat mi non hendrerit. Etiam vehicula euismod tortor, quis aliquam enim ornare a. Aliquam dolor mi, iaculis quis justo nec, semper tristique leo. Vestibulum rhoncus placerat mi non hendrerit. Etiam vehicula euismod tortor, quis aliquam enim ornare a. "
+      },
+      {
+        "id": 102,
+        "name": "Hugh",
+        "surname": "Laurie",
+        "notes": "Aliquam dolor mi, iaculis quis justo nec, semper tristique leo. Vestibulum rhoncus placerat mi non hendrerit. Etiam vehicula euismod tortor, quis aliquam enim ornare a. "
+      },
+      {
+        "id": 103,
+        "name": "Mario",
+        "surname": "Gomez",
+        "notes": "Aliquam dolor mi, iaculis quis justo nec, semper tristique leo. Vestibulum rhoncus placerat mi non hendrerit. Etiam vehicula euismod tortor, quis aliquam enim ornare a. "
+      }
+    ],
+    "favArticles": [
+      {
+        "id": 1000,
+        "title": "Http",
+        "year": "2015 ",
+        "abstract": "Aliquam dolor mi, iaculis quis justo nec, semper tristique leo. Vestibulum rhoncus placerat mi non hendrerit. Etiam vehicula euismod tortor, quis aliquam enim ornare a. "
+      },
+      {
+        "id": 45,
+        "title": "Htasdaweetp",
+        "year": "1997 ",
+        "abstract": "Aliquam dolor mi, iaculis quis justo nec, semper tristique leo. Vestibulum rhoncus placerat mi non hendrerit. Etiam vehicula euismod tortor, quis aliquam enim ornare a. "
+      },
+      {
+        "id": 455,
+        "title": "asdas",
+        "year": "2000",
+        "abstract": "Aliquam dolor mi, iaculis quis justo nec, semper tristique leo. Vestibulum rhoncus placerat mi non hendrerit. Etiam vehicula euismod tortor, quis aliquam enim ornare a. "
+      }
+    ],
+    "paymentMethods": [
+      {
+        "id": 1000,
+        "type": "Kredi Kartı",
+        "abstract": "Aliquam dolor mi, iaculis quis justo nec, semper tristique leo. Vestibulum rhoncus placerat mi non hendrerit. Etiam vehicula euismod tortor, quis aliquam enim ornare a. "
+      },
+      {
+        "id": 455,
+        "type": "Puan",
+        "abstract": "Aliquam dolor mi, iaculis quis justo nec, semper tristique leo. Vestibulum rhoncus placerat mi non hendrerit. Etiam vehicula euismod tortor, quis aliquam enim ornare a. "
+      }
+    ]
+  }
+}

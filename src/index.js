@@ -1,13 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Main from "./commons/home/Main";
 import "./index.css";
+import App from "./app/App";
+import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
-global.jQuery = require('jquery');
-require('bootstrap');
+import 'bootstrap/dist/js/bootstrap.js';
+import "./assets/styles/main.scss";
 
-
-ReactDOM.render(
-    <Main/>,
-    document.getElementById("root")
-);
+ReactDOM.render(<App/>, document.getElementById("root"));
+serviceWorker.register();
