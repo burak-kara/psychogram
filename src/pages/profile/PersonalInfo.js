@@ -1,8 +1,9 @@
 import React, {useState} from "react";
 import profile_pic from "../../assets/demo_data/profile/profile_pic.jpg";
-import {GoCalendar, GoLocation, GoMail, MdInsertEmoticon} from "react-icons/all";
 import {OverlayTrigger, Popover} from "react-bootstrap";
 import Emoji from 'a11y-react-emoji'
+import {faceEmojis, profileInfoEmojis} from '../../utility/emojis'
+import {Tooltip, Zoom} from "@material-ui/core";
 
 const PersonalInfo = (props) => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -16,6 +17,45 @@ const PersonalInfo = (props) => {
     };
 
     const open = Boolean(anchorEl);
+
+    const renderOverlay = () =>
+        <OverlayTrigger
+            placement="right"
+            trigger="click"
+            delay={{show: 250, hide: 400}}
+            onClick={handleClick}
+            overlay={
+                <Popover id="popover-basic">
+                    <Popover.Title as="h3">
+                        Durumunu Değiştir
+                    </Popover.Title>
+                    <Popover.Content>
+                        <div className="container-fluid">
+                            <div className="row">
+                                {renderEmojis()}
+                            </div>
+                        </div>
+                    </Popover.Content>
+                </Popover>
+            }
+        >
+            <Emoji symbol={faceEmojis.get('Grinning Face')} className="emoji-32"/>
+        </OverlayTrigger>;
+
+    const renderEmojis = () => {
+        let allEmojis = [];
+        faceEmojis.forEach((value, key) => {
+            allEmojis.push(
+                <Tooltip title={key} TransitionComponent={Zoom}>
+                    <div className="col-3">
+                        <Emoji symbol={value} style={{fontSize: "32px", cursor: "pointer"}}/>
+                    </div>
+                </Tooltip>
+            );
+        });
+
+        return allEmojis;
+    };
 
     return (
         <div className="col-lg-3 col-md-3 col-sm-12 col-12 pl-5 pr-5 pt-2 pb-4 profile-info">
@@ -37,69 +77,11 @@ const PersonalInfo = (props) => {
                         </span>
                     </div>
                 </div>
-                <div className="col-lg-3 col-3 text-right pr-0">
-                    <OverlayTrigger
-                        placement="right"
-                        trigger="click"
-                        delay={{show: 250, hide: 400}}
-                        onClick={handleClick}
-                        overlay={
-                            <Popover id="popover-basic">
-                                <Popover.Title as="h3">
-                                    Durumunu Değiştir
-                                </Popover.Title>
-                                <Popover.Content>
-                                    <div className="container-fluid">
-                                        <div className="row">
-                                            <div className="col-3">
-                                                <Emoji symbol="😀" style={{fontSize: "32px", cursor:"pointer"}}/>
-                                            </div>
-                                            <div className="col-3">
-                                                <Emoji symbol="😂" style={{fontSize: "32px", cursor:"pointer"}}/>
-                                            </div>
-                                            <div className="col-3">
-                                                <Emoji symbol="😎" style={{fontSize: "32px", cursor:"pointer"}}/>
-                                            </div>
-                                            <div className="col-3">
-                                                <Emoji symbol="🥰" style={{fontSize: "32px", cursor:"pointer"}}/>
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-3">
-                                                <Emoji symbol="😴" style={{fontSize: "32px", cursor:"pointer"}}/>
-                                            </div>
-                                            <div className="col-3">
-                                                <Emoji symbol="🤑" style={{fontSize: "32px", cursor:"pointer"}}/>
-                                            </div>
-                                            <div className="col-3">
-                                                <Emoji symbol="😤" style={{fontSize: "32px", cursor:"pointer"}}/>
-                                            </div>
-                                            <div className="col-3">
-                                                <Emoji symbol="🤒" style={{fontSize: "32px", cursor:"pointer"}}/>
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-3">
-                                                <Emoji symbol="🤢" style={{fontSize: "32px", cursor:"pointer"}}/>
-                                            </div>
-                                            <div className="col-3">
-                                                <Emoji symbol="😇" style={{fontSize: "32px", cursor:"pointer"}}/>
-                                            </div>
-                                            <div className="col-3">
-                                                <Emoji symbol="🥳" style={{fontSize: "32px", cursor:"pointer"}}/>
-                                            </div>
-                                            <div className="col-3">
-                                                <Emoji symbol="😈" style={{fontSize: "32px", cursor:"pointer"}}/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </Popover.Content>
-                            </Popover>
-                        }
-                    >
-                        <Emoji symbol="😀" style={{fontSize: "32px", cursor:"pointer"}}/>
-                    </OverlayTrigger>
-                </div>
+                <Tooltip title="Durum" TransitionComponent={Zoom} placement="bottom-end">
+                    <div className="col-lg-3 col-3 text-right pr-0">
+                        {renderOverlay()}
+                    </div>
+                </Tooltip>
             </div>
             <div className="row mt-2 h-auto">
                 <span>
@@ -119,7 +101,7 @@ const PersonalInfo = (props) => {
                 <div className="col-12">
                     <div className="row text-capitalize">
                         <div className="col-12 no-padding">
-                            <Emoji symbol="📍" style={{fontSize: "18px"}} className="ml-1"/>
+                            <Emoji symbol={profileInfoEmojis.get('Round Pushpin')} className="font-18 ml-1"/>
                             <span className="align-middle ml-1">
                                 {` ${props.user.location}`}
                             </span>
@@ -127,7 +109,7 @@ const PersonalInfo = (props) => {
                     </div>
                     <div className="row">
                         <div className="col-12 no-padding">
-                            <Emoji symbol="📧" style={{fontSize: "18px"}}/>
+                            <Emoji symbol={profileInfoEmojis.get('E-Mail')} className="font-18"/>
                             <span className="align-middle">
                                 {` ${props.user.mail}`}
                             </span>
@@ -135,7 +117,7 @@ const PersonalInfo = (props) => {
                     </div>
                     <div className="row">
                         <div className="col-12 no-padding">
-                            <Emoji symbol="🗓" style={{fontSize: "18px"}}/>
+                            <Emoji symbol={profileInfoEmojis.get('Spiral Calendar')} className="font-18"/>
                             <span className="align-middle ml-1">
                                 {` ${props.user.birthday}`}
                             </span>
