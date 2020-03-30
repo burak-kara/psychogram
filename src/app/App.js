@@ -3,6 +3,7 @@ import './App.css';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Profile from "../pages/profile/Profile";
 import Home from "../pages/home/Home";
+import * as ROUTES from "../constants/routes";
 
 export default class App extends Component {
     render() {
@@ -10,11 +11,11 @@ export default class App extends Component {
             <Router>
                 <Switch>
                     <Route
-                        exact path="/"
+                        exact path={ROUTES.LANDING}
                         render={(props) => <Home/>}
                     />
                     <Route
-                        exact path="/profile"
+                        exact path={ROUTES.PROFILE}
                         render={(props) => <Profile/>}
                     />
                 </Switch>
