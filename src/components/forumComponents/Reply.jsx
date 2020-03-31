@@ -1,7 +1,7 @@
 import React, {Component} from "react";
-import CancelReply from "../components of Reply/CancelReply";
-import EnterReply from "../components of Reply/EnterReply";
-import SendReply from "../components of Reply/SendReply";
+import CancelReply from "./replyComponents/CancelReply";
+import EnterReply from "./replyComponents/EnterReply";
+import SendReply from "./replyComponents/SendReply";
 
 class Reply extends Component {
     constructor(props) {

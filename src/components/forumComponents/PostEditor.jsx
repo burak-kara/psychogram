@@ -5,10 +5,9 @@ class PostEditor extends Component {
         super(props);
         this.state = {
             newPostBody: '',
-        }
+        };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.createPost = this.createPost.bind(this);
-
     }
 
     handleInputChange(ev) {
