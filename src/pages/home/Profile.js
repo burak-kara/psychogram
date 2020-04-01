@@ -1,4 +1,12 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
+
+import "../../index.css";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
+import Login from "./Login";
+import SignUp from "./Signup";
+import Contact from "./Contact";
+import Home from "./Home"
 
 class Profile extends Component {
 
@@ -24,7 +32,37 @@ class Profile extends Component {
     }
     render() {
         return (
-            <div>
+            <div className="profilepage">
+
+                <nav className="navbar  bg-primary navbar-expand-sm  navbar-dark fixed-top ">
+                    <div className="container">
+
+                        <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+                            <ul className="navbar-nav mr-auto5 visible ">
+                                <li className="nav-item">
+                                    <Link className="navbar-brand" to={"/Home"}>HOME</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="navbar-brand" to={"/Profile"}>PROFILE</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="navbar-brand" to={"/Contact"}>CONTACT</Link>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+                            <ul className="navbar-nav ml-auto">
+                                <li className="nav-item">
+                                    <Link className="nav-link" to={"/sign-in"}>Log Out</Link>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </nav>
+
+
                 <h2>Profile</h2>
 
                 <form>
