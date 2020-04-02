@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import DialogWindow from "../../components/DialogWindow";
 import {Typography} from "@material-ui/core";
 
@@ -37,7 +37,7 @@ const Settings = (props) => {
     };
     return (
         <DialogWindow
-            title="Settings"
+            title="Profili Düzenle"
             content={renderContent()}
             actions={renderActions()}
             open={props.open}
