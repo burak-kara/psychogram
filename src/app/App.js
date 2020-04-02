@@ -10,7 +10,6 @@ import Profile from "../pages/profile/Profile";
 import Home from "../pages/home/Home";
 import Contact from "../pages/home/Contact";
 import Forum from "../pages/forum/Forum";
-
 export default class App extends Component {
     render() {
         return (

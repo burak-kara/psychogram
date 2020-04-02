@@ -1,11 +1,13 @@
+@import "src/utility/colors";
+
 .card-container {
-  box-shadow: inset 0 0 5px 0 rgba(0, 0, 0, 0.30);
+  box-shadow: inset $box-shadow;
   border-radius: 10px;
   margin-right: 2px;
   margin-left: 2px;
   padding: 5px 5px 10px;
   margin-top: 10px;
-  background-color: #ffffff;
+  background-color: $white;
 
   .card-container:hover {
     /*box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.50);*/
@@ -17,25 +19,25 @@
 
   .card-container-title-row-title {
     font-weight: bold;
-    color: #204051;
+    color: $color-green-3;
     cursor: default;
   }
 
   .card-container-title-row-clickable {
     font-weight: bold;
-    color: #204051;
+    color: $color-green-3;
     cursor: pointer;
     text-decoration: underline;
   }
 
   .card {
     border-radius: 10px;
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.30);
+    box-shadow: $box-shadow;
     cursor: default;
   }
 
   .card:hover {
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.50);
+    box-shadow: $box-shadow-hover
   }
 
   /*http://hackingui.com/front-end/a-pure-css-solution-for-multiline-text-truncation/*/
@@ -63,11 +65,11 @@
     width: 1em;
     height: 1em;
     margin-top: 0.2em;
-    background: white;
+    background: $white;
   }
 
   .card-btn {
-    background-color: #204051;
-    color: #ffffff;
+    background-color: $color-green-3;
+    color: $white;
   }
 }
