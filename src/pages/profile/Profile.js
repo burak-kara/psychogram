@@ -38,9 +38,9 @@ const Profile = () => {
     return (
         <div>
             {/* TODO delete extra header and footer divs*/}
-            <div className="bg-secondary text-center font-weight-bolder" style={{height: "64px"}}>
-                HEADER
-            </div>
+            {/*<div className="bg-secondary text-center font-weight-bolder" style={{height: "64px"}}>*/}
+            {/*    HEADER*/}
+            {/*</div>*/}
             <div className="container-fluid h-auto patient-profile">
                 <div className="row h-auto">
                     <PersonalInfo user={data.user} openSettings={handleSettingsOpen}/>
