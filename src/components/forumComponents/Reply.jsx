@@ -1,7 +1,5 @@
 import React, {Component} from "react";
-import CancelReply from "./replyComponents/CancelReply";
-import EnterReply from "./replyComponents/EnterReply";
-import SendReply from "./replyComponents/SendReply";
+import SendReply from "./postComponents/SendReply";
 
 class Reply extends Component {
     constructor(props) {
@@ -21,9 +19,9 @@ class Reply extends Component {
         const isLoggedIn = this.state.isLoggedIn;
         let button;
         if (isLoggedIn) {
-            button = <CancelReply onClick={this.enterClick.bind(this)}/>;
+            button = <button className="reply" onClick={this.enterClick.bind(this)}>Cancel</button>;
         } else {
-            button = <EnterReply onClick={this.cancelClick.bind(this)}/>;
+            button = <button className="reply" onClick={this.cancelClick.bind(this)}>Reply</button>;
         }
 
         return (

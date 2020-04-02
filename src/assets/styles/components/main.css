@@ -72,7 +72,6 @@ ul.header li a {
 
 .post-info {
     position: absolute;
-    /*bottom: 0;*/
     right: 290px;
     font-size: 12px;
     color: #999;
@@ -95,12 +94,11 @@ ul.header li a {
 
 .sendMessage {
     margin: 1em -26%;
-    /*bottom: 0px;*/
 }
 
 .like {
     margin-right: 5px;
-    bottom: 0px;
+    bottom: 0;
 }
 
 .parent {
