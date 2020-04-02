@@ -1,17 +1,18 @@
 import React from "react";
 import {Link, Redirect} from "react-router-dom";
-import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 export default class Login extends React.Component {
     state = {
         redirect: false
     };
+
     setRedirect = () => {
         this.setState({
             redirect: true
         });
         this.renderRedirect()
     };
+
     renderRedirect = () => {
         if (this.state.redirect) {
             return <Redirect to='/Home'/>
@@ -42,11 +43,16 @@ export default class Login extends React.Component {
                     </div>
                     <div className="form-group">
                         {this.renderRedirect()}
-                        <button onClick={this.setRedirect} type="submit" className="btn btn-primary btn-block">Submit
+                        <button onClick={this.setRedirect} type="submit" className="btn btn-primary btn-block">
+                            Submit
                         </button>
                     </div>
-                    <p id="noacc text-left">Don't have an acount? <Link id="noaccLink" className="nav-link"
-                                                                        to={"/sign-up"}>Sign up</Link></p>
+                    <p id="noacc text-left">
+                        Don't have an acount?
+                        <Link id="noaccLink" className="nav-link" to={"/sign-up"}>
+                            Sign up
+                        </Link>
+                    </p>
                 </form>
             </div>
         );
