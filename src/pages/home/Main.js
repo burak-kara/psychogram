@@ -1,33 +1,58 @@
-import React, {Component} from "react";
-import {
-    Route,
-    NavLink,
-    HashRouter
-} from "react-router-dom";
-import home from "./Home";
-import profile from "./Profile";
-import contact from "./Contact";
+import React from 'react';
+import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
+import Login from "./Login";
+import SignUp from "./Signup";
+import Home from './Home'
+import Contact from './Contact'
+import Profile from './Profile'
 
-class Main extends Component {
-    render() {
-        return (
-            <HashRouter>
-                <div>
-                    <h1>PSYCHOGRAM</h1>
-                    <ul className="header">
-                        <li><NavLink exact to="/">Home</NavLink></li>
-                        <li><NavLink to="/Profile">Profile</NavLink></li>
-                        <li><NavLink to="/Contact">Contact</NavLink></li>
-                    </ul>
-                    <div className="content">
-                        <Route exact path="/" component={home}/>
-                        <Route path="/Profile" component={profile}/>
-                        <Route path="/Contact" component={contact}/>
+const Main = () => {
+    return (<Router>
+            <div className="App">
+                <nav className="navbar navbar-expand-sm navbar-light fixed-top ">
+                    <div className="container">
+                        <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+                            <ul className="navbar-nav mr-auto5 invisible ">
+                                <li className="nav-item">
+                                    <Link className="navbar-brand" to={"/Home"}>HOME</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="navbar-brand" to={"/Profile"}>PROFILE</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="navbar-brand" to={"/Contact"}>CONTACT</Link>
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+                            <ul className="navbar-nav ml-auto">
+                                <li className="nav-item">
+                                    <Link className="nav-link" to={"/sign-in"}>Login</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to={"/sign-up"}>Sign up</Link>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </nav>
+                <div className="auth-wrapper">
+                    <div className="auth-inner">
+                        <Switch>
+                            <Route exact path='/' component={Login}/>
+                            <Route path="/sign-in" component={Login}/>
+                            <Route path="/sign-up" component={SignUp}/>
+                            <Route path="/Home" component={Home}/>
+                            <Route path="/Profile" component={Profile}/>
+                            <Route path="/Contact" component={Contact}/>
+                        </Switch>
                     </div>
                 </div>
-            </HashRouter>
-        );
-    }
-}
+            </div>
+        </Router>
+    );
+};
 
 export default Main;
