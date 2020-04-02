@@ -3,13 +3,13 @@ import Time from "./postComponents/Time";
 import Likes from "./postComponents/Likes";
 
 const Post = (props) => (
-    <div className="post-body">
-        <div className="panel-body">
+    <div className="post-container ">
+        <div className="post-body">
             {props.postBody}
-            <div className="post-info">
-                <Time/>
-                <Likes/>
-            </div>
+        </div>
+        <div className="post-info">
+            <Time/>
+            <Likes/>
         </div>
     </div>
 );

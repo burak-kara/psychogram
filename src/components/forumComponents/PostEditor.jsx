@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 
 class PostEditor extends Component {
     constructor(props) {
@@ -6,8 +7,6 @@ class PostEditor extends Component {
         this.state = {
             newPostBody: '',
         };
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.createPost = this.createPost.bind(this);
     }
 
     handleInputChange(ev) {
@@ -27,9 +26,11 @@ class PostEditor extends Component {
         return (
             <div className="post-editor">
                 <div className="panel-body">
-                    <textarea className="form-control" value={this.state.newPostBody}
-                              onChange={this.handleInputChange}/>
-                    <button className="btn-success" onClick={this.createPost}>Post</button>
+                    <TextareaAutosize className="form-control" value={this.state.newPostBody}
+                                      onChange={this.handleInputChange.bind(this)}/>
+                    <button className="btn-success" onClick={this.createPost.bind(this)}
+                            disabled={!this.state.newPostBody}>Post
+                    </button>
                 </div>
             </div>
         )

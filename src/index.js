@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import "./assets/styles/main.scss";
-import "./assets/styles/components/index.css"
+import "./assets/styles/components/Forum.css"
 
 ReactDOM.render(<App/>, document.getElementById("root"));
 serviceWorker.register();
