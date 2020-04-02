@@ -1,42 +1,34 @@
-import React, { Component } from "react";
-
-import "../../index.css";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-
-import Login from "./Login";
-import SignUp from "./Signup";
-import Contact from "./Contact";
-import Home from "./Home"
+import React, {Component} from "react";
+import {Link} from "react-router-dom";
 
 class Profile extends Component {
 
-    state = {selectedFile: null}
+    state = {selectedFile: null};
 
     fileChangedHandler = event => {
         this.setState({selectedFile: event.target.files[0]})
-    }
+    };
 
     uploadHandler = () => {
         console.log(
             this.state.selectedFile)
-    }
+    };
 
     uploadHandler = () => {
-        const formData = new FormData()
+        const formData = new FormData();
         formData.append(
             'myFile',
             this.state.selectedFile,
             this.state.selectedFile.name
         )
-       // axios.post('my-domain.com/file-upload', formData)
-    }
+        // axios.post('my-domain.com/file-upload', formData)
+    };
+
     render() {
         return (
             <div className="profilepage">
-
                 <nav className="navbar  bg-primary navbar-expand-sm  navbar-dark fixed-top ">
                     <div className="container">
-
                         <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
                             <ul className="navbar-nav mr-auto5 visible ">
                                 <li className="nav-item">
@@ -50,7 +42,6 @@ class Profile extends Component {
                                 </li>
                             </ul>
                         </div>
-
                         <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
                             <ul className="navbar-nav ml-auto">
                                 <li className="nav-item">
@@ -58,13 +49,9 @@ class Profile extends Component {
                                 </li>
                             </ul>
                         </div>
-
                     </div>
                 </nav>
-
-
                 <h2>Profile</h2>
-
                 <form>
                     <p>
                         <label>First Name</label> <br/>
