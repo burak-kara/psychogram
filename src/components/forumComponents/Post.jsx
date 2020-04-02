@@ -3,7 +3,7 @@ import Time from "./postComponents/Time";
 import Likes from "./postComponents/Likes";
 
 const Post = (props) => (
-    <div className="post-container ">
+    <div className="post-container">
         <div className="post-body">
             {props.postBody}
         </div>
