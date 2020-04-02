@@ -1,14 +1,15 @@
 import React from 'react';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
-import Login from "./Login";
-import SignUp from "./Signup";
-import Home from './Home'
-import Contact from './Contact'
-import Profile from './Profile'
+import Login from "../login/Login";
+import SignUp from "../signUp/Signup";
+import Home from './Home';
+import Contact from './Contact';
+import Profile from '../profile/Profile';
 
 const Main = () => {
-    return (<Router>
+    return (
+        <Router>
             <div className="App">
                 <nav className="navbar navbar-expand-sm navbar-light fixed-top ">
                     <div className="container">
@@ -28,7 +29,7 @@ const Main = () => {
                         <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
                             <ul className="navbar-nav ml-auto">
                                 <li className="nav-item">
-                                    <Link className="nav-link" to={"/sign-in"}>Login</Link>
+                                    <Link className="nav-link" to={"/signUp"}>Login</Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link className="nav-link" to={"/sign-up"}>Sign up</Link>

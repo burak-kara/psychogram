@@ -1,6 +1,6 @@
 import React from "react";
 import {Link, Redirect} from "react-router-dom";
-import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default class SignUp extends React.Component {
     state = {
@@ -48,7 +48,7 @@ export default class SignUp extends React.Component {
                         </button>
                     </div>
                     <p id="noacc text-left">Already registered? <Link id="noaccLink" className="nav-link"
-                                                                      to={"/sign-in"}>Sign in</Link></p>
+                                                                      to={"/signUp"}>Sign in</Link></p>
                 </form>
             </div>
         );
