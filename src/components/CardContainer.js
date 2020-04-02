@@ -22,7 +22,9 @@ const CardContainer = (props) => {
                                 </p>
                             </div>
                             <div className="card-footer text-right bg-transparent border-secondary">
-                                <a href="#" className="btn card-btn">Go somewhere</a>
+                                <button className="btn card-btn" onClick={() => alert("button clicked")}>
+                                    Go somewhere
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -54,6 +56,8 @@ const CardContainer = (props) => {
                 fields.push(item.type);
                 fields.push(item.abstract);
                 break;
+            default:
+                fields.push("Veri Yok")
         }
         return fields
     };

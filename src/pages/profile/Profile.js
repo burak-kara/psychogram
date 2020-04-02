@@ -3,7 +3,6 @@ import data from "../../assets/demo_data/profile/data";
 import PersonalInfo from "./PersonalInfo";
 import ProfileDetails from "./ProfileDetails";
 import Settings from "./Settings";
-import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "../../components/Alert";
 
 const Profile = () => {

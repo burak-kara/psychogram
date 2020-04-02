@@ -1,0 +1,28 @@
+@import "src/utility/colors";
+
+.patient-profile {
+  color: $color-green-3;
+  font-size: 16px;
+
+  .profile-info {
+    background-color: $background-color-1;
+    padding: 10px 30px !important;
+  }
+
+  .font-18 {
+    font-size: 18px;
+  }
+
+  .emoji-32 {
+    font-size: 32px !important;
+    cursor: pointer;
+  }
+
+  .no-padding {
+    padding: 0 !important;
+  }
+
+  .profile-details {
+    box-shadow: $box-shadow;
+  }
+}
