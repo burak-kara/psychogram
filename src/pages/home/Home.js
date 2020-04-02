@@ -1,6 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import "./Home.css";
+import psycho from "../../assets/logo/psycho.jpg";
 
 class Home extends React.Component {
     render() {
@@ -31,7 +32,7 @@ class Home extends React.Component {
                     </div>
                 </nav>
                 <main>
-                    <img id="uppertop" src="psycho_2.jpg" alt="main picture"/>
+                    <img id="uppertop" src={psycho} alt="main picture"/>
                     <h2 className="centered">You Are Not Alone</h2>
                     <br></br>
                     <br></br>
