@@ -10,13 +10,12 @@ import Profile from "../pages/profile/Profile";
 import Home from "../pages/home/Home";
 import Contact from "../pages/home/Contact";
 import Forum from "../pages/forum/Forum";
+
 export default class App extends Component {
     render() {
         return (
             <HashRouter>
-                <div >
-                    <div className="title">
-                    </div>
+                <div className="navigator">
                     <ul className="header">
                         <li><NavLink exact to="/">Home</NavLink></li>
                         <li><NavLink to="/Profile">Profile</NavLink></li>
