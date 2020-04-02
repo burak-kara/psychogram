@@ -4,7 +4,8 @@ import psycho from "../../assets/logo/psycho.jpg";
 const Home = props => {
     return (
         <div className="homepage">
-            <img id="uppertop" src={psycho} alt="main picture"/>
+            {/*TODO change img properties and styles*/}
+            <img id="uppertop" src={psycho} alt="main picture" style={{width:'50%'}}/>
             <h2 className="centered">You Are Not Alone</h2>
             <br></br>
             <br></br>

@@ -1,6 +1,5 @@
 import React from "react";
 import {Link, Redirect} from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default class SignUp extends React.Component {
     state = {
@@ -44,11 +43,16 @@ export default class SignUp extends React.Component {
                     </div>
                     <div className="form-group">
                         {this.renderRedirect()}
-                        <button onClick={this.setRedirect} type="submit" className="btn btn-primary btn-block">Sign Up
+                        <button onClick={this.setRedirect} type="submit" className="btn btn-primary btn-block">
+                            Sign Up
                         </button>
                     </div>
-                    <p id="noacc text-left">Already registered? <Link id="noaccLink" className="nav-link"
-                                                                      to={"/signUp"}>Sign in</Link></p>
+                    <p id="noacc text-left">
+                        Already registered?
+                        <Link id="noaccLink" className="nav-link" to={"/signup"}>
+                            Sign in
+                        </Link>
+                    </p>
                 </form>
             </div>
         );
