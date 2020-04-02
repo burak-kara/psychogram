@@ -1,23 +1,12 @@
-import React, { Component } from "react";
-
-import "../../index.css";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-
-import Login from "./Login";
-import SignUp from "./Signup";
-import Home from "./Home";
-import Profile from "./Profile";
-
+import React from "react";
+import {Link} from "react-router-dom";
 
 class Contact extends React.Component {
-
     render() {
         return (
             <div className="contactpage">
-
                 <nav className="navbar  bg-primary navbar-expand-sm  navbar-dark fixed-top ">
                     <div className="container">
-
                         <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
                             <ul className="navbar-nav mr-auto5 visible ">
                                 <li className="nav-item">
@@ -31,7 +20,6 @@ class Contact extends React.Component {
                                 </li>
                             </ul>
                         </div>
-
                         <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
                             <ul className="navbar-nav ml-auto">
                                 <li className="nav-item">
@@ -39,22 +27,16 @@ class Contact extends React.Component {
                                 </li>
                             </ul>
                         </div>
-
                     </div>
                 </nav>
-
-
                 <main>
-
                     <h2>GOT QUESTIONS?</h2>
                     <p>Ask your question to us via e-mail. <a href="mailto:info@psychogram.com">Email Me</a>
-
                     </p>
                 </main>
-
-
             </div>
         );
     }
 }
+
 export default Contact
