@@ -6,16 +6,14 @@ import SendReply from "./replyComponents/SendReply";
 class Reply extends Component {
     constructor(props) {
         super(props);
-        this.handleLoginClick = this.handleLoginClick.bind(this);
-        this.handleLogoutClick = this.handleLogoutClick.bind(this);
         this.state = {isLoggedIn: false};
     }
 
-    handleLoginClick() {
+    cancelClick() {
         this.setState({isLoggedIn: true});
     }
 
-    handleLogoutClick() {
+    enterClick() {
         this.setState({isLoggedIn: false});
     }
 
@@ -23,14 +21,13 @@ class Reply extends Component {
         const isLoggedIn = this.state.isLoggedIn;
         let button;
         if (isLoggedIn) {
-            button = <CancelReply onClick={this.handleLogoutClick}/>;
-        }
-        else {
-            button = <EnterReply onClick={this.handleLoginClick}/>;
+            button = <CancelReply onClick={this.enterClick.bind(this)}/>;
+        } else {
+            button = <EnterReply onClick={this.cancelClick.bind(this)}/>;
         }
 
         return (
-            <div>
+            <div className="rep">
                 <SendReply isLoggedIn={isLoggedIn}/>
                 {button}
             </div>

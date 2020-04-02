@@ -8,8 +8,8 @@ import {
 } from "react-router-dom";
 import Profile from "../pages/profile/Profile";
 import Home from "../pages/home/Home";
-import Forum from "../pages/forum/Forum";
 import Contact from "../pages/home/Contact";
+import Forum from "../pages/forum/Forum";
 
 export default class App extends Component {
     render() {
