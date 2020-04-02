@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 
 class SendReply extends Component {
     constructor(props) {
