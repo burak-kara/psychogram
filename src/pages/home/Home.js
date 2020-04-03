@@ -4,13 +4,12 @@ import psycho from "../../assets/logo/psycho.jpg";
 const Home = props => {
     return (
         <div className="homepage">
-            {/*TODO change img properties and styles*/}
-            <img id="uppertop" src={psycho} alt="main picture" style={{width:'50%'}}/>
-            <h2 className="centered">You Are Not Alone</h2>
+            <img id="picLoc" src={psycho} alt="main picture"/>
+            <h2 className="leftLoc">You Are Not Alone</h2>
             <br></br>
             <br></br>
             <article>
-                <h2 id="m1">OUR SERVICES</h2>
+                <h2 id="ourService">OUR SERVICES</h2>
                 <br></br>
                 <h3>ANXIETY AND RELATED DISORDERS</h3>
                 <p>At BHAVA Therapy Group, we believe the best approach to the treatment of anxiety tends to
