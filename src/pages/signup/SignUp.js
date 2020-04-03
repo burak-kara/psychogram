@@ -21,9 +21,9 @@ export default class SignUp extends React.Component {
 
     render() {
         return (
-            <div className="mainTitle">
-                <h1>PSYCHOGRAM</h1>
-                <form>
+            <div className="divLogin">
+                <form className="formLogin">
+                    <h1>PSYCHOGRAM</h1>
                     <h3>Sign Up</h3>
                     <div className="form-group">
                         <label>First name</label>
@@ -49,9 +49,7 @@ export default class SignUp extends React.Component {
                     </div>
                     <p id="noacc text-left">
                         Already registered?
-                        <Link id="noaccLink" className="nav-link" to={"/signup"}>
-                            Sign in
-                        </Link>
+                        <Link id="noaccLink" className="nav-link" to={"/sign-in"}>Sign in</Link>
                     </p>
                 </form>
             </div>
