@@ -15,7 +15,6 @@ export default class Login extends React.Component {
 
     renderRedirect = () => {
         if (this.state.redirect) {
-            document.body.style.background = 'white';
             return <Redirect to='/Home'/>
         }
     };
