@@ -1,18 +1,23 @@
-import React from "react";
-import {Dialog, DialogActions, DialogContent, DialogTitle} from "@material-ui/core";
+import React from 'react';
+import {
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+} from '@material-ui/core';
 
-const DialogWindow = (props) => {
+const DialogWindow = props => {
     return (
-        <Dialog aria-labelledby="customized-dialog-title" onClose={props.handleClose} open={props.open}>
+        <Dialog
+            aria-labelledby="customized-dialog-title"
+            onClose={props.handleClose}
+            open={props.open}
+        >
             <DialogTitle id="customized-dialog-title">
                 {props.title}
             </DialogTitle>
-            <DialogContent dividers>
-                {props.content}
-            </DialogContent>
-            <DialogActions>
-                {props.actions}
-            </DialogActions>
+            <DialogContent dividers>{props.content}</DialogContent>
+            <DialogActions>{props.actions}</DialogActions>
         </Dialog>
     );
 };

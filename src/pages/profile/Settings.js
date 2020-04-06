@@ -1,23 +1,26 @@
-import React from "react";
-import DialogWindow from "../../components/DialogWindow";
-import {Typography} from "@material-ui/core";
+import React from 'react';
+import DialogWindow from '../../components/DialogWindow';
+import { Typography } from '@material-ui/core';
 
-const Settings = (props) => {
+const Settings = props => {
     const renderContent = () => {
         return (
             <>
                 <Typography gutterBottom>
-                    Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
-                    in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+                    Cras mattis consectetur purus sit amet fermentum. Cras justo
+                    odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
+                    risus, porta ac consectetur ac, vestibulum at eros.
                 </Typography>
                 <Typography gutterBottom>
-                    Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
-                    lacus vel augue laoreet rutrum faucibus dolor auctor.
+                    Praesent commodo cursus magna, vel scelerisque nisl
+                    consectetur et. Vivamus sagittis lacus vel augue laoreet
+                    rutrum faucibus dolor auctor.
                 </Typography>
                 <Typography gutterBottom>
-                    Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-                    scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
-                    auctor fringilla.
+                    Aenean lacinia bibendum nulla sed consectetur. Praesent
+                    commodo cursus magna, vel scelerisque nisl consectetur et.
+                    Donec sed odio dui. Donec ullamcorper nulla non metus auctor
+                    fringilla.
                 </Typography>
             </>
         );
@@ -26,7 +29,10 @@ const Settings = (props) => {
     const renderActions = () => {
         return (
             <>
-                <button className="btn btn-secondary" onClick={props.handleClose}>
+                <button
+                    className="btn btn-secondary"
+                    onClick={props.handleClose}
+                >
                     Vazgeç
                 </button>
                 <button className="btn btn-primary" onClick={props.handleSave}>

@@ -1,18 +1,18 @@
-import React, {Component} from "react";
-import SendReply from "./postComponents/SendReply";
+import React, { Component } from 'react';
+import SendReply from './postComponents/SendReply';
 
 class Reply extends Component {
     constructor(props) {
         super(props);
-        this.state = {isLoggedIn: false};
+        this.state = { isLoggedIn: false };
     }
 
     cancelClick() {
-        this.setState({isLoggedIn: true});
+        this.setState({ isLoggedIn: true });
     }
 
     enterClick() {
-        this.setState({isLoggedIn: false});
+        this.setState({ isLoggedIn: false });
     }
 
     render() {
