@@ -4,6 +4,7 @@ import PersonalInfo from './PersonalInfo';
 import ProfileDetails from './ProfileDetails';
 import Settings from './Settings';
 import Alert from '../../components/Alert';
+
 const Profile = () => {
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [alertOpen, setAlertsOpen] = useState(false);

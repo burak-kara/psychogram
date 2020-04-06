@@ -1,6 +1,6 @@
-import React from "react";
-import Time from "./postComponents/Time";
-import Likes from "./postComponents/Likes";
+import React from 'react';
+import Time from './postComponents/Time';
+import Likes from './postComponents/Likes';
 
 const Post = (props) => (
     <div className="post-container">

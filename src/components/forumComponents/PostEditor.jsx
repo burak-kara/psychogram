@@ -1,5 +1,5 @@
-import React, {Component} from "react";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import React, { Component } from 'react';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 class PostEditor extends Component {
     constructor(props) {
@@ -11,8 +11,8 @@ class PostEditor extends Component {
 
     handleInputChange(ev) {
         this.setState({
-            newPostBody: ev.target.value
-        })
+            newPostBody: ev.target.value,
+        });
     }
 
     createPost() {
@@ -33,7 +33,7 @@ class PostEditor extends Component {
                     </button>
                 </div>
             </div>
-        )
+        );
     }
 }
 
