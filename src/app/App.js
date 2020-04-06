@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Route, NavLink, HashRouter } from 'react-router-dom';
+import { HashRouter, NavLink, Route } from 'react-router-dom';
 import Profile from '../pages/profile/Profile';
 import Home from '../pages/home/Home';
 import Login from '../pages/login/Login';
