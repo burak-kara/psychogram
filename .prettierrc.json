@@ -10,14 +10,15 @@
         {
             "files": "*.scss",
             "options": {
-                "tabWidth": 4
+                "tabWidth": 4,
+                "singleQuote": true
             }
         },
         {
             "files": "*.json",
             "options": {
                 "tabWidth": 4,
-                "singleQuote": false
+                "singleQuote": true
             }
         }
     ]

@@ -36,19 +36,13 @@
         "root": true
     },
     "lint-staged": {
-        "src/**/*.{js,jsx,ts,tsx,md}": [
-            "prettier --write",
-            "eslint --fix",
-            "git add"
-        ],
-        "src/**/*.{css, scss,json}": [
-            "prettier --write",
-            "git add"
-        ],
-        ".xyz": [
-            "./node_modules/.bin/eslint - fix",
-            "git add"
-        ]
+        "*.js": "eslint --cache --fix",
+        "*.{js,css,scss,md}": "prettier --write"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
     },
     "browserslist": {
         "production": [
@@ -64,6 +58,8 @@
     },
     "devDependencies": {
         "eslint": "^6.8.0",
+        "husky": "^4.2.3",
+        "lint-staged": "^10.1.2",
         "prettier": "^2.0.4",
         "prettier-eslint": "^9.0.1"
     }
