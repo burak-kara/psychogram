@@ -17,7 +17,9 @@ class Likes extends Component {
 
     render() {
         return (
-            <button className="like" onClick={this.increment}>Likes: {this.state.count} </button>
+            <button className="like" onClick={this.increment}>
+                Likes: {this.state.count}{' '}
+            </button>
         );
     }
 }

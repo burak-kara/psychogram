@@ -10,9 +10,7 @@ class Time extends Component {
     }
 
     render() {
-        return (
-            <p className="currentTime">{this.state.today}</p>
-        );
+        return <p className="currentTime">{this.state.today}</p>;
     }
 }
 

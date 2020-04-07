@@ -19,9 +19,16 @@ class SendReply extends Component {
     render() {
         return this.props.isLoggedIn ? (
             <div className="sendReply">
-                <textarea className="replyArea" disabled={(this.state.disabled) ? 'disabled' : ''}/>
-                <button className="sendMessage"
-                        onClick={this.sendMessage.bind(this)}> {this.state.replyStatus ? 'Reply' : 'Cancel'}
+                <textarea
+                    className="replyArea"
+                    disabled={this.state.disabled ? 'disabled' : ''}
+                />
+                <button
+                    className="sendMessage"
+                    onClick={this.sendMessage.bind(this)}
+                >
+                    {' '}
+                    {this.state.replyStatus ? 'Reply' : 'Cancel'}
                 </button>
             </div>
         ) : null;

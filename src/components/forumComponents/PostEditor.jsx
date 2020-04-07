@@ -26,10 +26,17 @@ class PostEditor extends Component {
         return (
             <div className="post-editor">
                 <div className="panel-body">
-                    <TextareaAutosize className="form-control" value={this.state.newPostBody}
-                                      onChange={this.handleInputChange.bind(this)}/>
-                    <button className="btn-success" onClick={this.createPost.bind(this)}
-                            disabled={!this.state.newPostBody}>Post
+                    <TextareaAutosize
+                        className="form-control"
+                        value={this.state.newPostBody}
+                        onChange={this.handleInputChange.bind(this)}
+                    />
+                    <button
+                        className="btn-success"
+                        onClick={this.createPost.bind(this)}
+                        disabled={!this.state.newPostBody}
+                    >
+                        Post
                     </button>
                 </div>
             </div>

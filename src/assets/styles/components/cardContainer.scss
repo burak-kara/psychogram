@@ -1,75 +1,75 @@
-@import "src/utility/colors";
+@import 'src/utility/colors';
 
 .card-container {
-  box-shadow: inset $box-shadow;
-  border-radius: 10px;
-  margin-right: 2px;
-  margin-left: 2px;
-  padding: 5px 5px 10px;
-  margin-top: 10px;
-  background-color: $white;
-
-  .card-container:hover {
-    /*box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.50);*/
-  }
-
-  .card-container-title-row {
-    max-height: 30px;
-  }
-
-  .card-container-title-row-title {
-    font-weight: bold;
-    color: $color-green-3;
-    cursor: default;
-  }
-
-  .card-container-title-row-clickable {
-    font-weight: bold;
-    color: $color-green-3;
-    cursor: pointer;
-    text-decoration: underline;
-  }
-
-  .card {
+    box-shadow: inset $box-shadow;
     border-radius: 10px;
-    box-shadow: $box-shadow;
-    cursor: default;
-  }
+    margin-right: 2px;
+    margin-left: 2px;
+    padding: 5px 5px 10px;
+    margin-top: 10px;
+    background-color: $white;
 
-  .card:hover {
-    box-shadow: $box-shadow-hover
-  }
+    .card-container:hover {
+        /*box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.50);*/
+    }
 
-  /*http://hackingui.com/front-end/a-pure-css-solution-for-multiline-text-truncation/*/
-  .card-text {
-    overflow: hidden;
-    position: relative;
-    line-height: 1.2em;
-    max-height: 3.6em;
-    text-align: justify;
-    margin-right: -1em;
-    padding-right: 1em;
-  }
+    .card-container-title-row {
+        max-height: 30px;
+    }
 
-  .card-text:before {
-    content: '...';
-    position: absolute;
-    right: 0;
-    bottom: 0;
-  }
+    .card-container-title-row-title {
+        font-weight: bold;
+        color: $color-green-3;
+        cursor: default;
+    }
 
-  .card-text:after {
-    content: '';
-    position: absolute;
-    right: 0;
-    width: 1em;
-    height: 1em;
-    margin-top: 0.2em;
-    background: $white;
-  }
+    .card-container-title-row-clickable {
+        font-weight: bold;
+        color: $color-green-3;
+        cursor: pointer;
+        text-decoration: underline;
+    }
 
-  .card-btn {
-    background-color: $color-green-3;
-    color: $white;
-  }
+    .card {
+        border-radius: 10px;
+        box-shadow: $box-shadow;
+        cursor: default;
+    }
+
+    .card:hover {
+        box-shadow: $box-shadow-hover;
+    }
+
+    /*http://hackingui.com/front-end/a-pure-css-solution-for-multiline-text-truncation/*/
+    .card-text {
+        overflow: hidden;
+        position: relative;
+        line-height: 1.2em;
+        max-height: 3.6em;
+        text-align: justify;
+        margin-right: -1em;
+        padding-right: 1em;
+    }
+
+    .card-text:before {
+        content: '...';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+
+    .card-text:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        width: 1em;
+        height: 1em;
+        margin-top: 0.2em;
+        background: $white;
+    }
+
+    .card-btn {
+        background-color: $color-green-3;
+        color: $white;
+    }
 }
