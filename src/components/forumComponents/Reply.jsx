@@ -19,14 +19,22 @@ class Reply extends Component {
         const isLoggedIn = this.state.isLoggedIn;
         let button;
         if (isLoggedIn) {
-            button = <button className="reply" onClick={this.enterClick.bind(this)}>Cancel</button>;
+            button = (
+                <button className="reply" onClick={this.enterClick.bind(this)}>
+                    Cancel
+                </button>
+            );
         } else {
-            button = <button className="reply" onClick={this.cancelClick.bind(this)}>Reply</button>;
+            button = (
+                <button className="reply" onClick={this.cancelClick.bind(this)}>
+                    Reply
+                </button>
+            );
         }
 
         return (
             <div className="rep">
-                <SendReply isLoggedIn={isLoggedIn}/>
+                <SendReply isLoggedIn={isLoggedIn} />
                 {button}
             </div>
         );
