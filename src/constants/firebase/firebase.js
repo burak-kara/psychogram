@@ -50,7 +50,9 @@ class Firebase {
     doPasswordUpdate = password =>
         this.auth.currentUser.updatePassword(password);
 
-    user = () => this.db.ref('user');
+    getUser = () => this.db.ref('user');
+
+    // Add new backend methods here
 }
 
 export default Firebase;

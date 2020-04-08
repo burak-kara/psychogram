@@ -3,7 +3,7 @@ import { withFirebase } from '../../constants/firebase';
 
 const TestClass = props => {
     const handleClick = () => {
-        const user = props.firebase.user().on('value', snapshot => {
+        props.firebase.getUser().on('value', snapshot => {
             console.log(snapshot.val());
         });
     };
