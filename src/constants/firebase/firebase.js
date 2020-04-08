@@ -2,6 +2,7 @@
 // must be listed before other Firebase SDKs
 import app from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/database';
 
 const developmentConfig = {
     apiKey: 'AIzaSyBCbSOeYmUnT8aMuc-9kaFAK00E-123uQQ',
@@ -25,13 +26,15 @@ const releaseConfig = {
     measurementId: 'G-7DR9KH8796',
 };
 
-const config =
-    process.env.NODE_ENV === 'production' ? releaseConfig : developmentConfig;
+// TODO change when release config is ready
+// const config = process.env.NODE_ENV === 'production' ? releaseConfig : developmentConfig;
+const config = developmentConfig;
 
 class Firebase {
     constructor() {
         app.initializeApp(config);
         this.auth = app.auth();
+        this.db = app.database();
     }
 
     doCreateUserWithEmailAndPassword = (email, password) =>
@@ -46,6 +49,8 @@ class Firebase {
 
     doPasswordUpdate = password =>
         this.auth.currentUser.updatePassword(password);
+
+    user = () => this.db.ref('user');
 }
 
 export default Firebase;
