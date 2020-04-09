@@ -1,0 +1,76 @@
+{
+    "users": [
+        {
+            "id": 0,
+            "username": "kibitzer",
+            "name": "Burak",
+            "surname": "Kara",
+            "mail": "burak@test.com",
+            "birthday": "20.10.2020",
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+            "meetings": ["1", "3"],
+            "favoriteForumPosts": ["0", "2", "3"],
+            "favoriteDoctors": ["0", "1", "2"],
+            "paymentMethods": [
+                {
+                    "no": "1010 **** **** 1122",
+                    "name": "Burak Dummy"
+                },
+                {
+                    "no": "1010 **** **** 5577",
+                    "name": "Lorem Ipsum"
+                }
+            ]
+        },
+        {
+            "id": 1,
+            "username": "sarp",
+            "name": "Sarp",
+            "surname": "Ipsum",
+            "mail": "sarp@test.com",
+            "birthday": "01.10.1122",
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+            "meetings": ["0", "2"],
+            "favoriteForumPosts": ["0", "1", "3"],
+            "favoriteDoctors": ["2", "3"],
+            "paymentMethods": [
+                {
+                    "no": "1010 **** **** 8899",
+                    "name": "sarp Dummy"
+                },
+                {
+                    "no": "1010 **** **** 5544",
+                    "name": "Lorem kibitzer"
+                }
+            ]
+        }
+    ],
+    "meetings": [
+        {
+            "id": 0,
+            "doctor": "0",
+            "user": "1",
+            "date": "10.10.2015"
+        },
+        {
+            "id": 1,
+            "doctor": "0",
+            "user": "0",
+            "date": "29.04.2018"
+        },
+        {
+            "id": 2,
+            "doctor": "1",
+            "user": "1",
+            "date": "24.07.2020"
+        },
+        {
+            "id": 3,
+            "doctor": "1",
+            "user": "0",
+            "date": "10.11.2017"
+        }
+    ],
+    "doctors": [],
+    "forumPosts": []
+}
