@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { withFirebase } from '../../constants/firebase';
-import data from '../../assets/demo_data/profile/data';
 import PersonalInfo from './PersonalInfo';
 import ProfileDetails from './ProfileDetails';
 import Settings from './Settings';
@@ -12,6 +11,7 @@ const Profile = props => {
     const [message, setMessage] = useState('');
     const [severity, setSeverity] = useState('');
     const [user, setUser] = useState(null);
+    const [profilePic, setProfilePic] = useState('');
 
     const handleSettingsOpen = () => {
         setSettingsOpen(true);
@@ -23,6 +23,7 @@ const Profile = props => {
 
     const handleSettingsSave = () => {
         setSettingsOpen(false);
+        // TODO implement when backend is ready
         if (true) {
             setMessage('Yeni ayarlar kaydedildi.');
             setSeverity('success');
@@ -41,6 +42,12 @@ const Profile = props => {
         props.firebase.getUser().on('value', snapshot => {
             setUser(snapshot.val());
         });
+        props.firebase
+            .getUserProfilePic()
+            .getDownloadURL()
+            .then(url => {
+                setProfilePic(url);
+            });
     }, []);
 
     return user ? (
@@ -49,6 +56,7 @@ const Profile = props => {
                 <div className="row h-auto">
                     <PersonalInfo
                         user={user}
+                        profilePic={profilePic}
                         openSettings={handleSettingsOpen}
                     />
                     <ProfileDetails user={user} />
