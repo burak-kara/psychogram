@@ -36,7 +36,6 @@
         "root": true
     },
     "lint-staged": {
-        "*.js": "eslint --cache --fix",
         "*.{js,css,scss,md}": "prettier --write"
     },
     "husky": {
