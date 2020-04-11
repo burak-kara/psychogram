@@ -7,7 +7,7 @@ import Login from '../pages/login/Login';
 import SignUp from '../pages/signup/SignUp';
 import Contact from '../pages/home/Contact';
 import Forum from '../pages/forum/Forum';
-import AboutUs from '../pages/aboutUs/AboutUs';
+import AboutUs from '../pages/aboutus/AboutUs';
 import * as ROUTES from '../constants/routes';
 
 export default class App extends Component {
