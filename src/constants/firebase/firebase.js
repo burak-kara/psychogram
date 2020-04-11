@@ -2,6 +2,9 @@
 // must be listed before other Firebase SDKs
 import app from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/database';
+import 'firebase/storage';
+import { storageConstants } from '../storageConstants';
 
 const developmentConfig = {
     apiKey: 'AIzaSyBCbSOeYmUnT8aMuc-9kaFAK00E-123uQQ',
@@ -25,13 +28,19 @@ const releaseConfig = {
     measurementId: 'G-7DR9KH8796',
 };
 
-const config =
-    process.env.NODE_ENV === 'production' ? releaseConfig : developmentConfig;
+// TODO change when release config is ready
+// const config = process.env.NODE_ENV === 'production' ? releaseConfig : developmentConfig;
+const config = developmentConfig;
+
+// TODO use when getting current user infos from db
+const currentUserID = localStorage.getItem(storageConstants.USER_ID);
 
 class Firebase {
     constructor() {
         app.initializeApp(config);
         this.auth = app.auth();
+        this.db = app.database();
+        this.storage = app.storage();
     }
 
     doCreateUserWithEmailAndPassword = (email, password) =>
@@ -46,6 +55,13 @@ class Firebase {
 
     doPasswordUpdate = password =>
         this.auth.currentUser.updatePassword(password);
+
+    getUser = () => this.db.ref('user');
+
+    getUserProfilePic = () =>
+        this.storage.ref().child('profile_pics').child('profile_pic.jpg');
+
+    // Add new backend methods here
 }
 
 export default Firebase;
