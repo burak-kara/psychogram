@@ -5,7 +5,7 @@ const AboutUs = props => {
     return (
         <div className="AboutUspage">
             <img id="picLoc" src={psycho} alt="main picture" />
-            <h2 id="Aboutus">ABOUT US</h2>
+            <h2 className="leftLoc">ABOUT US</h2>
             <p>
                 We provide online professional and affordable psychiatric help
                 for people who don't have the chance to get face to face help.{' '}
