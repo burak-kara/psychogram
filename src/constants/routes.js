@@ -7,3 +7,4 @@ export const PROFILE = '/profile';
 export const ADMIN = '/admin';
 export const CONTACT = '/contact';
 export const FORUM = '/forum';
+export const ABOUT_US = '/aboutus';
