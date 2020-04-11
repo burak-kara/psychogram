@@ -1,4 +1,4 @@
-import React from "react";
+import React from "./node_modules/react";
 import psycho from '../../assets/logo/psycho.jpg';
 
 const AboutUs = props => {
