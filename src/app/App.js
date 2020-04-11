@@ -7,6 +7,7 @@ import Login from '../pages/login/Login';
 import SignUp from '../pages/signup/SignUp';
 import Contact from '../pages/home/Contact';
 import Forum from '../pages/forum/Forum';
+import AboutUs from '../pages/aboutus/AboutUs';
 import * as ROUTES from '../constants/routes';
 
 export default class App extends Component {
@@ -35,6 +36,9 @@ export default class App extends Component {
                         <li>
                             <NavLink to={ROUTES.FORUM}>Forum</NavLink>
                         </li>
+                        <li>
+                            <NavLink to={ROUTES.ABOUT_US}>About Us</NavLink>
+                        </li>
                     </ul>
                     <div className="content">
                         <Route exact path={ROUTES.LANDING} component={Home} />
@@ -43,6 +47,7 @@ export default class App extends Component {
                         <Route path={ROUTES.PROFILE} component={Profile} />
                         <Route path={ROUTES.CONTACT} component={Contact} />
                         <Route path={ROUTES.FORUM} component={Forum} />
+                        <Route path={ROUTES.ABOUT_US} component={AboutUs} />
                     </div>
                 </div>
             </HashRouter>
