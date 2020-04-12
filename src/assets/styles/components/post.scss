@@ -1,4 +1,10 @@
 .post-container {
+    .post-title {
+        border-style: ridge;
+        position: relative;
+        overflow: auto;
+        margin: 1em 20% -20px;
+    }
     .post-body {
         margin: 1em 20%;
         min-height: 100px;
