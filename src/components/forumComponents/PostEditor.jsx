@@ -6,19 +6,26 @@ class PostEditor extends Component {
         super(props);
         this.state = {
             newPostBody: '',
+            newTitle: ''
         };
     }
 
-    handleInputChange(ev) {
+    handleTextChange(ev) {
         this.setState({
-            newPostBody: ev.target.value,
+            newPostBody: ev.target.value
+        });
+    }
+    handleTitleChange(ev) {
+        this.setState({
+            newTitle: ev.target.value
         });
     }
 
     createPost() {
-        this.props.addPost(this.state.newPostBody);
+        this.props.addPost(this.state.newPostBody, this.state.newTitle);
         this.setState({
             newPostBody: '',
+            newTitle: ''
         });
     }
 
@@ -26,10 +33,14 @@ class PostEditor extends Component {
         return (
             <div className="post-editor">
                 <div className="panel-body">
+                    <input type="text"  className="form-control" placeholder="Enter the title..."  value={this.state.newTitle}
+                           onChange={this.handleTitleChange.bind(this)}/>
                     <TextareaAutosize
                         className="form-control"
+                        placeholder="Enter the content..."
+                        rows="7"cols="25"
                         value={this.state.newPostBody}
-                        onChange={this.handleInputChange.bind(this)}
+                        onChange={this.handleTextChange.bind(this)}
                     />
                     <button
                         className="btn-success"

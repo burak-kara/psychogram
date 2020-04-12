@@ -11,26 +11,30 @@ class Forum extends Component {
         };
     }
 
-    addPost(newPostBody) {
+    addPost(newPostBody, newPostTitle) {
         const newState = Object.assign({}, this.state);
-        newState.posts.push(newPostBody);
+        let post = { body: newPostBody, title: newPostTitle };
+        newState.posts.push(post);
         this.setState(newState);
     }
 
     render() {
         return (
             <div>
-                {this.state.posts.map((postBody, idx) => {
+                {this.state.posts.map((post, idx) => {
                     return (
                         <div className="parent">
-                            <Post key={idx} postBody={postBody} />
+                            <Post
+                                key={idx}
+                                postBody={post.body}
+                                postTitle={post.title}
+                            />
                             <div className="child">
                                 <Reply />
                             </div>
                         </div>
                     );
                 })}
-
                 <PostEditor addPost={this.addPost.bind(this)} />
             </div>
         );
