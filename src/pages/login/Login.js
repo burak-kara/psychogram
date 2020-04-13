@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
-export default class Login extends React.Component {
+export default class Login extends Component {
     state = {
         redirect: false,
     };
@@ -15,8 +15,63 @@ export default class Login extends React.Component {
 
     renderRedirect = () => {
         if (this.state.redirect) {
-            return <Redirect to="/Home" />;
+            return <Redirect to="/" />;
         }
+    };
+
+    componentDidMount() {
+        this.googleSDK();
+        console.log('sfsfd');
+    }
+
+    prepareLoginButton = () => {
+        console.log(this.refs.googleLoginBtn);
+
+        this.auth2.attachClickHandler(
+            this.refs.googleLoginBtn,
+            {},
+            googleUser => {
+                let profile = googleUser.getBasicProfile();
+                console.log(
+                    'Token || ' + googleUser.getAuthResponse().id_token
+                );
+                console.log('ID: ' + profile.getId());
+                console.log('Name: ' + profile.getName());
+                console.log('Image URL: ' + profile.getImageUrl());
+                console.log('Email: ' + profile.getEmail());
+                //YOUR CODE HERE
+            },
+            error => {
+                alert(JSON.stringify(error, undefined, 2));
+            }
+        );
+    };
+
+    googleSDK = () => {
+        window['googleSDKLoaded'] = () => {
+            window['gapi'].load('auth2', () => {
+                this.auth2 = window['gapi'].auth2.init({
+                    client_id:
+                        '537770731016-gf1gbn5aqficurhnnaijpivgcg25o140.apps.googleusercontent.com',
+                    cookiepolicy: 'single_host_origin',
+                    scope: 'email',
+                });
+                this.prepareLoginButton();
+            });
+        };
+
+        (function (d, s, id) {
+            var js,
+                fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src =
+                'https://apis.google.com/js/platform.js?onload=googleSDKLoaded';
+            fjs.parentNode.insertBefore(js, fjs);
+        })(document, 'script', 'google-jssdk');
     };
 
     render() {
@@ -46,13 +101,6 @@ export default class Login extends React.Component {
                         </div>
                         <br></br>
                         <div className="form-group">
-                            <div className="login-with-google">
-                                <a href="https://www.ozyegin.edu.tr">
-                                    Login with Google
-                                </a>
-                            </div>
-                        </div>
-                        <div className="form-group">
                             {this.renderRedirect()}
                             <button
                                 onClick={this.setRedirect}
@@ -73,6 +121,14 @@ export default class Login extends React.Component {
                             </Link>
                         </p>
                     </form>
+                    <div className="formGoogle">
+                        <button
+                            className="loginBtn loginBtn--google"
+                            ref="googleLoginBtn"
+                        >
+                            Login with Google
+                        </button>
+                    </div>
                 </div>
             </div>
         );
