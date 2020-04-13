@@ -15,7 +15,7 @@ export default class SignUp extends React.Component {
 
     renderRedirect = () => {
         if (this.state.redirect) {
-            return <Redirect to="/Home" />;
+            return <Redirect to="/" />;
         }
     };
 
