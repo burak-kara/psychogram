@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component, useState} from 'react';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 class PostEditor extends Component {
@@ -15,6 +15,7 @@ class PostEditor extends Component {
             newPostBody: ev.target.value
         });
     }
+
     handleTitleChange(ev) {
         this.setState({
             newTitle: ev.target.value
@@ -33,12 +34,15 @@ class PostEditor extends Component {
         return (
             <div className="post-editor">
                 <div className="panel-body">
-                    <input type="text"  className="form-control" placeholder="Enter the title..."  value={this.state.newTitle}
+                    <input type="text" className="form-control"
+                           placeholder="Enter the title..."
+                           value={this.state.newTitle}
                            onChange={this.handleTitleChange.bind(this)}/>
                     <TextareaAutosize
                         className="form-control"
                         placeholder="Enter the content..."
-                        rows="7"cols="25"
+                        rows="7"
+                        cols="25"
                         value={this.state.newPostBody}
                         onChange={this.handleTextChange.bind(this)}
                     />
