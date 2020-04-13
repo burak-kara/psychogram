@@ -21,20 +21,18 @@ class Forum extends Component {
     render() {
         return (
             <div>
-                {this.state.posts.map((post, idx) => {
-                    return (
-                        <div className="parent">
-                            <Post
-                                key={idx}
-                                postBody={post.body}
-                                postTitle={post.title}
-                            />
-                            <div className="child">
-                                <Reply />
-                            </div>
+                {this.state.posts.map((post, idx) => (
+                    <div className="parent">
+                        <Post
+                            key={idx}
+                            postBody={post.body}
+                            postTitle={post.title}
+                        />
+                        <div className="child">
+                            <Reply />
                         </div>
-                    );
-                })}
+                    </div>
+                ))}
                 <PostEditor addPost={this.addPost.bind(this)} />
             </div>
         );
