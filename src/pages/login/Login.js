@@ -1,22 +1,45 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import { compose } from 'recompose';
+//import { SignUpLink } from '../signup/SignUp';
+import { withFirebase } from '../../constants/firebase/';
+import * as ROUTES from '../../constants/routes';
 
-export default class Login extends Component {
-    state = {
-        redirect: false,
+//const SignInPage = () => (
+const SignIn = () => (
+    <div>
+        <SignInForm />
+    </div>
+);
+
+const INITIAL_STATE = {
+    email: '',
+    password: '',
+    error: null,
+};
+
+class SignInFormBase extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { ...INITIAL_STATE };
+    }
+
+    onSubmit = event => {
+        const { email, password } = this.state;
+        this.props.firebase
+            .doSignInWithEmailAndPassword(email, password)
+
+            .then(() => {
+                this.setState({ ...INITIAL_STATE });
+                this.props.history.push(ROUTES.LANDING);
+            })
+            .catch(error => {
+                this.setState({ error });
+            });
+        event.preventDefault();
     };
-
-    setRedirect = () => {
-        this.setState({
-            redirect: true,
-        });
-        this.renderRedirect();
-    };
-
-    renderRedirect = () => {
-        if (this.state.redirect) {
-            return <Redirect to="/" />;
-        }
+    onChange = event => {
+        this.setState({ [event.target.name]: event.target.value });
     };
 
     componentDidMount() {
@@ -40,6 +63,7 @@ export default class Login extends Component {
                 console.log('Image URL: ' + profile.getImageUrl());
                 console.log('Email: ' + profile.getEmail());
                 //YOUR CODE HERE
+                this.props.history.push(ROUTES.LANDING);
             },
             error => {
                 alert(JSON.stringify(error, undefined, 2));
@@ -75,41 +99,57 @@ export default class Login extends Component {
     };
 
     render() {
+        const { email, password, error } = this.state;
+        const isInvalid = password === '' || email === '';
+
         return (
             <div>
                 <div className="divLogin">
-                    <form className="formLogin">
+                    <form className="formLogin" onSubmit={this.onSubmit}>
                         <div className="mainTitle">
                             <h1>PSYCHOGRAM</h1>
                         </div>
-                        <h3>Sign In</h3>
+                        <h3>Sign in</h3>
+                        <br />
                         <div className="form-group">
-                            <label>Email address</label>
+                            <label id="labId">
+                                {' '}
+                                <strong>Email address</strong>
+                            </label>
+                            <br />
                             <input
-                                type="email"
-                                className="form-control"
-                                placeholder="Enter email"
+                                name="email"
+                                value={email}
+                                onChange={this.onChange}
+                                type="text"
+                                placeholder="Email Address"
                             />
                         </div>
                         <div className="form-group">
-                            <label>Password</label>
+                            <label id="labId">
+                                {' '}
+                                <strong>Password</strong>
+                            </label>
+                            <br />
                             <input
+                                name="password"
+                                value={password}
+                                onChange={this.onChange}
                                 type="password"
-                                className="form-control"
-                                placeholder="Enter password"
+                                placeholder="Password"
                             />
                         </div>
                         <br></br>
                         <div className="form-group">
-                            {this.renderRedirect()}
                             <button
-                                onClick={this.setRedirect}
+                                id="submitButton"
+                                disabled={isInvalid}
                                 type="submit"
-                                className="btn btn-primary btn-block"
                             >
                                 Submit
                             </button>
                         </div>
+
                         <p id="noacc text-left">
                             Don't have an acount?
                             <Link
@@ -120,7 +160,10 @@ export default class Login extends Component {
                                 Sign up
                             </Link>
                         </p>
+
+                        {error && <p>{error.message}</p>}
                     </form>
+
                     <div className="formGoogle">
                         <button
                             className="loginBtn loginBtn--google"
@@ -134,3 +177,8 @@ export default class Login extends Component {
         );
     }
 }
+
+const SignInForm = compose(withRouter, withFirebase)(SignInFormBase);
+
+export default SignIn; //SignInPage
+export { SignInForm };
