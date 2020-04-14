@@ -21,6 +21,22 @@
     //transition: all 0.3s;
 }
 
+.formLogin {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: left;
+    border-color: #867bff;
+    line-height: 1;
+    width: 450px;
+    margin: auto;
+    background: #ffffff;
+    box-shadow: 0 14px 80px rgba(34, 35, 58, 0.2);
+    padding: 40px 55px 45px 55px;
+    //border-radius: 15px;
+    //transition: all 0.3s;
+}
+
 .formGoogle {
     display: flex;
     justify-content: center;
@@ -45,6 +61,19 @@
 #noaccLink {
     display: inline-block;
     padding: 0px 15px 0px 25px;
+}
+
+#submitButton {
+    background-color: #1c8ef9; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
 }
 
 .loginBtn {
