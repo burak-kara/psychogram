@@ -9,6 +9,7 @@ import Contact from '../pages/home/Contact';
 import Forum from '../pages/forum/Forum';
 import AboutUs from '../pages/aboutus/AboutUs';
 import TestClass from '../pages/firebaseDemo/Test';
+import Faq from '../pages/faq/Faq';
 import * as ROUTES from '../constants/routes';
 
 export default class App extends Component {
@@ -40,6 +41,11 @@ export default class App extends Component {
                         <li>
                             <NavLink to={ROUTES.ABOUT_US}>About Us</NavLink>
                         </li>
+                        <li>
+                            <NavLink to={ROUTES.FAQ}>
+                                Frequently Asked Questions
+                            </NavLink>
+                        </li>
                         {/* TODO Delete test*/}
                         <li>
                             <NavLink to={'/test'}>Test</NavLink>
@@ -53,6 +59,7 @@ export default class App extends Component {
                         <Route path={ROUTES.CONTACT} component={Contact} />
                         <Route path={ROUTES.FORUM} component={Forum} />
                         <Route path={ROUTES.ABOUT_US} component={AboutUs} />
+                        <Route path={ROUTES.FAQ} component={Faq} />
                         {/* TODO delete test*/}
                         <Route path={'/test'} component={TestClass} />
                     </div>
