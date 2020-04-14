@@ -8,3 +8,4 @@ export const ADMIN = '/admin';
 export const CONTACT = '/contact';
 export const FORUM = '/forum';
 export const ABOUT_US = '/aboutus';
+export const FAQ = '/faq';
