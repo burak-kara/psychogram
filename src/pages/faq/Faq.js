@@ -9,6 +9,7 @@ import {
 } from 'react-accessible-accordion';
 
 const FAQ = props => {
+    // TODO connect to backend
     return (
         <Accordion>
             <AccordionItem>
