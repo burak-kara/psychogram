@@ -1,16 +1,30 @@
-import React from 'react';
-import psycho from '../../assets/logo/psycho.jpg';
+import React, { useEffect, useState } from 'react';
+import { withFirebase } from '../../constants/firebase';
 
 const AboutUs = props => {
+    const [aboutUs, setAboutUs] = useState('');
+    const [psycho, setPsycho] = useState('');
+
+    useEffect(() => {
+        props.firebase.getAboutUsInfo().on('value', snapshot => {
+            setAboutUs(snapshot.val());
+        });
+
+        props.firebase
+            .getPsychoPic()
+            .getDownloadURL()
+            .then(url => {
+                setPsycho(url);
+            });
+    }, []);
+
     return (
-        <div className="AboutUspage">
-            <img id="picLoc" src={psycho} alt="main picture" />
-            <h2 className="leftLoc">ABOUT US</h2>
-            <p>
-                We provide online professional and affordable psychiatric help
-                for people who don't have the chance to get face to face help.{' '}
-            </p>
+        <div className="about-us-page">
+            <h2 className="about-us mb-4">ABOUT US</h2>
+            <img className="pic" src={psycho} alt="main picture" />
+            <p className="about-us">{aboutUs}</p>
         </div>
     );
 };
-export default AboutUs;
+
+export default withFirebase(AboutUs);

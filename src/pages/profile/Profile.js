@@ -42,6 +42,7 @@ const Profile = props => {
         props.firebase.getUser().on('value', snapshot => {
             setUser(snapshot.val());
         });
+
         props.firebase
             .getUserProfilePic()
             .getDownloadURL()
