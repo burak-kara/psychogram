@@ -21,8 +21,8 @@ const AboutUs = props => {
     return (
         <div className="about-us-page">
             <h2 className="about-us mb-4">ABOUT US</h2>
-            <img className="pic" src={psycho} alt="main picture" />
-            <p className="about-us">{aboutUs}</p>
+            <img className="pic mb-4" src={psycho} alt="main picture" />
+            <p className="about-us pb-5">{aboutUs}</p>
         </div>
     );
 };
