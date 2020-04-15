@@ -68,6 +68,8 @@ class Firebase {
     getPsychoPic = () =>
         this.storage.ref().child('app_pics').child('psycho.jpg');
 
+    getFaqs = () => this.db.ref('faqs');
+
     // Add new backend methods here
 }
 
