@@ -49,6 +49,11 @@ class Firebase {
     doSignInWithEmailAndPassword = (email, password) =>
         this.auth.signInWithEmailAndPassword(email, password);
 
+    doSendEmailVerification = () =>
+        this.auth.currentUser.sendEmailVerification({
+            url: 'http://localhost:3000', //in Production you must changed this domain name such tthat https://mydomain.com
+        });
+
     doSignOut = () => this.auth.signOut();
 
     doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
