@@ -1,12 +1,14 @@
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import ForumModal from "./ForumModal";
 
 class PostEditor extends Component {
     constructor(props) {
         super(props);
         this.state = {
             newPostBody: '',
-            newTitle: ''
+            newTitle: '',
+            modal: false
         };
     }
 
@@ -26,7 +28,14 @@ class PostEditor extends Component {
         this.props.addPost(this.state.newPostBody, this.state.newTitle);
         this.setState({
             newPostBody: '',
-            newTitle: ''
+            newTitle: '',
+            modal: true
+        });
+    }
+
+    modalClose() {
+        this.setState({
+            modal: false
         });
     }
 
@@ -53,6 +62,9 @@ class PostEditor extends Component {
                     >
                         Post
                     </button>
+                    <ForumModal show={this.state.modal} handleClose={e => this.modalClose(e)}>
+                        <h3>Blog Successfully Created</h3>
+                    </ForumModal>
                 </div>
             </div>
         );

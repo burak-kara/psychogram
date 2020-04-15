@@ -1,0 +1,21 @@
+.nav-btn {
+    display: inline-block;
+
+    .post-btn,
+    .list-btn {
+        margin-top: 1em;
+        background-color: #204051;
+        color: #ffffff;
+        border-color: #204051;
+        margin-bottom: 10px;
+        display: inline-block;
+    }
+
+    .post-btn {
+        margin-left: 100px;
+    }
+
+    .list-btn {
+        margin-left: 540px;
+    }
+}
