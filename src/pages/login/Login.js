@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
-//import { SignUpLink } from '../signup/SignUp';
 import { withFirebase } from '../../constants/firebase/';
 import * as ROUTES from '../../constants/routes';
 
-//const SignInPage = () => (
 const SignIn = () => (
     <div>
         <SignInForm />
@@ -28,7 +26,6 @@ class SignInFormBase extends Component {
         const { email, password } = this.state;
         this.props.firebase
             .doSignInWithEmailAndPassword(email, password)
-
             .then(() => {
                 this.setState({ ...INITIAL_STATE });
                 this.props.history.push(ROUTES.LANDING);
@@ -44,12 +41,9 @@ class SignInFormBase extends Component {
 
     componentDidMount() {
         this.googleSDK();
-        console.log('sfsfd');
     }
 
     prepareLoginButton = () => {
-        console.log(this.refs.googleLoginBtn);
-
         this.auth2.attachClickHandler(
             this.refs.googleLoginBtn,
             {},
@@ -58,11 +52,6 @@ class SignInFormBase extends Component {
                 console.log(
                     'Token || ' + googleUser.getAuthResponse().id_token
                 );
-                console.log('ID: ' + profile.getId());
-                console.log('Name: ' + profile.getName());
-                console.log('Image URL: ' + profile.getImageUrl());
-                console.log('Email: ' + profile.getEmail());
-                //YOUR CODE HERE
                 this.props.history.push(ROUTES.LANDING);
             },
             error => {
