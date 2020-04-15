@@ -61,6 +61,13 @@ class Firebase {
     getUserProfilePic = () =>
         this.storage.ref().child('profile_pics').child('profile_pic.jpg');
 
+    getAboutUsInfo = () => this.db.ref('aboutUs');
+
+    getLogo = () => this.storage.ref().child('app_pics').child('logo.jpg');
+
+    getPsychoPic = () =>
+        this.storage.ref().child('app_pics').child('psycho.jpg');
+
     // Add new backend methods here
 }
 
