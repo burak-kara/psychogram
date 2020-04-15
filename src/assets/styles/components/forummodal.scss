@@ -1,0 +1,18 @@
+.modal {
+    background: rgba(0, 0, 0, 0.6);
+
+    .modal-container {
+        position: absolute;
+        background: #ffffff;
+        left: 35%;
+        top: 30%;
+        padding: 20px;
+    }
+
+    .modal-btn {
+        background-color: #204051;
+        color: #ffffff;
+        border-color: #204051;
+        margin: 1em 45%;
+    }
+}
