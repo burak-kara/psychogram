@@ -4,7 +4,6 @@ import * as ROUTES from '../../constants/routes';
 import { withFirebase } from '../../constants/firebase';
 import { compose } from 'recompose';
 
-//const SignUpPage = () => (
 const SignUp = () => (
     <div>
         <SignUpForm />
@@ -57,14 +56,6 @@ class SignUpFormBase extends Component {
             error,
         } = this.state;
 
-        /*
-              const isInvalid =
-                  passwordOne !== passwordTwo ||
-                  passwordOne === '' ||
-                  email === '' ||
-                  age < 18 ||
-                  username === '';
-      */
         const isInvalid = age < 18 || username === '';
 
         return (
