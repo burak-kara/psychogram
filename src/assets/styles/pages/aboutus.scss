@@ -1,5 +1,6 @@
 .about-us-page {
-    margin: 20px;
+    padding: 20px;
+    background-color: $background-color-1;
 
     .pic {
         border-radius: 50% !important;
@@ -13,5 +14,6 @@
 
     .about-us {
         text-align: center;
+        margin: 0 100px;
     }
 }
