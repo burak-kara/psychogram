@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Post from '../../components/forumComponents/Post';
 import PostEditor from '../../components/forumComponents/PostEditor';
 import Reply from '../../components/forumComponents/Reply';
-import Route from 'react-router-dom/es/Route';
+import { Route } from 'react-router-dom';
 import ForumNavigation from '../../components/forumComponents/ForumNavigation';
 
 class Forum extends Component {
@@ -11,6 +11,7 @@ class Forum extends Component {
         this.state = {
             posts: [],
         };
+        this.addPost = this.addPost.bind(this);
     }
 
     addPost(newPostBody, newPostTitle) {
@@ -39,7 +40,7 @@ class Forum extends Component {
                     ))}
                 </Route>
                 <Route exact path="/forum/create">
-                    <PostEditor addPost={this.addPost.bind(this)} />
+                    <PostEditor addPost={this.addPost} />
                 </Route>
             </div>
         );
