@@ -30,6 +30,9 @@ class SignUpFormBase extends Component {
         const { username, email, passwordOne } = this.state;
         this.props.firebase
             .doCreateUserWithEmailAndPassword(email, passwordOne)
+            .then(() => {
+                return this.props.firebase.doSendEmailVerification();
+            })
             .then(authUser => {
                 this.setState({ ...INITIAL_STATE });
                 this.props.history.push(ROUTES.LANDING);
@@ -129,7 +132,7 @@ class SignUpFormBase extends Component {
                     <div className="form-group">
                         <label id="labId">
                             {' '}
-                            <strong>Age must be over 17</strong>
+                            <strong>Age</strong>
                         </label>
                         <br />
                         <input
@@ -137,7 +140,7 @@ class SignUpFormBase extends Component {
                             value={age}
                             onChange={this.onChange}
                             type="number"
-                            placeholder="Enter Age"
+                            placeholder="Only +18"
                         />
                     </div>
                     <div className="form-group">
