@@ -10,6 +10,9 @@ class PostEditor extends Component {
             newTitle: '',
             modal: false
         };
+        this.handleTextChange = this.handleTextChange.bind(this)
+        this.handleTitleChange = this.handleTitleChange.bind(this)
+        this.createPost = this.createPost.bind(this)
     }
 
     handleTextChange(ev) {
@@ -46,18 +49,18 @@ class PostEditor extends Component {
                     <input type="text" className="form-control"
                            placeholder="Enter the title..."
                            value={this.state.newTitle}
-                           onChange={this.handleTitleChange.bind(this)}/>
+                           onChange={this.handleTitleChange}/>
                     <TextareaAutosize
                         className="form-control"
                         placeholder="Enter the content..."
                         rows="7"
                         cols="25"
                         value={this.state.newPostBody}
-                        onChange={this.handleTextChange.bind(this)}
+                        onChange={this.handleTextChange}
                     />
                     <button
                         className="btn-success"
-                        onClick={this.createPost.bind(this)}
+                        onClick={this.createPost}
                         disabled={!this.state.newPostBody}
                     >
                         Post
