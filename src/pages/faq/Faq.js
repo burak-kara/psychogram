@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React, { useEffect, useState } from 'react';
 import {
     Accordion,
     AccordionItem,
@@ -7,32 +6,33 @@ import {
     AccordionItemButton,
     AccordionItemPanel,
 } from 'react-accessible-accordion';
+import { withFirebase } from '../../constants/firebase';
 
 const FAQ = props => {
-    // TODO connect to backend
-    return (
-        <Accordion>
-            <AccordionItem>
-                <AccordionItemHeading>
-                    <AccordionItemButton>
-                        Can I see my chat history?
-                    </AccordionItemButton>
-                </AccordionItemHeading>
-                <AccordionItemPanel>
-                    <p>You can see it in your profile page.</p>
-                </AccordionItemPanel>
-            </AccordionItem>
-            <AccordionItem>
-                <AccordionItemHeading>
-                    <AccordionItemButton>
-                        How do I make payment?
-                    </AccordionItemButton>
-                </AccordionItemHeading>
-                <AccordionItemPanel>
-                    <p>Ben de bilmiyom.</p>
-                </AccordionItemPanel>
-            </AccordionItem>
-        </Accordion>
-    );
+    const [faqs, setFaqs] = useState([]);
+
+    useEffect(() => {
+        props.firebase.getFaqs().on('value', snapshot => {
+            setFaqs(snapshot.val());
+        });
+    }, []);
+
+    const renderAccordionItems = () =>
+        faqs
+            ? faqs.map(item => (
+                  <AccordionItem>
+                      <AccordionItemHeading>
+                          <AccordionItemButton>
+                              {item.question}
+                          </AccordionItemButton>
+                      </AccordionItemHeading>
+                      <AccordionItemPanel>
+                          <p>{item.answer}</p>
+                      </AccordionItemPanel>
+                  </AccordionItem>
+              ))
+            : null;
+
+    return <Accordion>{renderAccordionItems()}</Accordion>;
 };
-export default FAQ;
+export default withFirebase(FAQ);
