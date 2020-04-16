@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { BrowserRouter, NavLink, Route } from 'react-router-dom';
+import { BrowserRouter as Router, NavLink, Route } from 'react-router-dom';
 import Profile from '../pages/profile/Profile';
 import Home from '../pages/home/Home';
 import Login from '../pages/login/Login';
@@ -69,7 +69,7 @@ export default function CustomizedMenus() {
     };
 
     return (
-        <BrowserRouter>
+        <Router>
             <div className="navigator">
                 <ul className="header">
                     <li>
@@ -170,6 +170,6 @@ export default function CustomizedMenus() {
                     <Route path={ROUTES.FAQ} component={Faq} />
                 </div>
             </div>
-        </BrowserRouter>
+        </Router>
     );
 }

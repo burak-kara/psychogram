@@ -25,7 +25,7 @@ const PersonalInfo = props => {
             delay={{ show: 250, hide: 400 }}
             onClick={handleClick}
             overlay={
-                <Popover id="popoverBasic">
+                <Popover id="popover-basic">
                     <Popover.Title as="h3">Durumunu Değiştir</Popover.Title>
                     <Popover.Content>
                         <div className="container-fluid">
@@ -36,7 +36,6 @@ const PersonalInfo = props => {
             }
         >
             <Emoji
-                id="profileEmoji"
                 symbol={faceEmojis.get(emojiStatus)}
                 className="emoji-32"
             />
