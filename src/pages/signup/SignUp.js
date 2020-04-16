@@ -12,6 +12,7 @@ const SignUp = () => (
 
 const INITIAL_STATE = {
     username: '',
+    phone: '',
     email: '',
     passwordOne: '',
     passwordTwo: '',
@@ -49,6 +50,7 @@ class SignUpFormBase extends Component {
     render() {
         const {
             username,
+            phone,
             email,
             passwordOne,
             passwordTwo,
@@ -76,6 +78,20 @@ class SignUpFormBase extends Component {
                             onChange={this.onChange}
                             type="text"
                             placeholder="Full Name"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label id="labId">
+                            {' '}
+                            <strong>Phone Number</strong>
+                        </label>
+                        <br />
+                        <input
+                            name="phone"
+                            value={phone}
+                            onChange={this.onChange}
+                            type="text"
+                            placeholder="Enter phone number"
                         />
                     </div>
                     <div className="form-group">
@@ -143,7 +159,6 @@ class SignUpFormBase extends Component {
                             Sign Up
                         </button>
                     </div>
-
                     <p id="noacc text-left">
                         Already registered?
                         <Link
@@ -154,7 +169,6 @@ class SignUpFormBase extends Component {
                             Sign in
                         </Link>
                     </p>
-
                     {error && <p>{error.message}</p>}
                 </form>
             </div>
