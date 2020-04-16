@@ -1,0 +1,19 @@
+.about-us-page {
+    padding: 20px;
+    background-color: $background-color-1;
+
+    .pic {
+        border-radius: 50% !important;
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+    }
+
+    .about-us {
+        text-align: center;
+        margin: 0 100px;
+    }
+}

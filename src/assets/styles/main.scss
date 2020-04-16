@@ -1,8 +1,11 @@
 @import 'pages/profile';
-@import 'components/cardContainer';
 @import 'pages/home';
 @import 'pages/login';
 @import 'pages/forum';
+@import 'pages/aboutus';
+@import 'pages/faq';
+
+@import 'components/cardContainer';
 @import 'components/like.scss';
 @import 'components/time.scss';
 @import 'components/post.scss';
@@ -10,3 +13,5 @@
 @import 'components/postEditor.scss';
 @import 'components/reply.scss';
 @import 'components/navigator';
+@import 'components/forumnavigation';
+@import 'components/forummodal';

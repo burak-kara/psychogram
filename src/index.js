@@ -6,6 +6,12 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import './assets/styles/main.scss';
+import Firebase, { FirebaseContext } from './constants/firebase';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+    <FirebaseContext.Provider value={new Firebase()}>
+        <App />
+    </FirebaseContext.Provider>,
+    document.getElementById('root')
+);
 serviceWorker.register();

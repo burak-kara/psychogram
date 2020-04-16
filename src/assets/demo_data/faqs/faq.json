@@ -1,0 +1,27 @@
+[
+    {
+        "id": 0,
+        "question": "Can I delete my account?",
+        "answer": "Yes"
+    },
+    {
+        "id": 1,
+        "question": "Can I update my profile picture?",
+        "answer": "Yes"
+    },
+    {
+        "id": 2,
+        "question": "How can I meet my doctor?",
+        "answer": "Test use it"
+    },
+    {
+        "id": 3,
+        "question": "I want to withdraw my earnings?",
+        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    },
+    {
+        "id": 4,
+        "question": "Lorem ipsum is a pseudo-Latin text used in web design?",
+        "answer": "Yes"
+    }
+]
