@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import { withFirebase } from '../../constants/firebase/';
 import * as ROUTES from '../../constants/routes';
+import Alert from '../../components/Alert';
 
 const SignIn = () => (
     <div>
@@ -13,13 +14,17 @@ const SignIn = () => (
 const INITIAL_STATE = {
     email: '',
     password: '',
-    error: null,
 };
 
 class SignInFormBase extends Component {
     constructor(props) {
         super(props);
-        this.state = { ...INITIAL_STATE };
+        this.state = {
+            ...INITIAL_STATE,
+            isAlertOpen: false,
+            alertMessage: '',
+            severity: '',
+        };
     }
 
     onSubmit = event => {
@@ -31,12 +36,20 @@ class SignInFormBase extends Component {
                 this.props.history.push(ROUTES.LANDING);
             })
             .catch(error => {
-                this.setState({ error });
+                this.setState({
+                    alertMessage: error.message,
+                    severity: 'error',
+                });
             });
+        this.setState({ isAlertOpen: true });
         event.preventDefault();
     };
     onChange = event => {
         this.setState({ [event.target.name]: event.target.value });
+    };
+
+    handleAlertClose = () => {
+        this.setState({ isAlertOpen: false });
     };
 
     componentDidMount() {
@@ -55,7 +68,10 @@ class SignInFormBase extends Component {
                 this.props.history.push(ROUTES.LANDING);
             },
             error => {
-                alert(JSON.stringify(error, undefined, 2));
+                this.setState({
+                    alertMessage: error.message,
+                    severity: 'error',
+                });
             }
         );
     };
@@ -88,7 +104,13 @@ class SignInFormBase extends Component {
     };
 
     render() {
-        const { email, password, error } = this.state;
+        const {
+            email,
+            password,
+            isAlertOpen,
+            alertMessage,
+            severity,
+        } = this.state;
         const isInvalid = password === '' || email === '';
 
         return (
@@ -138,7 +160,6 @@ class SignInFormBase extends Component {
                                 Submit
                             </button>
                         </div>
-
                         <p id="noacc text-left">
                             Don't have an acount?
                             <Link
@@ -149,10 +170,7 @@ class SignInFormBase extends Component {
                                 Sign up
                             </Link>
                         </p>
-
-                        {error && <p>{error.message}</p>}
                     </form>
-
                     <div className="formGoogle">
                         <button
                             className="loginBtn loginBtn--google"
@@ -162,6 +180,13 @@ class SignInFormBase extends Component {
                         </button>
                     </div>
                 </div>
+                <Alert
+                    open={isAlertOpen}
+                    handleClose={this.handleAlertClose}
+                    message={alertMessage}
+                    severity={severity}
+                    duration={5000}
+                />
             </div>
         );
     }
