@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import profile_pic from '../../assets/demo_data/profile/profile_pic.jpg';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import Emoji from 'a11y-react-emoji';
 import { faceEmojis, profileInfoEmojis } from '../../utility/emojis';
@@ -67,7 +66,7 @@ const PersonalInfo = props => {
             <div className="row d-flex justify-content-center">
                 <div className="col-lg-12 col-md-12 col-sm-6 col-6 h-auto text-center">
                     <img
-                        src={profile_pic}
+                        src={props.profilePic}
                         className="img-fluid rounded-circle"
                         alt=""
                     />

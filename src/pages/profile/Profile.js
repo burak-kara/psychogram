@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
-import data from '../../assets/demo_data/profile/data';
+import React, { useEffect, useState } from 'react';
+import { withFirebase } from '../../constants/firebase';
 import PersonalInfo from './PersonalInfo';
 import ProfileDetails from './ProfileDetails';
 import Settings from './Settings';
 import Alert from '../../components/Alert';
 
-const Profile = () => {
+const Profile = props => {
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [alertOpen, setAlertsOpen] = useState(false);
     const [message, setMessage] = useState('');
     const [severity, setSeverity] = useState('');
+    const [user, setUser] = useState(null);
+    const [profilePic, setProfilePic] = useState('');
 
     const handleSettingsOpen = () => {
         setSettingsOpen(true);
@@ -21,6 +23,7 @@ const Profile = () => {
 
     const handleSettingsSave = () => {
         setSettingsOpen(false);
+        // TODO implement when backend is ready
         if (true) {
             setMessage('Yeni ayarlar kaydedildi.');
             setSeverity('success');
@@ -35,19 +38,29 @@ const Profile = () => {
         setAlertsOpen(false);
     };
 
-    return (
+    useEffect(() => {
+        props.firebase.getUser().on('value', snapshot => {
+            setUser(snapshot.val());
+        });
+
+        props.firebase
+            .getUserProfilePic()
+            .getDownloadURL()
+            .then(url => {
+                setProfilePic(url);
+            });
+    }, []);
+
+    return user ? (
         <div>
-            {/* TODO delete extra header and footer divs*/}
-            {/*<div className="bg-secondary text-center font-weight-bolder" style={{height: "64px"}}>*/}
-            {/*    HEADER*/}
-            {/*</div>*/}
             <div className="container-fluid h-auto patient-profile">
                 <div className="row h-auto">
                     <PersonalInfo
-                        user={data.user}
+                        user={user}
+                        profilePic={profilePic}
                         openSettings={handleSettingsOpen}
                     />
-                    <ProfileDetails user={data.user} />
+                    <ProfileDetails user={user} />
                 </div>
             </div>
             <Settings
@@ -68,7 +81,7 @@ const Profile = () => {
                 FOOTER
             </div>
         </div>
-    );
+    ) : null;
 };
 
-export default Profile;
+export default withFirebase(Profile);
