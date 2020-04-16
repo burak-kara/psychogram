@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { withFirebase } from '../../constants/firebase';
+import { withFirebase } from '../../_firebase';
 import PersonalInfo from './PersonalInfo';
 import ProfileDetails from './ProfileDetails';
 import Settings from './Settings';

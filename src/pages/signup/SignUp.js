@@ -1,7 +1,7 @@
 import { Link, withRouter } from 'react-router-dom';
 import React, { Component } from 'react';
-import * as ROUTES from '../../constants/routes';
-import { withFirebase } from '../../constants/firebase';
+import * as ROUTES from '../../constants/routeConstants';
+import { withFirebase } from '../../_firebase';
 import { compose } from 'recompose';
 import Alert from '../../components/Alert';
 

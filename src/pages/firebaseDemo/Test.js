@@ -1,5 +1,5 @@
 import React from 'react';
-import { withFirebase } from '../../constants/firebase';
+import { withFirebase } from '../../_firebase';
 
 const TestClass = props => {
     const handleClick = () => {

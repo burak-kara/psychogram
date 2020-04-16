@@ -9,7 +9,7 @@ import Contact from '../pages/home/Contact';
 import Forum from '../pages/forum/Forum';
 import AboutUs from '../pages/aboutus/AboutUs';
 import Faq from '../pages/faq/Faq';
-import * as ROUTES from '../constants/routes';
+import * as ROUTES from '../constants/routeConstants';
 
 export default class App extends Component {
     render() {
