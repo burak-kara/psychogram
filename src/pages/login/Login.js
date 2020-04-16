@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
-import { withFirebase } from '../../constants/firebase/';
-import * as ROUTES from '../../constants/routes';
+import { withFirebase } from '../../_firebase/';
+import * as ROUTES from '../../constants/routeConstants';
 import Alert from '../../components/Alert';
 
 const SignIn = () => (

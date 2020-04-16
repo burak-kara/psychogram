@@ -6,7 +6,7 @@ import {
     AccordionItemButton,
     AccordionItemPanel,
 } from 'react-accessible-accordion';
-import { withFirebase } from '../../constants/firebase';
+import { withFirebase } from '../../_firebase';
 
 const FAQ = props => {
     const [faqs, setFaqs] = useState([]);

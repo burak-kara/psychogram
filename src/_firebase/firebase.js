@@ -4,7 +4,7 @@ import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 import 'firebase/storage';
-import { storageConstants } from '../storageConstants';
+import { storageConstants } from '../constants/storageConstants';
 
 const developmentConfig = {
     apiKey: 'AIzaSyBCbSOeYmUnT8aMuc-9kaFAK00E-123uQQ',
