@@ -10,10 +10,7 @@ import Forum from '../pages/forum/Forum';
 import AboutUs from '../pages/aboutus/AboutUs';
 import Faq from '../pages/faq/Faq';
 import * as ROUTES from '../constants/routes';
-import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ForumIcon from '@material-ui/icons/Forum';
@@ -25,37 +22,8 @@ import HomeIcon from '@material-ui/icons/Home';
 import logo from '../assets/logo/logo.jpg';
 import AppsRoundedIcon from '@material-ui/icons/AppsRounded';
 import FormatShapesRoundedIcon from '@material-ui/icons/FormatShapesRounded';
-
-const StyledMenu = withStyles({
-    paper: {
-        border: '1px solid #d3d4d5',
-    },
-})(props => (
-    <Menu
-        elevation={0}
-        getContentAnchorEl={null}
-        anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-        }}
-        transformOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
-        }}
-        {...props}
-    />
-));
-
-const StyledMenuItem = withStyles(theme => ({
-    root: {
-        '&:focus': {
-            backgroundColor: theme.palette.primary.main,
-            '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-                color: theme.palette.common.white,
-            },
-        },
-    },
-}))(MenuItem);
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 export default function CustomizedMenus() {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -85,78 +53,78 @@ export default function CustomizedMenus() {
                         >
                             ...
                         </Button>
-                        <StyledMenu
+                        <Menu
                             id="customized-menu"
                             anchorEl={anchorEl}
                             keepMounted
                             open={Boolean(anchorEl)}
                             onClose={handleClose}
                         >
-                            <StyledMenuItem>
+                            <MenuItem>
                                 <ListItemIcon>
                                     <HomeIcon fontSize="small" />
                                 </ListItemIcon>
                                 <NavLink exact to={ROUTES.LANDING}>
                                     <ListItemText primary="Home" />
                                 </NavLink>
-                            </StyledMenuItem>
-                            <StyledMenuItem>
+                            </MenuItem>
+                            <MenuItem>
                                 <ListItemIcon>
                                     <DraftsIcon fontSize="small" />
                                 </ListItemIcon>
                                 <NavLink to={ROUTES.SIGN_IN}>
                                     <ListItemText primary="Sign In" />
                                 </NavLink>
-                            </StyledMenuItem>
-                            <StyledMenuItem>
+                            </MenuItem>
+                            <MenuItem>
                                 <ListItemIcon>
                                     <ForumIcon fontSize="small" />
                                 </ListItemIcon>
                                 <NavLink to={ROUTES.FORUM}>
                                     <ListItemText primary="Forum" />
                                 </NavLink>
-                            </StyledMenuItem>
-                            <StyledMenuItem>
+                            </MenuItem>
+                            <MenuItem>
                                 <ListItemIcon>
                                     <CardMembershipIcon fontSize="small" />
                                 </ListItemIcon>
                                 <NavLink to={ROUTES.SIGN_UP}>
                                     <ListItemText primary="SignUp" />
                                 </NavLink>
-                            </StyledMenuItem>
-                            <StyledMenuItem>
+                            </MenuItem>
+                            <MenuItem>
                                 <ListItemIcon>
                                     <ContactSupportIcon fontSize="small" />
                                 </ListItemIcon>
                                 <NavLink to={ROUTES.CONTACT}>
                                     <ListItemText primary="Contact" />
                                 </NavLink>
-                            </StyledMenuItem>
-                            <StyledMenuItem>
+                            </MenuItem>
+                            <MenuItem>
                                 <ListItemIcon>
                                     <AccountCircleIcon fontSize="small" />
                                 </ListItemIcon>
                                 <NavLink to={ROUTES.PROFILE}>
                                     <ListItemText primary="Profile" />
                                 </NavLink>
-                            </StyledMenuItem>
-                            <StyledMenuItem>
+                            </MenuItem>
+                            <MenuItem>
                                 <ListItemIcon>
                                     <FormatShapesRoundedIcon fontSize="small" />
                                 </ListItemIcon>
                                 <NavLink to={ROUTES.ABOUT_US}>
                                     <ListItemText primary="About Us" />
                                 </NavLink>
-                            </StyledMenuItem>
-                            <StyledMenuItem>
+                            </MenuItem>
+                            <MenuItem>
                                 <ListItemIcon>
                                     <AppsRoundedIcon fontSize="small" />
                                 </ListItemIcon>
                                 <NavLink to={ROUTES.FAQ}>
                                     <ListItemText primary=" Frequently Asked Questions" />
                                 </NavLink>
-                            </StyledMenuItem>
-                        </StyledMenu>
+                            </MenuItem>
+                        </Menu>
                     </li>
                 </ul>
                 <div className="content">
