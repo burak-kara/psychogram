@@ -6,6 +6,9 @@ import { Tooltip, Zoom } from '@material-ui/core';
 
 const PersonalInfo = props => {
     const [anchorEl, setAnchorEl] = useState(null);
+    const [emojiStatus, setEmojiStatus] = useState(null);
+
+
 
     const handleClick = event => {
         setAnchorEl(event.currentTarget);
@@ -23,9 +26,8 @@ const PersonalInfo = props => {
             trigger="click"
             delay={{ show: 250, hide: 400 }}
             onClick={handleClick}
-          //  id="hoverHolder" onClick={this("hide")} hide olmuyor bu??
             overlay={
-                <Popover id="popoverBasic"  >
+                <Popover id="popoverBasic">
                     <Popover.Title as="h3">Durumunu Değiştir</Popover.Title>
                     <Popover.Content>
                         <div className="container-fluid">
@@ -35,7 +37,8 @@ const PersonalInfo = props => {
                 </Popover>
             }
         >
-            <Emoji id="profileEmoji"
+            <Emoji
+                id="profileEmoji"
                 symbol={faceEmojis.get('Grinning Face')}
                 className="emoji-32"
             />
@@ -50,7 +53,10 @@ const PersonalInfo = props => {
                     <div className="col-3">
                         <Emoji
                             symbol={value}
-                            onClick={(e)=>{ document.all.profileEmoji.innerHTML = value.toLocaleString()}    }//) }}
+                            onClick={e => {
+                                document.all.profileEmoji.innerHTML = value.toLocaleString();
+                                setEmojiStatus(value);
+                            }}
                             style={{ fontSize: '32px', cursor: 'pointer' }}
                         />
                     </div>

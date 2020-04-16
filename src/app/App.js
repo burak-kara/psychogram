@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-//import { BrowserRouter as Router, NavLink, Route } from 'react-router-dom';
+import { BrowserRouter, NavLink, Route } from 'react-router-dom';
 import Profile from '../pages/profile/Profile';
 import Home from '../pages/home/Home';
 import Login from '../pages/login/Login';
@@ -10,7 +10,7 @@ import Forum from '../pages/forum/Forum';
 import AboutUs from '../pages/aboutus/AboutUs';
 import Faq from '../pages/faq/Faq';
 import * as ROUTES from '../constants/routes';
-import {withStyles} from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -25,13 +25,12 @@ import HomeIcon from '@material-ui/icons/Home';
 import logo from '../assets/logo/logo.jpg';
 import AppsRoundedIcon from '@material-ui/icons/AppsRounded';
 import FormatShapesRoundedIcon from '@material-ui/icons/FormatShapesRounded';
-import {HashRouter, NavLink, Route} from 'react-router-dom';
 
 const StyledMenu = withStyles({
     paper: {
         border: '1px solid #d3d4d5',
     },
-})((props) => (
+})(props => (
     <Menu
         elevation={0}
         getContentAnchorEl={null}
@@ -47,7 +46,7 @@ const StyledMenu = withStyles({
     />
 ));
 
-const StyledMenuItem = withStyles((theme) => ({
+const StyledMenuItem = withStyles(theme => ({
     root: {
         '&:focus': {
             backgroundColor: theme.palette.primary.main,
@@ -61,7 +60,7 @@ const StyledMenuItem = withStyles((theme) => ({
 export default function CustomizedMenus() {
     const [anchorEl, setAnchorEl] = React.useState(null);
 
-    const handleClick = (event) => {
+    const handleClick = event => {
         setAnchorEl(event.currentTarget);
     };
 
@@ -69,13 +68,12 @@ export default function CustomizedMenus() {
         setAnchorEl(null);
     };
 
-
     return (
-        <HashRouter>
+        <BrowserRouter>
             <div className="navigator">
                 <ul className="header">
                     <li>
-                        <img src={logo} alt="Logo" width={35} height={35}/>
+                        <img src={logo} alt="Logo" width={35} height={35} />
                     </li>
                     <li>
                         <Button
@@ -96,121 +94,82 @@ export default function CustomizedMenus() {
                         >
                             <StyledMenuItem>
                                 <ListItemIcon>
-                                    <HomeIcon fontSize="small"/>
+                                    <HomeIcon fontSize="small" />
                                 </ListItemIcon>
                                 <NavLink exact to={ROUTES.LANDING}>
-                                    <ListItemText primary="Home"/>
+                                    <ListItemText primary="Home" />
                                 </NavLink>
                             </StyledMenuItem>
                             <StyledMenuItem>
                                 <ListItemIcon>
-                                    <DraftsIcon fontSize="small"/>
+                                    <DraftsIcon fontSize="small" />
                                 </ListItemIcon>
-                                <NavLink to={ROUTES.SIGN_IN}><ListItemText primary="Sign In"/></NavLink>
+                                <NavLink to={ROUTES.SIGN_IN}>
+                                    <ListItemText primary="Sign In" />
+                                </NavLink>
                             </StyledMenuItem>
                             <StyledMenuItem>
                                 <ListItemIcon>
-                                    <ForumIcon fontSize="small"/>
-
+                                    <ForumIcon fontSize="small" />
                                 </ListItemIcon>
-                                <NavLink to={ROUTES.FORUM}><ListItemText primary="Forum"/></NavLink>
+                                <NavLink to={ROUTES.FORUM}>
+                                    <ListItemText primary="Forum" />
+                                </NavLink>
                             </StyledMenuItem>
                             <StyledMenuItem>
                                 <ListItemIcon>
-                                    <CardMembershipIcon fontSize="small"/>
+                                    <CardMembershipIcon fontSize="small" />
                                 </ListItemIcon>
-                                <NavLink to={ROUTES.SIGN_UP}><ListItemText primary="SignUp"/></NavLink>
+                                <NavLink to={ROUTES.SIGN_UP}>
+                                    <ListItemText primary="SignUp" />
+                                </NavLink>
                             </StyledMenuItem>
                             <StyledMenuItem>
                                 <ListItemIcon>
-                                    <ContactSupportIcon fontSize="small"/>
+                                    <ContactSupportIcon fontSize="small" />
                                 </ListItemIcon>
-                                <NavLink to={ROUTES.CONTACT}><ListItemText primary="Contact"/></NavLink>
+                                <NavLink to={ROUTES.CONTACT}>
+                                    <ListItemText primary="Contact" />
+                                </NavLink>
                             </StyledMenuItem>
                             <StyledMenuItem>
                                 <ListItemIcon>
-                                    <AccountCircleIcon fontSize="small"/>
+                                    <AccountCircleIcon fontSize="small" />
                                 </ListItemIcon>
-                                <NavLink to={ROUTES.PROFILE}><ListItemText primary="Profile"/></NavLink>
+                                <NavLink to={ROUTES.PROFILE}>
+                                    <ListItemText primary="Profile" />
+                                </NavLink>
                             </StyledMenuItem>
                             <StyledMenuItem>
                                 <ListItemIcon>
-                                    <FormatShapesRoundedIcon fontSize="small"/>
+                                    <FormatShapesRoundedIcon fontSize="small" />
                                 </ListItemIcon>
-                                <NavLink to={ROUTES.ABOUT_US}><ListItemText primary="About Us"/></NavLink>
+                                <NavLink to={ROUTES.ABOUT_US}>
+                                    <ListItemText primary="About Us" />
+                                </NavLink>
                             </StyledMenuItem>
                             <StyledMenuItem>
                                 <ListItemIcon>
-                                    <AppsRoundedIcon fontSize="small"/>
+                                    <AppsRoundedIcon fontSize="small" />
                                 </ListItemIcon>
-                                <NavLink to={ROUTES.FAQ}><ListItemText primary=" Frequently Asked Questions"/></NavLink>
+                                <NavLink to={ROUTES.FAQ}>
+                                    <ListItemText primary=" Frequently Asked Questions" />
+                                </NavLink>
                             </StyledMenuItem>
                         </StyledMenu>
                     </li>
                 </ul>
                 <div className="content">
-                    <Route exact path={ROUTES.LANDING} component={Home}/>
-                    <Route path={ROUTES.SIGN_IN} component={Login}/>
-                    <Route path={ROUTES.SIGN_UP} component={SignUp}/>
-                    <Route path={ROUTES.PROFILE} component={Profile}/>
-                    <Route path={ROUTES.CONTACT} component={Contact}/>
-                    <Route path={ROUTES.FORUM} component={Forum}/>
+                    <Route exact path={ROUTES.LANDING} component={Home} />
+                    <Route path={ROUTES.SIGN_IN} component={Login} />
+                    <Route path={ROUTES.SIGN_UP} component={SignUp} />
+                    <Route path={ROUTES.PROFILE} component={Profile} />
+                    <Route path={ROUTES.CONTACT} component={Contact} />
+                    <Route path={ROUTES.FORUM} component={Forum} />
                     <Route path={ROUTES.ABOUT_US} component={AboutUs} />
                     <Route path={ROUTES.FAQ} component={Faq} />
                 </div>
             </div>
-        </HashRouter>
+        </BrowserRouter>
     );
-
-    /*export default class App extends Component {
-        render() {
-            return (
-                <Router>
-                    <div className="navigator">
-                        <ul className="header">
-                            <li>
-                                <NavLink exact to={ROUTES.LANDING}>
-                                    Home
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink to={ROUTES.SIGN_IN}>Sign In</NavLink>
-                            </li>
-                            <li>
-                                <NavLink to={ROUTES.SIGN_UP}>Sign Up</NavLink>
-                            </li>
-                            <li>
-                                <NavLink to={ROUTES.PROFILE}>Profile</NavLink>
-                            </li>
-                            <li>
-                                <NavLink to={ROUTES.CONTACT}>Contact</NavLink>
-                            </li>
-                            <li>
-                                <NavLink to={ROUTES.FORUM}>Forum</NavLink>
-                            </li>
-                            <li>
-                                <NavLink to={ROUTES.ABOUT_US}>About Us</NavLink>
-                            </li>
-                            <li>
-                                <NavLink to={ROUTES.FAQ}>
-                                    Frequently Asked Questions
-                                </NavLink>
-                            </li>
-                        </ul>
-                        <div className="content">
-                            <Route exact path={ROUTES.LANDING} component={Home} />
-                            <Route path={ROUTES.SIGN_IN} component={Login} />
-                            <Route path={ROUTES.SIGN_UP} component={SignUp} />
-                            <Route path={ROUTES.PROFILE} component={Profile} />
-                            <Route path={ROUTES.CONTACT} component={Contact} />
-                            <Route path={ROUTES.FORUM} component={Forum} />
-                            <Route path={ROUTES.ABOUT_US} component={AboutUs} />
-                            <Route path={ROUTES.FAQ} component={Faq} />
-                        </div>
-                    </div>
-                </Router>
-            );
-        }
-
-        */
 }
