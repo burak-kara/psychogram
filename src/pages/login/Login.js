@@ -44,6 +44,9 @@ class SignInFormBase extends Component {
         this.setState({ isAlertOpen: true });
         event.preventDefault();
     };
+
+    setLocalStorage = () => {};
+
     onChange = event => {
         this.setState({ [event.target.name]: event.target.value });
     };

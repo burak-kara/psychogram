@@ -4,7 +4,7 @@ import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 import 'firebase/storage';
-import { storageConstants } from '../constants/storageConstants';
+import * as STORAGE_CONSTANTS from '../constants/storageConstants';
 
 const developmentConfig = {
     apiKey: 'AIzaSyBCbSOeYmUnT8aMuc-9kaFAK00E-123uQQ',
@@ -33,7 +33,7 @@ const releaseConfig = {
 const config = developmentConfig;
 
 // TODO use when getting current user infos from db
-const currentUserID = localStorage.getItem(storageConstants.USER_ID);
+const currentUserID = localStorage.getItem(STORAGE_CONSTANTS.USER_ID);
 
 class Firebase {
     constructor() {
@@ -42,6 +42,10 @@ class Firebase {
         this.db = app.database();
         this.storage = app.storage();
     }
+
+    session = () => {
+        this.auth.setPersistence(this.auth.Auth.Persistence.LOCAL);
+    };
 
     doCreateUserWithEmailAndPassword = (email, password) =>
         this.auth.createUserWithEmailAndPassword(email, password);
