@@ -11,7 +11,7 @@ const Alert = props => {
         <Snackbar
             anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
             open={props.open}
-            autoHideDuration={2000}
+            autoHideDuration={props.duration ? props.duration : 2000}
             onClose={props.handleClose}
         >
             <MuiCostumAlert
