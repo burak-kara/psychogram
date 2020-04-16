@@ -1,68 +1,160 @@
-import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import React, { Component } from 'react';
+import * as ROUTES from '../../constants/routes';
+import { withFirebase } from '../../constants/firebase';
+import { compose } from 'recompose';
 
-export default class SignUp extends React.Component {
-    state = {
-        redirect: false,
+const SignUp = () => (
+    <div>
+        <SignUpForm />
+    </div>
+);
+
+const INITIAL_STATE = {
+    username: '',
+    phone: '',
+    email: '',
+    passwordOne: '',
+    passwordTwo: '',
+    age: null,
+    error: null,
+};
+
+class SignUpFormBase extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { ...INITIAL_STATE };
+    }
+
+    onSubmit = event => {
+        const { username, email, passwordOne } = this.state;
+        this.props.firebase
+            .doCreateUserWithEmailAndPassword(email, passwordOne)
+            .then(() => {
+                return this.props.firebase.doSendEmailVerification();
+            })
+            .then(authUser => {
+                this.setState({ ...INITIAL_STATE });
+                this.props.history.push(ROUTES.LANDING);
+            })
+            .catch(error => {
+                this.setState({ error });
+            });
+        event.preventDefault();
     };
 
-    setRedirect = () => {
-        this.setState({
-            redirect: true,
-        });
-        this.renderRedirect();
-    };
-
-    renderRedirect = () => {
-        if (this.state.redirect) {
-            return <Redirect to="/Home" />;
-        }
+    onChange = event => {
+        this.setState({ [event.target.name]: event.target.value });
     };
 
     render() {
+        const {
+            username,
+            phone,
+            email,
+            passwordOne,
+            passwordTwo,
+            age,
+            error,
+        } = this.state;
+
+        const isInvalid = age < 18 || username === '';
+
         return (
             <div className="divLogin">
-                <form className="formLogin">
+                <form className="formLogin" onSubmit={this.onSubmit}>
                     <h1>PSYCHOGRAM</h1>
-                    <h3>Sign Up</h3>
+                    <h3>Sign up</h3>
+                    <br />
                     <div className="form-group">
-                        <label>First name</label>
+                        <label id="labId">
+                            {' '}
+                            <strong>Full Name</strong>
+                        </label>
+                        <br />
                         <input
+                            name="username"
+                            value={username}
+                            onChange={this.onChange}
                             type="text"
-                            className="form-control"
-                            placeholder="First name"
+                            placeholder="Full Name"
                         />
                     </div>
                     <div className="form-group">
-                        <label>Last name</label>
+                        <label id="labId">
+                            {' '}
+                            <strong>Phone Number</strong>
+                        </label>
+                        <br />
                         <input
+                            name="phone"
+                            value={phone}
+                            onChange={this.onChange}
                             type="text"
-                            className="form-control"
-                            placeholder="Last name"
+                            placeholder="Enter phone number"
                         />
                     </div>
                     <div className="form-group">
-                        <label>Email address</label>
+                        <label id="labId">
+                            {' '}
+                            <strong>Email address</strong>
+                        </label>
+                        <br />
                         <input
-                            type="email"
-                            className="form-control"
-                            placeholder="Enter email"
+                            name="email"
+                            value={email}
+                            onChange={this.onChange}
+                            type="text"
+                            placeholder="Email Address"
                         />
                     </div>
                     <div className="form-group">
-                        <label>Password</label>
+                        <label id="labId">
+                            {' '}
+                            <strong>Password</strong>
+                        </label>
+                        <br />
                         <input
+                            name="passwordOne"
+                            value={passwordOne}
+                            onChange={this.onChange}
                             type="password"
-                            className="form-control"
-                            placeholder="Enter password"
+                            placeholder="Password"
                         />
                     </div>
                     <div className="form-group">
-                        {this.renderRedirect()}
+                        <label id="labId">
+                            {' '}
+                            <strong>Password</strong>
+                        </label>
+                        <br />
+                        <input
+                            name="passwordTwo"
+                            value={passwordTwo}
+                            onChange={this.onChange}
+                            type="password"
+                            placeholder="Confirm Password"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label id="labId">
+                            {' '}
+                            <strong>Age</strong>
+                        </label>
+                        <br />
+                        <input
+                            name="age"
+                            value={age}
+                            onChange={this.onChange}
+                            type="number"
+                            placeholder="Only +18"
+                        />
+                    </div>
+                    <div className="form-group">
                         <button
-                            onClick={this.setRedirect}
+                            id="submitButton"
+                            disabled={isInvalid}
                             type="submit"
-                            className="btn btn-primary btn-block"
                         >
                             Sign Up
                         </button>
@@ -77,8 +169,20 @@ export default class SignUp extends React.Component {
                             Sign in
                         </Link>
                     </p>
+                    {error && <p>{error.message}</p>}
                 </form>
             </div>
         );
     }
 }
+
+const SignUpLink = () => (
+    <p>
+        Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
+    </p>
+);
+
+const SignUpForm = compose(withRouter, withFirebase)(SignUpFormBase);
+
+export default SignUp; //SignUpPage
+export { SignUpForm, SignUpLink };

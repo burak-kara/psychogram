@@ -1,67 +1,144 @@
-import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import React, { Component } from 'react';
+import { Link, withRouter } from 'react-router-dom';
+import { compose } from 'recompose';
+import { withFirebase } from '../../constants/firebase/';
+import * as ROUTES from '../../constants/routes';
 
-export default class Login extends React.Component {
-    state = {
-        redirect: false,
+const SignIn = () => (
+    <div>
+        <SignInForm />
+    </div>
+);
+
+const INITIAL_STATE = {
+    email: '',
+    password: '',
+    error: null,
+};
+
+class SignInFormBase extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { ...INITIAL_STATE };
+    }
+
+    onSubmit = event => {
+        const { email, password } = this.state;
+        this.props.firebase
+            .doSignInWithEmailAndPassword(email, password)
+            .then(() => {
+                this.setState({ ...INITIAL_STATE });
+                this.props.history.push(ROUTES.LANDING);
+            })
+            .catch(error => {
+                this.setState({ error });
+            });
+        event.preventDefault();
+    };
+    onChange = event => {
+        this.setState({ [event.target.name]: event.target.value });
     };
 
-    setRedirect = () => {
-        this.setState({
-            redirect: true,
-        });
-        this.renderRedirect();
+    componentDidMount() {
+        this.googleSDK();
+    }
+
+    prepareLoginButton = () => {
+        this.auth2.attachClickHandler(
+            this.refs.googleLoginBtn,
+            {},
+            googleUser => {
+                let profile = googleUser.getBasicProfile();
+                console.log(
+                    'Token || ' + googleUser.getAuthResponse().id_token
+                );
+                this.props.history.push(ROUTES.LANDING);
+            },
+            error => {
+                alert(JSON.stringify(error, undefined, 2));
+            }
+        );
     };
 
-    renderRedirect = () => {
-        if (this.state.redirect) {
-            return <Redirect to="/Home" />;
-        }
+    googleSDK = () => {
+        window['googleSDKLoaded'] = () => {
+            window['gapi'].load('auth2', () => {
+                this.auth2 = window['gapi'].auth2.init({
+                    client_id:
+                        '537770731016-gf1gbn5aqficurhnnaijpivgcg25o140.apps.googleusercontent.com',
+                    cookiepolicy: 'single_host_origin',
+                    scope: 'email',
+                });
+                this.prepareLoginButton();
+            });
+        };
+
+        (function (d, s, id) {
+            var js,
+                fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src =
+                'https://apis.google.com/js/platform.js?onload=googleSDKLoaded';
+            fjs.parentNode.insertBefore(js, fjs);
+        })(document, 'script', 'google-jssdk');
     };
 
     render() {
+        const { email, password, error } = this.state;
+        const isInvalid = password === '' || email === '';
+
         return (
             <div>
                 <div className="divLogin">
-                    <form className="formLogin">
+                    <form className="formLogin" onSubmit={this.onSubmit}>
                         <div className="mainTitle">
                             <h1>PSYCHOGRAM</h1>
                         </div>
-                        <h3>Sign In</h3>
+                        <h3>Sign in</h3>
+                        <br />
                         <div className="form-group">
-                            <label>Email address</label>
+                            <label id="labId">
+                                {' '}
+                                <strong>Email address</strong>
+                            </label>
+                            <br />
                             <input
-                                type="email"
-                                className="form-control"
-                                placeholder="Enter email"
+                                name="email"
+                                value={email}
+                                onChange={this.onChange}
+                                type="text"
+                                placeholder="Email Address"
                             />
                         </div>
                         <div className="form-group">
-                            <label>Password</label>
+                            <label id="labId">
+                                {' '}
+                                <strong>Password</strong>
+                            </label>
+                            <br />
                             <input
+                                name="password"
+                                value={password}
+                                onChange={this.onChange}
                                 type="password"
-                                className="form-control"
-                                placeholder="Enter password"
+                                placeholder="Password"
                             />
                         </div>
                         <br></br>
                         <div className="form-group">
-                            <div className="login-with-google">
-                                <a href="https://www.ozyegin.edu.tr">
-                                    Login with Google
-                                </a>
-                            </div>
-                        </div>
-                        <div className="form-group">
-                            {this.renderRedirect()}
                             <button
-                                onClick={this.setRedirect}
+                                id="submitButton"
+                                disabled={isInvalid}
                                 type="submit"
-                                className="btn btn-primary btn-block"
                             >
                                 Submit
                             </button>
                         </div>
+
                         <p id="noacc text-left">
                             Don't have an acount?
                             <Link
@@ -72,9 +149,25 @@ export default class Login extends React.Component {
                                 Sign up
                             </Link>
                         </p>
+
+                        {error && <p>{error.message}</p>}
                     </form>
+
+                    <div className="formGoogle">
+                        <button
+                            className="loginBtn loginBtn--google"
+                            ref="googleLoginBtn"
+                        >
+                            Login with Google
+                        </button>
+                    </div>
                 </div>
             </div>
         );
     }
 }
+
+const SignInForm = compose(withRouter, withFirebase)(SignInFormBase);
+
+export default SignIn; //SignInPage
+export { SignInForm };
