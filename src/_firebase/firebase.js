@@ -4,7 +4,6 @@ import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 import 'firebase/storage';
-import * as STORAGE_CONSTANTS from '../constants/storageConstants';
 
 const developmentConfig = {
     apiKey: 'AIzaSyBCbSOeYmUnT8aMuc-9kaFAK00E-123uQQ',
@@ -52,7 +51,8 @@ class Firebase {
 
     doSendEmailVerification = () =>
         this.auth.currentUser.sendEmailVerification({
-            url: 'http://localhost:3000', //in Production you must changed this domain name such tthat https://mydomain.com
+            // TODO in Production change this domain name such that https://mydomain.com
+            url: 'http://localhost:3000',
         });
 
     doSignOut = () => this.auth.signOut();
@@ -85,10 +85,8 @@ class Firebase {
                         const dbUser = snapshot.val();
 
                         // default empty roles
-                        if (dbUser) {
-                            if (!dbUser.roles) {
-                                dbUser.roles = {};
-                            }
+                        if (dbUser && !dbUser.roles) {
+                            dbUser.roles = {};
                         }
 
                         // merge auth and db user

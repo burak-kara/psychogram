@@ -5,7 +5,7 @@ import Settings from './Settings';
 import Alert from '../../components/Alert';
 import { compose } from 'recompose';
 import { withAuthorization, withEmailVerification } from '../../_session';
-import * as ROLES from '../../constants/roles';
+import * as ROLES from '../../_constants/roles';
 
 const Profile = props => {
     const [settingsOpen, setSettingsOpen] = useState(false);
@@ -41,16 +41,19 @@ const Profile = props => {
     };
 
     useEffect(() => {
-        props.firebase.getUser().on('value', snapshot => {
-            setUser(snapshot.val());
-        });
-
-        props.firebase
-            .getUserProfilePic()
-            .getDownloadURL()
-            .then(url => {
-                setProfilePic(url);
+        const uid = JSON.parse(localStorage.getItem('authUser')).uid;
+        if (uid !== '') {
+            props.firebase.user(uid).on('value', snapshot => {
+                setUser(snapshot.val());
             });
+
+            props.firebase
+                .getUserProfilePic()
+                .getDownloadURL()
+                .then(url => {
+                    setProfilePic(url);
+                });
+        }
     }, []);
 
     return user ? (

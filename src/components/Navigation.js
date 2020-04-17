@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { AuthUserContext } from '../_session';
-import * as ROUTES from '../constants/routeConstants';
-import * as ROLES from '../constants/roles';
+import * as ROUTES from '../_constants/routeConstants';
+import * as ROLES from '../_constants/roles';
+import SignOut from './signPages/sign-out/SignOut';
 
 const Navigation = () => (
     <AuthUserContext.Consumer>
@@ -43,6 +44,9 @@ const NavigationAuth = ({ authUser }) => (
         </li>
         <li>
             <Link to={ROUTES.FAQ}>Frequently Asked Questions</Link>
+        </li>
+        <li>
+            <SignOut />
         </li>
     </>
 );
