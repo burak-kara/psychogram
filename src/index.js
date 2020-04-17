@@ -6,7 +6,7 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import './assets/styles/main.scss';
-import Firebase, { FirebaseContext } from './constants/firebase';
+import Firebase, { FirebaseContext } from './_firebase';
 
 ReactDOM.render(
     <FirebaseContext.Provider value={new Firebase()}>
