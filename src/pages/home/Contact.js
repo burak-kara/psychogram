@@ -1,6 +1,8 @@
 import React from 'react';
+import { compose } from 'recompose';
+import { withAuthorization } from '../../_session';
 
-const Contact = props => {
+const Contact = () => {
     return (
         <div>
             <h2>GOT QUESTIONS?</h2>
@@ -11,5 +13,6 @@ const Contact = props => {
         </div>
     );
 };
+const condition = authUser => authUser;
 
-export default Contact;
+export default compose(withAuthorization(condition))(Contact);

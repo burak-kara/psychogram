@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
-import { withFirebase } from '../../constants/firebase/';
-import * as ROUTES from '../../constants/routes';
-import Alert from '../../components/Alert';
+import { withFirebase } from '../../../_firebase';
+import * as ROUTES from '../../../_constants/routeConstants';
+import Alert from '../../Alert';
 
 const SignIn = () => (
     <div>
@@ -33,6 +33,10 @@ class SignInFormBase extends Component {
             .doSignInWithEmailAndPassword(email, password)
             .then(() => {
                 this.setState({ ...INITIAL_STATE });
+                this.setState({
+                    alertMessage: 'Giriş Yapıldı',
+                    severity: 'success',
+                });
                 this.props.history.push(ROUTES.LANDING);
             })
             .catch(error => {
@@ -44,6 +48,9 @@ class SignInFormBase extends Component {
         this.setState({ isAlertOpen: true });
         event.preventDefault();
     };
+
+    setLocalStorage = () => {};
+
     onChange = event => {
         this.setState({ [event.target.name]: event.target.value });
     };
@@ -150,7 +157,7 @@ class SignInFormBase extends Component {
                                 placeholder="Password"
                             />
                         </div>
-                        <br></br>
+                        <br />
                         <div className="form-group">
                             <button
                                 id="submitButton"
@@ -194,5 +201,5 @@ class SignInFormBase extends Component {
 
 const SignInForm = compose(withRouter, withFirebase)(SignInFormBase);
 
-export default SignIn; //SignInPage
+export default SignIn;
 export { SignInForm };

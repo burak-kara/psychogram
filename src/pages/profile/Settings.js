@@ -41,6 +41,7 @@ const Settings = props => {
             </>
         );
     };
+
     return (
         <DialogWindow
             title="Profili Düzenle"

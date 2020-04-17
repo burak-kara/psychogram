@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { withFirebase } from '../../constants/firebase';
+import { withFirebase } from '../../_firebase';
 
 const AboutUs = props => {
     const [aboutUs, setAboutUs] = useState('');
