@@ -79,7 +79,7 @@ const Home = () => {
         </div>
     );
 };
-const condition = authUser => !!authUser;
+const condition = authUser => authUser;
 
 export default compose(
     withEmailVerification,

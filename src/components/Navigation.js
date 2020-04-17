@@ -13,13 +13,7 @@ const Navigation = () => (
                         <NavigationAuth authUser={authUser} />
                     </ul>
                 </div>
-            ) : (
-                <div className="navigator">
-                    <ul className="header">
-                        <NavigationNonAuth />
-                    </ul>
-                </div>
-            )
+            ) : null
         }
     </AuthUserContext.Consumer>
 );
@@ -31,11 +25,13 @@ const NavigationAuth = ({ authUser }) => (
                 Home
             </Link>
         </li>
-        {!authUser && !authUser.roles[ROLES.ADMIN] && (
+        {authUser &&
+        authUser.roles[ROLES.ADMIN] &&
+        authUser.roles[ROLES.ADMIN] === ROLES.ADMIN ? (
             <li>
                 <Link to={ROUTES.PROFILE}>Profile</Link>
             </li>
-        )}
+        ) : null}
         <li>
             <Link to={ROUTES.CONTACT}>Contact</Link>
         </li>
@@ -49,12 +45,6 @@ const NavigationAuth = ({ authUser }) => (
             <Link to={ROUTES.FAQ}>Frequently Asked Questions</Link>
         </li>
     </>
-);
-
-const NavigationNonAuth = () => (
-    <li>
-        <Link to={ROUTES.SIGN_IN}>Sign In</Link>
-    </li>
 );
 
 export default Navigation;
