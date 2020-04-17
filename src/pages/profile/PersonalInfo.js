@@ -6,6 +6,7 @@ import { Tooltip, Zoom } from '@material-ui/core';
 
 const PersonalInfo = props => {
     const [anchorEl, setAnchorEl] = useState(null);
+    const [emojiStatus, setEmojiStatus] = useState('Angry Face');
 
     const handleClick = event => {
         setAnchorEl(event.currentTarget);
@@ -35,7 +36,7 @@ const PersonalInfo = props => {
             }
         >
             <Emoji
-                symbol={faceEmojis.get('Grinning Face')}
+                symbol={faceEmojis.get(emojiStatus)}
                 className="emoji-32"
             />
         </OverlayTrigger>
@@ -49,6 +50,9 @@ const PersonalInfo = props => {
                     <div className="col-3">
                         <Emoji
                             symbol={value}
+                            onClick={e => {
+                                setEmojiStatus(key);
+                            }}
                             style={{ fontSize: '32px', cursor: 'pointer' }}
                         />
                     </div>
