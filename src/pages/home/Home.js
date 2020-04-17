@@ -1,18 +1,18 @@
 import React from 'react';
 import { compose } from 'recompose';
 import psycho from '../../assets/logo/psycho.jpg';
-import { withAuthorization, withEmailVerification } from '../../_session';
+import { withAuthorization } from '../../_session';
 
 const Home = () => {
     return (
         <div className="homepage">
             <img id="picLoc" src={psycho} alt="main picture" />
             <h2 className="leftLoc">You Are Not Alone</h2>
-            <br></br>
-            <br></br>
+            <br />
+            <br />
             <article>
                 <h2 id="ourService">OUR SERVICES</h2>
-                <br></br>
+                <br />
                 <h3>ANXIETY AND RELATED DISORDERS</h3>
                 <p>
                     At BHAVA Therapy Group, we believe the best approach to the
@@ -81,7 +81,4 @@ const Home = () => {
 };
 const condition = authUser => authUser;
 
-export default compose(
-    withEmailVerification,
-    withAuthorization(condition)
-)(Home);
+export default compose(withAuthorization(condition))(Home);

@@ -2,6 +2,7 @@ import React from 'react';
 
 import AuthUserContext from './context';
 import { withFirebase } from '../_firebase';
+import EmailVerification from '../components/EmailVerification';
 
 const needsEmailVerification = authUser =>
     authUser &&
@@ -29,31 +30,10 @@ const withEmailVerification = Component => {
                 <AuthUserContext.Consumer>
                     {authUser =>
                         needsEmailVerification(authUser) ? (
-                            <div>
-                                {this.state.isSent ? (
-                                    <p>
-                                        E-Mail confirmation sent: Check your
-                                        E-Mails (Spam folder included) for a
-                                        confirmation E-Mail. Refresh this page
-                                        once you confirmed your E-Mail.
-                                    </p>
-                                ) : (
-                                    <p>
-                                        Verify your E-Mail: Check your E-Mails
-                                        (Spam folder included) for a
-                                        confirmation E-Mail or send another
-                                        confirmation E-Mail.
-                                    </p>
-                                )}
-
-                                <button
-                                    type="button"
-                                    onClick={this.onSendEmailVerification}
-                                    disabled={this.state.isSent}
-                                >
-                                    Send confirmation E-Mail
-                                </button>
-                            </div>
+                            <EmailVerification
+                                onClick={this.onSendEmailVerification}
+                                isSent={this.state.isSent}
+                            />
                         ) : (
                             <Component {...this.props} />
                         )

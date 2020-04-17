@@ -4,6 +4,8 @@ import PostEditor from '../../components/forumComponents/PostEditor';
 import Reply from '../../components/forumComponents/Reply';
 import { Route } from 'react-router-dom';
 import ForumNavigation from '../../components/forumComponents/ForumNavigation';
+import { compose } from 'recompose';
+import { withAuthorization, withEmailVerification } from '../../_session';
 
 class Forum extends Component {
     constructor(props) {
@@ -47,4 +49,9 @@ class Forum extends Component {
     }
 }
 
-export default Forum;
+const condition = authUser => authUser;
+
+export default compose(
+    withEmailVerification,
+    withAuthorization(condition)
+)(Forum);

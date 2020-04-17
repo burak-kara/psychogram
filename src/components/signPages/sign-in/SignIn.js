@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
-import { withFirebase } from '../../_firebase/';
-import * as ROUTES from '../../constants/routeConstants';
-import Alert from '../../components/Alert';
+import { withFirebase } from '../../../_firebase';
+import * as ROUTES from '../../../_constants/routeConstants';
+import Alert from '../../Alert';
 
 const SignIn = () => (
     <div>
@@ -157,7 +157,7 @@ class SignInFormBase extends Component {
                                 placeholder="Password"
                             />
                         </div>
-                        <br></br>
+                        <br />
                         <div className="form-group">
                             <button
                                 id="submitButton"

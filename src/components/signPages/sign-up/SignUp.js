@@ -1,10 +1,10 @@
 import { Link, withRouter } from 'react-router-dom';
 import React, { Component } from 'react';
-import * as ROUTES from '../../constants/routeConstants';
-import * as ROLES from '../../constants/roles';
-import { withFirebase } from '../../_firebase';
+import * as ROUTES from '../../../_constants/routeConstants';
+import * as ROLES from '../../../_constants/roles';
+import { withFirebase } from '../../../_firebase';
 import { compose } from 'recompose';
-import Alert from '../../components/Alert';
+import Alert from '../../Alert';
 
 const SignUp = () => (
     <div>
