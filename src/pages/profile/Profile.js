@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { withFirebase } from '../../_firebase';
 import PersonalInfo from './PersonalInfo';
 import ProfileDetails from './ProfileDetails';
 import Settings from './Settings';
 import Alert from '../../components/Alert';
+import { compose } from 'recompose';
+import { withAuthorization, withEmailVerification } from '../../_session';
+import * as ROLES from '../../constants/roles';
 
 const Profile = props => {
     const [settingsOpen, setSettingsOpen] = useState(false);
@@ -84,4 +86,9 @@ const Profile = props => {
     ) : null;
 };
 
-export default withFirebase(Profile);
+const condition = authUser => authUser && !!authUser.roles[ROLES.ADMIN];
+
+export default compose(
+    withEmailVerification,
+    withAuthorization(condition)
+)(Profile);
