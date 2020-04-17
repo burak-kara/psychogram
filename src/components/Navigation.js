@@ -14,11 +14,9 @@ const Navigation = () => (
     <AuthUserContext.Consumer>
         {authUser =>
             authUser ? (
-                <div className="navigator">
-                    <ul className="header pl-2 mb-0 align-top">
-                        <NavigationAuth authUser={authUser} />
-                    </ul>
-                </div>
+                <>
+                    <NavigationAuth authUser={authUser} />
+                </>
             ) : null
         }
     </AuthUserContext.Consumer>
@@ -36,63 +34,92 @@ const NavigationAuth = ({ authUser }) => {
     };
 
     return (
-        <>
-            <li>
-                <img src={logo} alt="Logo" width={35} height={35} />
-            </li>
-            <li>
-                <Link exact to={ROUTES.LANDING}>
-                    Home
-                </Link>
-            </li>
-            <li>
-                <Link to={ROUTES.CONTACT}>Contact</Link>
-            </li>
-            <li>
-                <Link to={ROUTES.FORUM}>Forum</Link>
-            </li>
-            <li>
-                <Link to={ROUTES.ABOUT_US}>About Us</Link>
-            </li>
-            <li>
-                <Link to={ROUTES.FAQ}>Frequently Asked Questions</Link>
-            </li>
-            <>
-                <IconContext.Provider value={{ color: 'white' }}>
-                    <div>
-                        <IoIosMore onClick={handleClick} />
-                    </div>
-                </IconContext.Provider>
-                <Menu
-                    id="customized-menu"
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
-                >
-                    <MenuItem>
-                        <ListItemIcon>
-                            <FaUserAlt fontSize="small" />
-                        </ListItemIcon>
-                        {authUser &&
-                        authUser.roles[ROLES.ADMIN] &&
-                        authUser.roles[ROLES.ADMIN] === ROLES.ADMIN ? (
+        <nav className="navbar navbar-expand-lg navigator">
+            <a className="navbar-brand" href="/">
+                <img src={logo} width="50" height="50" alt="" />
+            </a>
+            <button
+                className="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+                <span className="navbar-toggler-icon" />
+            </button>
+            <div className="collapse navbar-collapse" id="navbarNav">
+                <ul className="navbar-nav mr-auto">
+                    <li className="nav-item active">
+                        <a className="nav-link " href={ROUTES.LANDING}>
+                            Home
+                        </a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href={ROUTES.CONTACT}>
+                            Contact
+                        </a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href={ROUTES.FORUM}>
+                            Forum
+                        </a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href={ROUTES.ABOUT_US}>
+                            About Us
+                        </a>
+                    </li>
+                </ul>
+                <ul className="navbar-nav dots">
+                    <IconContext.Provider
+                        value={{ color: 'white', size: '2em' }}
+                    >
+                        <div>
+                            <IoIosMore onClick={handleClick} />
+                        </div>
+                    </IconContext.Provider>
+                    <Menu
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'center',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'center',
+                        }}
+                    >
+                        <MenuItem>
+                            {authUser &&
+                            authUser.roles[ROLES.ADMIN] &&
+                            authUser.roles[ROLES.ADMIN] === ROLES.ADMIN ? (
+                                <>
+                                    <ListItemIcon>
+                                        <FaUserAlt fontSize="small" />
+                                    </ListItemIcon>
+                                    <li>
+                                        <Link to={ROUTES.PROFILE}>Profile</Link>
+                                    </li>
+                                </>
+                            ) : null}
+                        </MenuItem>
+                        <MenuItem>
+                            <ListItemIcon>
+                                <FaSignOutAlt fontSize="small" />
+                            </ListItemIcon>
                             <li>
-                                <Link to={ROUTES.PROFILE}>Profile</Link>
+                                <SignOut />
                             </li>
-                        ) : null}
-                    </MenuItem>
-                    <MenuItem>
-                        <ListItemIcon>
-                            <FaSignOutAlt fontSize="small" />
-                        </ListItemIcon>
-                        <li>
-                            <SignOut />
-                        </li>
-                    </MenuItem>
-                </Menu>
-            </>
-        </>
+                        </MenuItem>
+                    </Menu>
+                </ul>
+            </div>
+        </nav>
     );
 };
 

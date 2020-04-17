@@ -1,5 +1,18 @@
 .navigator {
     background-color: #204051;
+    height: 64px !important;
+
+    .nav-link {
+        color: white !important;
+    }
+
+    .navbar-brand {
+        padding: 0 !important;
+    }
+
+    .dots {
+        cursor: pointer;
+    }
 
     ul.header li {
         display: inline;
@@ -14,7 +27,6 @@
     ul.header li a {
         color: #fff;
         font-weight: bold;
-        text-decoration: none;
         padding: 20px;
         display: inline-block;
     }

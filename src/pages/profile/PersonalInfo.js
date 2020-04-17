@@ -121,7 +121,7 @@ const PersonalInfo = props => {
                                 symbol={profileInfoEmojis.get('E-Mail')}
                                 className="font-18"
                             />
-                            <span className="align-middle">{` ${props.user.mail}`}</span>
+                            <span className="align-middle">{` ${props.user.email}`}</span>
                         </div>
                     </div>
                     <div className="row">
