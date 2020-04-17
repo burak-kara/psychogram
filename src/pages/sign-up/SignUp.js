@@ -1,6 +1,7 @@
 import { Link, withRouter } from 'react-router-dom';
 import React, { Component } from 'react';
 import * as ROUTES from '../../constants/routeConstants';
+import * as ROLES from '../../constants/roles';
 import { withFirebase } from '../../_firebase';
 import { compose } from 'recompose';
 import Alert from '../../components/Alert';
@@ -13,10 +14,13 @@ const SignUp = () => (
 
 const INITIAL_STATE = {
     username: '',
+    name: '',
+    surname: '',
     phone: '',
     email: '',
     passwordOne: '',
     passwordTwo: '',
+    isAdmin: false,
     age: null,
 };
 
@@ -32,14 +36,41 @@ class SignUpFormBase extends Component {
     }
 
     onSubmit = event => {
-        const { username, email, passwordOne } = this.state;
+        const {
+            username,
+            name,
+            surname,
+            email,
+            passwordOne,
+            isAdmin,
+            phone,
+            age,
+        } = this.state;
+
+        const roles = isAdmin ? [ROLES.ADMIN] : [];
+
         this.props.firebase
             .doCreateUserWithEmailAndPassword(email, passwordOne)
+            .then(authUser => {
+                return this.props.firebase.user(authUser.user.uid).set({
+                    username,
+                    name,
+                    surname,
+                    email,
+                    phone,
+                    age,
+                    roles,
+                });
+            })
             .then(() => {
                 return this.props.firebase.doSendEmailVerification();
             })
-            .then(authUser => {
+            .then(() => {
                 this.setState({ ...INITIAL_STATE });
+                this.setState({
+                    alertMessage: 'Başarıyla Kaydedildi',
+                    severity: 'success',
+                });
                 this.props.history.push(ROUTES.LANDING);
             })
             .catch(error => {
@@ -63,6 +94,8 @@ class SignUpFormBase extends Component {
     render() {
         const {
             username,
+            name,
+            surname,
             phone,
             email,
             passwordOne,
@@ -73,7 +106,13 @@ class SignUpFormBase extends Component {
             severity,
         } = this.state;
 
-        const isInvalid = age < 18 || username === '';
+        const isInvalid =
+            age < 18 ||
+            username === '' ||
+            passwordOne !== passwordTwo ||
+            passwordOne === '' ||
+            email === '' ||
+            username === '';
 
         return (
             <>
@@ -85,7 +124,35 @@ class SignUpFormBase extends Component {
                         <div className="form-group">
                             <label id="labId">
                                 {' '}
-                                <strong>Full Name</strong>
+                                <strong>First Name</strong>
+                            </label>
+                            <br />
+                            <input
+                                name="name"
+                                value={name}
+                                onChange={this.onChange}
+                                type="text"
+                                placeholder="First Name"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label id="labId">
+                                {' '}
+                                <strong>Surname</strong>
+                            </label>
+                            <br />
+                            <input
+                                name="surname"
+                                value={surname}
+                                onChange={this.onChange}
+                                type="text"
+                                placeholder="Surname"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label id="labId">
+                                {' '}
+                                <strong>Username</strong>
                             </label>
                             <br />
                             <input
@@ -93,7 +160,7 @@ class SignUpFormBase extends Component {
                                 value={username}
                                 onChange={this.onChange}
                                 type="text"
-                                placeholder="Full Name"
+                                placeholder="Username"
                             />
                         </div>
                         <div className="form-group">
@@ -207,5 +274,5 @@ const SignUpLink = () => (
 
 const SignUpForm = compose(withRouter, withFirebase)(SignUpFormBase);
 
-export default SignUp; //SignUpPage
+export default SignUp;
 export { SignUpForm, SignUpLink };

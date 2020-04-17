@@ -1,7 +1,9 @@
 import React from 'react';
+import { compose } from 'recompose';
 import psycho from '../../assets/logo/psycho.jpg';
+import { withAuthorization, withEmailVerification } from '../../_session';
 
-const Home = props => {
+const Home = () => {
     return (
         <div className="homepage">
             <img id="picLoc" src={psycho} alt="main picture" />
@@ -77,5 +79,9 @@ const Home = props => {
         </div>
     );
 };
+const condition = authUser => !!authUser;
 
-export default Home;
+export default compose(
+    withEmailVerification,
+    withAuthorization(condition)
+)(Home);

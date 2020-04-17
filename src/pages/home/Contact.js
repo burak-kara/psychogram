@@ -1,4 +1,6 @@
 import React from 'react';
+import { compose } from 'recompose';
+import { withAuthorization, withEmailVerification } from '../../_session';
 
 const Contact = props => {
     return (
@@ -11,5 +13,9 @@ const Contact = props => {
         </div>
     );
 };
+const condition = authUser => !!authUser;
 
-export default Contact;
+export default compose(
+    withEmailVerification,
+    withAuthorization(condition)
+)(Contact);

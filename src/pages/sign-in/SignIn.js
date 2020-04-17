@@ -33,6 +33,10 @@ class SignInFormBase extends Component {
             .doSignInWithEmailAndPassword(email, password)
             .then(() => {
                 this.setState({ ...INITIAL_STATE });
+                this.setState({
+                    alertMessage: 'Giriş Yapıldı',
+                    severity: 'success',
+                });
                 this.props.history.push(ROUTES.LANDING);
             })
             .catch(error => {
@@ -197,5 +201,5 @@ class SignInFormBase extends Component {
 
 const SignInForm = compose(withRouter, withFirebase)(SignInFormBase);
 
-export default SignIn; //SignInPage
+export default SignIn;
 export { SignInForm };
