@@ -47,7 +47,10 @@ class SignUpFormBase extends Component {
             age,
         } = this.state;
 
-        const roles = isAdmin ? [ROLES.ADMIN] : [];
+        const roles = {};
+        if (isAdmin) {
+            roles[ROLES.ADMIN] = ROLES.ADMIN;
+        }
 
         this.props.firebase
             .doCreateUserWithEmailAndPassword(email, passwordOne)
@@ -63,13 +66,15 @@ class SignUpFormBase extends Component {
                 });
             })
             .then(() => {
-                return this.props.firebase.doSendEmailVerification();
+                // TODO implement with styling
+                // return this.props.firebase.doSendEmailVerification();
             })
             .then(() => {
                 this.setState({ ...INITIAL_STATE });
                 this.setState({
                     alertMessage: 'Başarıyla Kaydedildi',
                     severity: 'success',
+                    isAlertOpen: true,
                 });
                 this.props.history.push(ROUTES.LANDING);
             })
@@ -77,9 +82,9 @@ class SignUpFormBase extends Component {
                 this.setState({
                     alertMessage: error.message,
                     severity: 'error',
+                    isAlertOpen: true,
                 });
             });
-        this.setState({ isAlertOpen: true });
         event.preventDefault();
     };
 

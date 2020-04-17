@@ -2,7 +2,7 @@ import React from 'react';
 import { compose } from 'recompose';
 import { withAuthorization, withEmailVerification } from '../../_session';
 
-const Contact = props => {
+const Contact = () => {
     return (
         <div>
             <h2>GOT QUESTIONS?</h2>
@@ -13,7 +13,7 @@ const Contact = props => {
         </div>
     );
 };
-const condition = authUser => !!authUser;
+const condition = authUser => authUser;
 
 export default compose(
     withEmailVerification,
