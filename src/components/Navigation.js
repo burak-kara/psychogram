@@ -38,6 +38,7 @@ const NavigationAuth = ({ authUser }) => {
             <a className="navbar-brand" href="/">
                 <img src={logo} width="50" height="50" alt="" />
             </a>
+            {/* TODO  button doesnt work import bootstrap js also add redux as dependency*/}
             <button
                 className="navbar-toggler"
                 type="button"
@@ -71,6 +72,11 @@ const NavigationAuth = ({ authUser }) => {
                             About Us
                         </a>
                     </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href={ROUTES.PATIENT_MEETING}>
+                            Meetings
+                        </a>
+                    </li>
                 </ul>
                 <ul className="navbar-nav dots">
                     <IconContext.Provider
@@ -96,8 +102,8 @@ const NavigationAuth = ({ authUser }) => {
                     >
                         <MenuItem>
                             {authUser &&
-                            authUser.roles[ROLES.ADMIN] &&
-                            authUser.roles[ROLES.ADMIN] === ROLES.ADMIN ? (
+                            authUser.role &&
+                            authUser.role === ROLES.ADMIN ? (
                                 <>
                                     <ListItemIcon>
                                         <FaUserAlt fontSize="small" />

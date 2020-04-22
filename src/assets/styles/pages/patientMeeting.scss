@@ -1,0 +1,53 @@
+.patient-meeting-container {
+    height: 696px;
+
+    .main-container {
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+
+        .meetings-list-container {
+            height: 100%;
+
+            .search-row {
+                padding: 3px;
+                background-color: #fff;
+                border-radius: 5px;
+
+                .input {
+                    border: 0;
+                    box-shadow: none;
+                    border-right: solid 1px #ccc;
+                }
+
+                .button {
+                    margin: 2px 0 0 0;
+                    background: none;
+                    box-shadow: none;
+                    border: 0;
+                    color: #666666;
+                    padding: 0 8px 0 10px;
+                }
+
+                .button:hover {
+                    box-shadow: none;
+                    border-left: solid 1px #ccc;
+                }
+            }
+
+            .list-row {
+                .card {
+                    height: 60px;
+                    cursor: pointer;
+                }
+
+                .card:hover {
+                    background-color: rgba(0, 0, 0, 0.1);
+                }
+            }
+        }
+    }
+
+    .padding-0 {
+        padding: 0 !important;
+    }
+}
