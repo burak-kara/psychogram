@@ -47,9 +47,9 @@ class SignUpFormBase extends Component {
             age,
         } = this.state;
 
-        const roles = {};
+        let role = '';
         if (isAdmin) {
-            roles[ROLES.ADMIN] = ROLES.ADMIN;
+            role = ROLES.ADMIN;
         }
 
         this.props.firebase
@@ -62,7 +62,7 @@ class SignUpFormBase extends Component {
                     email,
                     phone,
                     age,
-                    roles,
+                    role,
                 });
             })
             .then(() => {
