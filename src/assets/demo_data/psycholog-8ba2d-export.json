@@ -5,9 +5,7 @@
             "email": "burak.kara@ozu.edu.tr",
             "name": "Burak",
             "phone": "05415430982",
-            "roles": {
-                "ADMIN": "ADMIN"
-            },
+            "role": "ADMIN",
             "location": "Istanbul, Turkey",
             "surname": "Kara",
             "username": "kibitzer",
