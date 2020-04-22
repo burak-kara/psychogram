@@ -102,8 +102,8 @@ const NavigationAuth = ({ authUser }) => {
                     >
                         <MenuItem>
                             {authUser &&
-                            authUser.roles[ROLES.ADMIN] &&
-                            authUser.roles[ROLES.ADMIN] === ROLES.ADMIN ? (
+                            authUser.role &&
+                            authUser.role === ROLES.ADMIN ? (
                                 <>
                                     <ListItemIcon>
                                         <FaUserAlt fontSize="small" />
