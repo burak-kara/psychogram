@@ -76,7 +76,7 @@ const PersonalInfo = props => {
                     <div className="row font-18 font-weight-bold">
                         <span>{`${props.user.name} ${props.user.surname}`}</span>
                     </div>
-                    <div className="row username font-weight-lighter font-italic">
+                    <div className="row font-weight-lighter font-italic">
                         <span>{`${props.user.username}`}</span>
                     </div>
                 </div>
