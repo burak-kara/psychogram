@@ -9,3 +9,4 @@ export const CONTACT = '/contact';
 export const FORUM = '/forum';
 export const ABOUT_US = '/about-us';
 export const FAQ = '/faq';
+export const PATIENT_MEETING = '/meeting';

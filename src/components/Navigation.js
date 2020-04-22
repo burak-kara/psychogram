@@ -38,6 +38,7 @@ const NavigationAuth = ({ authUser }) => {
             <a className="navbar-brand" href="/">
                 <img src={logo} width="50" height="50" alt="" />
             </a>
+            {/* TODO  button doesnt work import bootstrap js also add redux as dependency*/}
             <button
                 className="navbar-toggler"
                 type="button"
@@ -69,6 +70,11 @@ const NavigationAuth = ({ authUser }) => {
                     <li className="nav-item">
                         <a className="nav-link" href={ROUTES.ABOUT_US}>
                             About Us
+                        </a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href={ROUTES.PATIENT_MEETING}>
+                            Meetings
                         </a>
                     </li>
                 </ul>
