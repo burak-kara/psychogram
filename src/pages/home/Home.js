@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
-import psycho from '../../assets/logo/psycho.jpg';
 import { withAuthorization } from '../../_session';
 
-const Home = () => {
+const Home = props => {
+    const [pic, setPic] = useState('');
+
+    useEffect(() => {
+        props.firebase
+            .getPsychoPic()
+            .getDownloadURL()
+            .then(url => {
+                setPic(url);
+            });
+    }, []);
+
     return (
         <div className="homepage">
-            <img id="picLoc" src={psycho} alt="main picture" />
+            <img id="picLoc" src={pic} alt="main picture" />
             <h2 className="leftLoc">You Are Not Alone</h2>
             <br />
             <br />
