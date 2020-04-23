@@ -5,7 +5,6 @@ import Settings from './Settings';
 import Alert from '../../components/Alert';
 import { compose } from 'recompose';
 import { withAuthorization, withEmailVerification } from '../../_session';
-import * as ROLES from '../../_constants/roles';
 
 const Profile = props => {
     const [settingsOpen, setSettingsOpen] = useState(false);
@@ -13,7 +12,6 @@ const Profile = props => {
     const [message, setMessage] = useState('');
     const [severity, setSeverity] = useState('');
     const [user, setUser] = useState(null);
-    const [profilePic, setProfilePic] = useState('');
 
     const handleSettingsOpen = () => {
         setSettingsOpen(true);
@@ -46,13 +44,6 @@ const Profile = props => {
             props.firebase.user(uid).on('value', snapshot => {
                 setUser(snapshot.val());
             });
-
-            props.firebase
-                .getUserProfilePic()
-                .getDownloadURL()
-                .then(url => {
-                    setProfilePic(url);
-                });
         }
     }, []);
 
@@ -62,7 +53,6 @@ const Profile = props => {
                 <div className="row h-auto">
                     <PersonalInfo
                         user={user}
-                        profilePic={profilePic}
                         openSettings={handleSettingsOpen}
                     />
                     <ProfileDetails user={user} />
