@@ -5,6 +5,8 @@ import * as ROLES from '../../../_constants/roles';
 import { withFirebase } from '../../../_firebase';
 import { compose } from 'recompose';
 import Alert from '../../Alert';
+import TextField from '@material-ui/core/TextField';
+import * as moment from "moment";
 
 const SignUp = () => (
     <div>
@@ -20,8 +22,12 @@ const INITIAL_STATE = {
     email: '',
     passwordOne: '',
     passwordTwo: '',
-    isAdmin: false,
-    age: null,
+    birthday: '',
+    description:'',
+    isDoctor:false,
+    profilePictureSource:'https://upload.wikimedia.org/wikipedia/commons/3/31/Michael_Jackson_in_1988.jpg',
+    location:'',
+    role:''
 };
 
 class SignUpFormBase extends Component {
@@ -42,15 +48,13 @@ class SignUpFormBase extends Component {
             surname,
             email,
             passwordOne,
-            isAdmin,
             phone,
-            age,
+            birthday,
+            description,
+            profilePictureSource,
+            location,
+            isDoctor
         } = this.state;
-
-        let role = '';
-        if (isAdmin) {
-            role = ROLES.ADMIN;
-        }
 
         this.props.firebase
             .doCreateUserWithEmailAndPassword(email, passwordOne)
@@ -61,8 +65,11 @@ class SignUpFormBase extends Component {
                     surname,
                     email,
                     phone,
-                    age,
-                    role,
+                    role: isDoctor ? ROLES.DOCTOR : ROLES.USER,
+                    birthday,
+                    description,
+                    profilePictureSource,
+                    location
                 });
             })
             .then(() => {
@@ -89,7 +96,9 @@ class SignUpFormBase extends Component {
     };
 
     onChange = event => {
-        this.setState({ [event.target.name]: event.target.value });
+        const name = event.target.name;
+        const value = name === 'isDoctor' ? event.target.checked : event.target.value;
+        this.setState({ [name]: value });
     };
 
     handleAlertClose = () => {
@@ -105,14 +114,15 @@ class SignUpFormBase extends Component {
             email,
             passwordOne,
             passwordTwo,
-            age,
+            birthday,
             isAlertOpen,
             alertMessage,
             severity,
+            isDoctor
         } = this.state;
 
         const isInvalid =
-            age < 18 ||
+            moment.duration(moment().diff(birthday)).asYears() < 18 ||
             username === '' ||
             passwordOne !== passwordTwo ||
             passwordOne === '' ||
@@ -126,6 +136,18 @@ class SignUpFormBase extends Component {
                         <h1>PSYCHOGRAM</h1>
                         <h3>Sign up</h3>
                         <br />
+                        <div className="form-group">
+                            <label id="labId">
+                                {' '}
+                                <strong>Doctor</strong>
+                            </label> &nbsp;
+                            <input
+                                name="isDoctor"
+                                type="checkbox"
+                                checked={isDoctor}
+                                onChange={this.onChange}
+                            />
+                        </div>
                         <div className="form-group">
                             <label id="labId">
                                 {' '}
@@ -227,15 +249,15 @@ class SignUpFormBase extends Component {
                         <div className="form-group">
                             <label id="labId">
                                 {' '}
-                                <strong>Age</strong>
+                                <strong>Birthdate</strong>
                             </label>
                             <br />
-                            <input
-                                name="age"
-                                value={age}
+                            <TextField
+                                name="birthday"
+                                value={birthday}
+                                format={'yyyy-MM-dd'}
                                 onChange={this.onChange}
-                                type="number"
-                                placeholder="Only +18"
+                                type="date"
                             />
                         </div>
                         <div className="form-group">
