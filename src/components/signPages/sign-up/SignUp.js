@@ -39,7 +39,6 @@ class SignUpFormBase extends Component {
             severity: '',
         };
 
-        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     onSubmit = event => {
@@ -98,18 +97,10 @@ class SignUpFormBase extends Component {
     };
 
     onChange = event => {
-        this.setState({ [event.target.name]: event.target.value });
+        const name = event.target.name;
+        const value = name === 'isDoctor' ? event.target.checked : event.target.value;
+        this.setState({ [name]: value });
     };
-
-    handleInputChange(event) {
-        const target = event.target;
-        const value = target.name === 'isDoctor' ? target.checked : target.value;
-        const name = target.name;
-
-        this.setState({
-            [name]:  value
-        });
-    }
 
     handleAlertClose = () => {
         this.setState({ isAlertOpen: false });
@@ -167,7 +158,7 @@ class SignUpFormBase extends Component {
                                 name="isDoctor"
                                 type="checkbox"
                                 checked={isDoctor}
-                                onChange={this.handleInputChange}
+                                onChange={this.onChange}
                             />
                         </div>
                         <div className="form-group">
