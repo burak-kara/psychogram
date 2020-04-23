@@ -13,6 +13,7 @@ import PatientMeetingPage from '../pages/meetingPatient';
 import * as ROUTES from '../_constants/routeConstants';
 import Navigation from '../components/Navigation';
 import { withAuthentication } from '../_session';
+import AdminPage from '../pages/admin/Admin';
 
 const App = () => (
     <Router>
@@ -26,6 +27,7 @@ const App = () => (
         <Route path={ROUTES.ABOUT_US} component={AboutUs} />
         <Route path={ROUTES.FAQ} component={Faq} />
         <Route path={ROUTES.PATIENT_MEETING} component={PatientMeetingPage} />
+        <Route path={ROUTES.ADMIN} component={AdminPage} />
     </Router>
 );
 

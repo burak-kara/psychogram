@@ -3,6 +3,7 @@ import { OverlayTrigger, Popover } from 'react-bootstrap';
 import Emoji from 'a11y-react-emoji';
 import { faceEmojis, profileInfoEmojis } from '../../_utilitiy/emojis';
 import { Tooltip, Zoom } from '@material-ui/core';
+import moment from 'moment';
 
 const PersonalInfo = props => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -65,7 +66,7 @@ const PersonalInfo = props => {
             <div className="row d-flex justify-content-center">
                 <div className="col-lg-12 col-md-12 col-sm-6 col-6 h-auto text-center">
                     <img
-                        src={props.profilePic}
+                        src={props.user.profilePictureSource}
                         className="img-fluid rounded-circle"
                         alt=""
                     />
@@ -133,7 +134,9 @@ const PersonalInfo = props => {
                                 className="font-18"
                             />
                             <span className="align-middle ml-1">
-                                {` ${props.user.birthday}`}
+                                {moment(props.user.birthday).format(
+                                    'DD.MM.YYYY'
+                                )}
                             </span>
                         </div>
                     </div>
