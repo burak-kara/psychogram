@@ -21,16 +21,11 @@ const INITIAL_STATE = {
     email: '',
     passwordOne: '',
     passwordTwo: '',
-    isAdmin: false,
     birthday: '',
     description:'',
     isDoctor:false,
     profilePictureSource:'https://upload.wikimedia.org/wikipedia/commons/3/31/Michael_Jackson_in_1988.jpg',
-    favArticles:{"0":{id:'', abstract:'',title:'',year:''}},
-    favDocs:{"0":{id:'', name:'',notes:'',surname:''}},
     location:'',
-    paymentMethods:{"0":{abstract:'',id:'',type:''}},
-    meetings:{"0":{clinic:'',doctor:'',id:'',notes:''}},
     role:''
 };
 
@@ -54,23 +49,14 @@ class SignUpFormBase extends Component {
             surname,
             email,
             passwordOne,
-            isAdmin,
             phone,
             birthday,
             description,
             profilePictureSource,
-            favArticles,
-            favDocs,
             location,
-            paymentMethods,
-            meetings
+            isDoctor
         } = this.state;
 
-        let role = this.isDoctor ? ROLES.DOCTOR:ROLES.USER;
-
-        if (isAdmin) {
-            role = ROLES.ADMIN;
-        }
 
         this.props.firebase
             .doCreateUserWithEmailAndPassword(email, passwordOne)
@@ -81,15 +67,11 @@ class SignUpFormBase extends Component {
                     surname,
                     email,
                     phone,
-                    role,
+                    role: isDoctor ? ROLES.DOCTOR : ROLES.USER,
                     birthday,
                     description,
                     profilePictureSource,
-                    favArticles,
-                    favDocs,
-                    location,
-                    paymentMethods,
-                    meetings
+                    location
                 });
             })
             .then(() => {
@@ -124,10 +106,8 @@ class SignUpFormBase extends Component {
         const value = target.name === 'isDoctor' ? target.checked : target.value;
         const name = target.name;
 
-        this.isDoctor =  target.checked ? true: false;
-
         this.setState({
-            [name]: value
+            [name]:  value
         });
     }
 
@@ -150,16 +130,12 @@ class SignUpFormBase extends Component {
             severity,
             isDoctor,
             profilePictureSource,
-            favArticles,
-            favDocs,
-            location,
-            paymentMethods,
-            meetings
+            location
         } = this.state;
 
-        function calculate_age(birthdate) {
+        const calculateAge = () => {
             var today = new Date();
-            var birthDate = new Date(birthdate);
+            var birthDate = new Date(birthday);
             var age_now = today.getFullYear() - birthDate.getFullYear();
             var m = today.getMonth() - birthDate.getMonth();
             if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate()))
@@ -167,10 +143,10 @@ class SignUpFormBase extends Component {
                 age_now--;
             }
             return age_now;
-        }
+        };
 
         const isInvalid =
-            calculate_age(birthday) < 18 ||
+            calculateAge(birthday) < 18 ||
             username === '' ||
             passwordOne !== passwordTwo ||
             passwordOne === '' ||
@@ -192,7 +168,7 @@ class SignUpFormBase extends Component {
                             <input
                                 name="isDoctor"
                                 type="checkbox"
-                                checked={this.isDoctor}
+                                checked={isDoctor}
                                 onChange={this.handleInputChange}
                             />
                         </div>
