@@ -10,32 +10,7 @@
             "surname": "Kara",
             "username": "kibitzer",
             "birthday": "25.05.1990",
-            "meetings": [
-                {
-                    "clinic": "https://www.hellozdrowie.pl/wp-content/uploads/2019/03/psycholog-1140x761.jpeg",
-                    "doctor": "House M.D",
-                    "id": 11,
-                    "notes": "Aliquam dolor mi, iaculis quis justo nec, semper tristique leo. Vestibulum rhoncus placerat mi non hendrerit. Etiam vehicula euismod tortor, quis aliquam enim ornare a. "
-                },
-                {
-                    "clinic": "https://www.hellozdrowie.pl/wp-content/uploads/2019/03/psycholog-1140x761.jpeg",
-                    "doctor": "Doctor Who",
-                    "id": 12,
-                    "notes": "Aliquam dolor mi, iaculis quis justo nec, semper tristique leo. Vestibulum rhoncus placerat mi non hendrerit. Etiam vehicula euismod tortor, quis aliquam enim ornare a. Aliquam dolor mi, iaculis quis justo nec, semper tristique leo. Vestibulum rhoncus placerat mi non hendrerit. Etiam vehicula euismod tortor, quis aliquam enim ornare a. "
-                },
-                {
-                    "clinic": "https://www.hellozdrowie.pl/wp-content/uploads/2019/03/psycholog-1140x761.jpeg",
-                    "doctor": "Burak Kara",
-                    "id": 13,
-                    "notes": "Aliquam dolor mi, iaculis quis justo nec, semper tristique leo. Vestibulum rhoncus placerat mi non hendrerit. Etiam vehicula euismod tortor, quis aliquam enim ornare a. "
-                },
-                {
-                    "clinic": "https://www.hellozdrowie.pl/wp-content/uploads/2019/03/psycholog-1140x761.jpeg",
-                    "doctor": "Can Akgul",
-                    "id": 14,
-                    "notes": "Aliquam dolor mi, iaculis quis justo nec, semper tristique leo. Vestibulum rhoncus placerat mi non hendrerit. Etiam vehicula euismod tortor, quis aliquam enim ornare a. "
-                }
-            ],
+            "meetings": ["11"],
             "paymentMethods": [
                 {
                     "abstract": "Aliquam dolor mi, iaculis quis justo nec, semper tristique leo. Vestibulum rhoncus placerat mi non hendrerit. Etiam vehicula euismod tortor, quis aliquam enim ornare a. ",
@@ -99,28 +74,10 @@
     },
     "meetings": [
         {
-            "id": 0,
-            "doctor": "0",
-            "user": "1",
-            "date": "10.10.2015"
-        },
-        {
-            "id": 1,
-            "doctor": "0",
-            "user": "0",
-            "date": "29.04.2018"
-        },
-        {
-            "id": 2,
-            "doctor": "1",
-            "user": "1",
-            "date": "24.07.2020"
-        },
-        {
-            "id": 3,
-            "doctor": "1",
-            "user": "0",
-            "date": "10.11.2017"
+            "id": 11,
+            "userId": "M5rnq0VFDLaafZxLQmVBXkueIMz1",
+            "doctorId": "",
+            "messages": []
         }
     ],
     "doctors": [],
