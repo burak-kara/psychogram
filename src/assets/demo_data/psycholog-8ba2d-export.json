@@ -74,14 +74,12 @@
     },
     "meetings": [
         {
-            "id": 11,
+            "id": 0,
             "userId": "M5rnq0VFDLaafZxLQmVBXkueIMz1",
             "doctorId": "",
             "messages": []
         }
     ],
-    "doctors": [],
-    "forumPosts": [],
     "faqs": [
         {
             "id": 0,

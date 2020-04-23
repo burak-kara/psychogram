@@ -101,19 +101,25 @@ const NavigationAuth = ({ authUser }) => {
                         }}
                     >
                         <MenuItem>
-                            {authUser &&
-                            authUser.role &&
-                            authUser.role === ROLES.ADMIN ? (
-                                <>
-                                    <ListItemIcon>
-                                        <FaUserAlt fontSize="small" />
-                                    </ListItemIcon>
-                                    <li>
-                                        <Link to={ROUTES.PROFILE}>Profile</Link>
-                                    </li>
-                                </>
-                            ) : null}
+                            <ListItemIcon>
+                                <FaUserAlt fontSize="small" />
+                            </ListItemIcon>
+                            <li>
+                                <Link to={ROUTES.PROFILE}>Profile</Link>
+                            </li>
                         </MenuItem>
+                        {authUser &&
+                        authUser.role &&
+                        authUser.role === ROLES.ADMIN ? (
+                            <MenuItem>
+                                <ListItemIcon>
+                                    <FaUserAlt fontSize="small" />
+                                </ListItemIcon>
+                                <li>
+                                    <Link to={ROUTES.PROFILE}>Profile</Link>
+                                </li>
+                            </MenuItem>
+                        ) : null}
                         <MenuItem>
                             <ListItemIcon>
                                 <FaSignOutAlt fontSize="small" />

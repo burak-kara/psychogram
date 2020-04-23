@@ -89,7 +89,7 @@ const Profile = props => {
     ) : null;
 };
 
-const condition = authUser => authUser && authUser.role === ROLES.ADMIN;
+const condition = authUser => authUser;
 
 export default compose(
     withEmailVerification,
