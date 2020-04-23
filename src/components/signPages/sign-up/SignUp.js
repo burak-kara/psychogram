@@ -5,6 +5,7 @@ import * as ROLES from '../../../_constants/roles';
 import { withFirebase } from '../../../_firebase';
 import { compose } from 'recompose';
 import Alert from '../../Alert';
+import TextField from '@material-ui/core/TextField';
 
 const SignUp = () => (
     <div>
@@ -21,7 +22,16 @@ const INITIAL_STATE = {
     passwordOne: '',
     passwordTwo: '',
     isAdmin: false,
-    age: null,
+    birthday: '',
+    description:'',
+    isDoctor:false,
+    profilePictureSource:'https://upload.wikimedia.org/wikipedia/commons/3/31/Michael_Jackson_in_1988.jpg',
+    favArticles:{"0":{id:'', abstract:'',title:'',year:''}},
+    favDocs:{"0":{id:'', name:'',notes:'',surname:''}},
+    location:'',
+    paymentMethods:{"0":{abstract:'',id:'',type:''}},
+    meetings:{"0":{clinic:'',doctor:'',id:'',notes:''}},
+    role:''
 };
 
 class SignUpFormBase extends Component {
@@ -33,6 +43,8 @@ class SignUpFormBase extends Component {
             alertMessage: '',
             severity: '',
         };
+
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     onSubmit = event => {
@@ -44,10 +56,18 @@ class SignUpFormBase extends Component {
             passwordOne,
             isAdmin,
             phone,
-            age,
+            birthday,
+            description,
+            profilePictureSource,
+            favArticles,
+            favDocs,
+            location,
+            paymentMethods,
+            meetings
         } = this.state;
 
-        let role = '';
+        let role = this.isDoctor ? ROLES.DOCTOR:ROLES.USER;
+
         if (isAdmin) {
             role = ROLES.ADMIN;
         }
@@ -61,8 +81,15 @@ class SignUpFormBase extends Component {
                     surname,
                     email,
                     phone,
-                    age,
                     role,
+                    birthday,
+                    description,
+                    profilePictureSource,
+                    favArticles,
+                    favDocs,
+                    location,
+                    paymentMethods,
+                    meetings
                 });
             })
             .then(() => {
@@ -92,6 +119,18 @@ class SignUpFormBase extends Component {
         this.setState({ [event.target.name]: event.target.value });
     };
 
+    handleInputChange(event) {
+        const target = event.target;
+        const value = target.name === 'isDoctor' ? target.checked : target.value;
+        const name = target.name;
+
+        this.isDoctor =  target.checked ? true: false;
+
+        this.setState({
+            [name]: value
+        });
+    }
+
     handleAlertClose = () => {
         this.setState({ isAlertOpen: false });
     };
@@ -105,14 +144,33 @@ class SignUpFormBase extends Component {
             email,
             passwordOne,
             passwordTwo,
-            age,
+            birthday,
             isAlertOpen,
             alertMessage,
             severity,
+            isDoctor,
+            profilePictureSource,
+            favArticles,
+            favDocs,
+            location,
+            paymentMethods,
+            meetings
         } = this.state;
 
+        function calculate_age(birthdate) {
+            var today = new Date();
+            var birthDate = new Date(birthdate);
+            var age_now = today.getFullYear() - birthDate.getFullYear();
+            var m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate()))
+            {
+                age_now--;
+            }
+            return age_now;
+        }
+
         const isInvalid =
-            age < 18 ||
+            calculate_age(birthday) < 18 ||
             username === '' ||
             passwordOne !== passwordTwo ||
             passwordOne === '' ||
@@ -126,6 +184,18 @@ class SignUpFormBase extends Component {
                         <h1>PSYCHOGRAM</h1>
                         <h3>Sign up</h3>
                         <br />
+                        <div className="form-group">
+                            <label id="labId">
+                                {' '}
+                                <strong>Doctor</strong>
+                            </label> &nbsp;
+                            <input
+                                name="isDoctor"
+                                type="checkbox"
+                                checked={this.isDoctor}
+                                onChange={this.handleInputChange}
+                            />
+                        </div>
                         <div className="form-group">
                             <label id="labId">
                                 {' '}
@@ -227,15 +297,15 @@ class SignUpFormBase extends Component {
                         <div className="form-group">
                             <label id="labId">
                                 {' '}
-                                <strong>Age</strong>
+                                <strong>Birthdate</strong>
                             </label>
                             <br />
-                            <input
-                                name="age"
-                                value={age}
+                            <TextField
+                                name="birthday"
+                                value={birthday}
+                                format={'yyyy-MM-dd'}
                                 onChange={this.onChange}
-                                type="number"
-                                placeholder="Only +18"
+                                type="date"
                             />
                         </div>
                         <div className="form-group">
