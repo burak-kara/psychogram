@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import { withAuthorization, withEmailVerification } from '../../_session';
 import { GoSearch } from 'react-icons/go';
 import Avatar from '@material-ui/core/Avatar';
+import { getKeys } from '../../_utility/functions';
 
-const PatientMeetingPage = () => {
+const PatientMeetingPage = props => {
+    const [meetings, setMeetings] = useState([]);
+
     const getCard = () => {
         return (
             <div className="card container-fluid">
@@ -39,6 +42,20 @@ const PatientMeetingPage = () => {
             </div>
         );
     };
+
+    useEffect(() => {
+        let meetingIds = [];
+        props.firebase
+            .getUserMeetings(props.authUser.uid)
+            .on('value', snapshot => {
+                meetingIds = getKeys(snapshot.val());
+                meetingIds.map(id => {
+                    props.firebase.meeting(id).on('value', snapshot => {
+                        console.log(snapshot.val());
+                    });
+                });
+            });
+    }, []);
 
     const renderMeetingList = () => {
         return (
@@ -80,6 +97,13 @@ const PatientMeetingPage = () => {
         );
     };
 
+    const onClick = () => {
+        props.firebase.messages().push({
+            message: 'test',
+            userId: props.authUser.uid,
+        });
+    };
+
     return (
         <div className="container-fluid patient-meeting-container">
             <div className="row h-100">
@@ -90,7 +114,9 @@ const PatientMeetingPage = () => {
                                 {renderSearch()}
                                 {renderMeetingList()}
                             </div>
-                            <div className="col-8 col-lg-9 padding-0">test</div>
+                            <div className="col-8 col-lg-9 padding-0">
+                                <button onClick={onClick}>Test</button>
+                            </div>
                         </div>
                     </div>
                 </div>
