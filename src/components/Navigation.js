@@ -1,29 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthUserContext } from '../_session';
 import * as ROUTES from '../_constants/routeConstants';
 import * as ROLES from '../_constants/roles';
 import SignOut from './signPages/sign-out/SignOut';
-import logo from '../assets/logo/logo.jpg';
 import { MenuItem, ListItemIcon, Menu } from '@material-ui/core';
 import { FaUserAlt, FaSignOutAlt } from 'react-icons/fa';
 import { IoIosMore } from 'react-icons/io';
 import { IconContext } from 'react-icons';
+import { withFirebase } from '../_firebase';
 
-const Navigation = () => (
+const Navigation = props => (
     <AuthUserContext.Consumer>
         {authUser =>
             authUser ? (
                 <>
-                    <NavigationAuth authUser={authUser} />
+                    <NavigationAuth
+                        authUser={authUser}
+                        firebase={props.firebase}
+                    />
                 </>
             ) : null
         }
     </AuthUserContext.Consumer>
 );
 
-const NavigationAuth = ({ authUser }) => {
-    const [anchorEl, setAnchorEl] = React.useState(null);
+const NavigationAuth = ({ authUser, firebase }) => {
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [logo, setLogo] = useState('');
 
     const handleClick = event => {
         setAnchorEl(event.currentTarget);
@@ -32,6 +36,15 @@ const NavigationAuth = ({ authUser }) => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    useEffect(() => {
+        firebase
+            .getLogo()
+            .getDownloadURL()
+            .then(url => {
+                setLogo(url);
+            });
+    }, []);
 
     return (
         <nav className="navbar navbar-expand-lg navigator">
@@ -135,4 +148,4 @@ const NavigationAuth = ({ authUser }) => {
     );
 };
 
-export default Navigation;
+export default withFirebase(Navigation);
