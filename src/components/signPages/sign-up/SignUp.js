@@ -128,9 +128,7 @@ class SignUpFormBase extends Component {
             isAlertOpen,
             alertMessage,
             severity,
-            isDoctor,
-            profilePictureSource,
-            location
+            isDoctor
         } = this.state;
 
         const calculateAge = () => {
