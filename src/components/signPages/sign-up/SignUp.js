@@ -6,6 +6,7 @@ import { withFirebase } from '../../../_firebase';
 import { compose } from 'recompose';
 import Alert from '../../Alert';
 import TextField from '@material-ui/core/TextField';
+import * as moment from "moment";
 
 const SignUp = () => (
     <div>
@@ -38,7 +39,6 @@ class SignUpFormBase extends Component {
             alertMessage: '',
             severity: '',
         };
-
     }
 
     onSubmit = event => {
@@ -55,7 +55,6 @@ class SignUpFormBase extends Component {
             location,
             isDoctor
         } = this.state;
-
 
         this.props.firebase
             .doCreateUserWithEmailAndPassword(email, passwordOne)
@@ -122,20 +121,8 @@ class SignUpFormBase extends Component {
             isDoctor
         } = this.state;
 
-        const calculateAge = () => {
-            var today = new Date();
-            var birthDate = new Date(birthday);
-            var age_now = today.getFullYear() - birthDate.getFullYear();
-            var m = today.getMonth() - birthDate.getMonth();
-            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate()))
-            {
-                age_now--;
-            }
-            return age_now;
-        };
-
         const isInvalid =
-            calculateAge(birthday) < 18 ||
+            moment.duration(moment().diff(birthday)).asYears() < 18 ||
             username === '' ||
             passwordOne !== passwordTwo ||
             passwordOne === '' ||
