@@ -129,7 +129,7 @@ const NavigationAuth = ({ authUser, firebase }) => {
                                     <FaUserAlt fontSize="small" />
                                 </ListItemIcon>
                                 <li>
-                                    <Link to={ROUTES.PROFILE}>Profile</Link>
+                                    <Link to={ROUTES.ADMIN}>Admin</Link>
                                 </li>
                             </MenuItem>
                         ) : null}
