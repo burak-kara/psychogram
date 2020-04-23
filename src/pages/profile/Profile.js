@@ -39,9 +39,8 @@ const Profile = props => {
     };
 
     useEffect(() => {
-        const uid = JSON.parse(localStorage.getItem('authUser')).uid;
-        if (uid !== '') {
-            props.firebase.user(uid).on('value', snapshot => {
+        if (props.authUser && props.authUser.uid !== '') {
+            props.firebase.user(props.authUser.uid).on('value', snapshot => {
                 setUser(snapshot.val());
             });
         }
