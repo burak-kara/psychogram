@@ -1,14 +1,17 @@
 import React from 'react';
 import ChatCard from './ChatCard';
+import * as ROLES from '../../_constants/roles';
 
 const MeetingList = props => {
-    const { chatPairs, meetings } = props;
+    const { chatPairs, meetings, authUser } = props;
 
     const listMeetings = () => {
         if (chatPairs && meetings) {
             return chatPairs.map(value => {
-                let meeting = meetings.find(
-                    item => item.doctorId === value.uid
+                let meeting = meetings.find(item =>
+                    authUser.role === ROLES.PATIENT
+                        ? item.doctorId === value.uid
+                        : item.userId === value.uid
                 );
                 return <ChatCard user={value} message={meeting.lastMessage} />;
             });
