@@ -38,6 +38,12 @@
                 .card {
                     height: 60px;
                     cursor: pointer;
+
+                    .message {
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
                 }
 
                 .card:hover {

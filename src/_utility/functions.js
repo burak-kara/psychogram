@@ -24,7 +24,7 @@ export const dateAsString = date => {
     });
 };
 
-export const formatDate = date => moment(date).format('HH:mm');
+export const formatDateAsHours = date => moment(date).format('HH:mm');
 
 export const snapshotToArray = snapshot => {
     let array = [];
