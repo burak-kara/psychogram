@@ -7,6 +7,7 @@ import { compose } from 'recompose';
 import { withAuthorization, withEmailVerification } from '../../_session';
 
 const Profile = props => {
+    const { authUser, firebase } = props;
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [alertOpen, setAlertsOpen] = useState(false);
     const [message, setMessage] = useState('');
@@ -39,12 +40,12 @@ const Profile = props => {
     };
 
     useEffect(() => {
-        if (props.authUser && props.authUser.uid !== '') {
-            props.firebase.user(props.authUser.uid).on('value', snapshot => {
+        if (authUser && authUser.uid !== '') {
+            firebase.user(authUser.uid).on('value', snapshot => {
                 setUser(snapshot.val());
             });
         }
-    }, []);
+    }, [authUser, firebase]);
 
     return user ? (
         <div>
