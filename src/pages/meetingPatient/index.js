@@ -1,107 +1,55 @@
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import { withAuthorization, withEmailVerification } from '../../_session';
-import { GoSearch } from 'react-icons/go';
-import Avatar from '@material-ui/core/Avatar';
-import { getKeys } from '../../_utility/functions';
+import { snapshotToArray } from '../../_utility/functions';
+import Search from './Search';
+import MeetingList from './MeetingList';
+import * as ROLES from '../../_constants/roles';
+import moment from 'moment';
 
 const PatientMeetingPage = props => {
+    const { authUser, firebase } = props;
     const [meetings, setMeetings] = useState([]);
-
-    const getCard = () => {
-        return (
-            <div className="card container-fluid">
-                <div className="row h-100">
-                    <div className="col-2 d-flex align-items-center justify-content-center">
-                        <Avatar
-                            alt="Remy Sharp"
-                            src="https://www.vincentvangogh.org/images/self-portrait.jpg"
-                        />
-                    </div>
-                    <div className="col-6">
-                        <div className="row font-16 font-weight-normal">
-                            <span>Burak Kara</span>
-                        </div>
-                        <div className="row font-14 font-weight-lighter font-italic">
-                            <span>Son Mesaj</span>
-                        </div>
-                    </div>
-                    <div className="col-4">
-                        <div className="row">
-                            <div className="col-12 font-16 font-weight-light text-right pr-1">
-                                <span>22.10.2020</span>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-12 font-14 font-weight-lighter font-italic text-right pr-1">
-                                <span>Bugün</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    };
+    const [chatPairs, setChatPairs] = useState([]);
 
     useEffect(() => {
-        let meetingIds = [];
-        props.firebase
-            .getUserMeetings(props.authUser.uid)
+        firebase
+            .meetings()
+            .orderByChild('userId')
+            .equalTo(authUser.uid)
             .on('value', snapshot => {
-                meetingIds = getKeys(snapshot.val());
-                meetingIds.map(id => {
-                    props.firebase.meeting(id).on('value', snapshot => {
-                        console.log(snapshot.val());
-                    });
+                setMeetings(snapshotToArray(snapshot));
+                setChatPairs([]);
+                meetings.map(meeting => {
+                    const uid =
+                        authUser.role === ROLES.PATIENT
+                            ? meeting.doctorId
+                            : meeting.userId;
+                    firebase
+                        .user(uid)
+                        .once('value')
+                        .then(snapshot => snapshot.val())
+                        .then(data => {
+                            setChatPairs(chatPairs => [
+                                ...chatPairs,
+                                { uid, ...data },
+                            ]);
+                        });
                 });
             });
-    }, []);
-
-    const renderMeetingList = () => {
-        return (
-            <div className="row list-row">
-                <div className="col-12 padding-0">
-                    {getCard()}
-                    {getCard()}
-                    {getCard()}
-                    {getCard()}
-                    {getCard()}
-                    {getCard()}
-                    {getCard()}
-                    {getCard()}
-                    {getCard()}
-                </div>
-            </div>
-        );
-    };
-
-    const renderSearch = () => {
-        return (
-            <div className="row search-row border-bottom">
-                <div className="input-group col-12 padding-0">
-                    <input
-                        type="text"
-                        className="form-control input-lg input"
-                        placeholder="Search"
-                    />
-                    <span className="input-group-btn">
-                        <button
-                            className="btn btn-primary button"
-                            type="button"
-                        >
-                            <GoSearch />
-                        </button>
-                    </span>
-                </div>
-            </div>
-        );
-    };
+    }, [authUser, firebase]);
 
     const onClick = () => {
-        props.firebase.messages().push({
-            message: 'test',
-            userId: props.authUser.uid,
-        });
+        props.firebase
+            .meeting(
+                'p5p8ilVyjhNPkJF5zRLP6UUFoWh1_dC2wgD4HhbZnWAz4nKwAJlLA8JJ2'
+            )
+            .child('lastMessage')
+            .set({
+                message: 'Test messagee a bit long',
+                userId: props.authUser.uid,
+                date: moment().format(),
+            });
     };
 
     return (
@@ -111,8 +59,12 @@ const PatientMeetingPage = props => {
                     <div className="container-fluid h-100 main-container">
                         <div className="row h-100">
                             <div className="col-4 col-lg-3 border-right meetings-list-container">
-                                {renderSearch()}
-                                {renderMeetingList()}
+                                <Search />
+                                <MeetingList
+                                    chatPairs={chatPairs}
+                                    meetings={meetings}
+                                    {...props}
+                                />
                             </div>
                             <div className="col-8 col-lg-9 padding-0">
                                 <button onClick={onClick}>Test</button>
