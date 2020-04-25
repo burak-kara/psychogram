@@ -20,7 +20,6 @@ const PatientMeetingPage = props => {
             .equalTo(authUser.uid)
             .on('value', snapshot => {
                 setMeetings(snapshotToArray(snapshot));
-                console.log(snapshotToArray(snapshot));
                 setChatPairs([]);
                 meetings.map(meeting => {
                     const uid =
@@ -48,7 +47,8 @@ const PatientMeetingPage = props => {
             )
             .child('lastMessage')
             .set({
-                message: 'Test messagee a bit long',
+                message:
+                    'van gogh sent messagegogh sent messagegogh sent message',
                 userId: props.authUser.uid,
                 date: moment().format(),
             });
@@ -60,7 +60,7 @@ const PatientMeetingPage = props => {
                 <div className="col m-lg-4 m-md-3 m-sm-2 m-m-0 padding-0">
                     <div className="container-fluid h-100 main-container">
                         <div className="row h-100">
-                            <div className="col-4 col-lg-3 border-right meetings-list-container">
+                            <div className="col-7 col-lg-3 border-right meetings-list-container">
                                 <Search />
                                 <MeetingList
                                     chatPairs={chatPairs}
