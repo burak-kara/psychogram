@@ -13,12 +13,14 @@ const PatientMeetingPage = props => {
     const [chatPairs, setChatPairs] = useState([]);
 
     useEffect(() => {
+        const sort = authUser.role === ROLES.PATIENT ? 'userId' : 'doctorId';
         firebase
             .meetings()
-            .orderByChild('userId')
+            .orderByChild(sort)
             .equalTo(authUser.uid)
             .on('value', snapshot => {
                 setMeetings(snapshotToArray(snapshot));
+                console.log(snapshotToArray(snapshot));
                 setChatPairs([]);
                 meetings.map(meeting => {
                     const uid =
