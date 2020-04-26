@@ -1,12 +1,17 @@
+@import '../../../_utility/colors';
+
 .patient-meeting-container {
     height: 696px;
+    background-color: $color-light-green-1;
 
     .main-container {
-        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0 5px 0 $color-green-3;
         border-radius: 5px;
+        background-color: $color-light-green-0;
 
         .meetings-list-container {
             height: 100%;
+            box-shadow: inset 0 0 3px 0 $color-green-3;
 
             .search-row {
                 padding: 3px;
@@ -24,7 +29,7 @@
                     background: none;
                     box-shadow: none;
                     border: 0;
-                    color: #666666;
+                    color: $color-green-1;
                     padding: 0 8px 0 10px;
                 }
 
@@ -36,7 +41,7 @@
 
             .list-row {
                 .card {
-                    height: 60px;
+                    height: 72px;
                     cursor: pointer;
 
                     .message {
@@ -47,7 +52,43 @@
                 }
 
                 .card:hover {
-                    background-color: rgba(0, 0, 0, 0.1);
+                    //background-color: $color-light-green-1;
+                    box-shadow: 0 0 3px 0 $color-green-3;
+                    z-index: 2 !important;
+                }
+            }
+        }
+
+        .chat-section-container {
+            .text-field {
+                *::-webkit-scrollbar {
+                    width: 0.7em;
+                    border-radius: 10px;
+                    background-color: $color-green-0;
+                }
+                *::-webkit-scrollbar-track {
+                    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
+                }
+                *::-webkit-scrollbar-thumb {
+                    background-color: $color-green-3;
+                    border-radius: 5px;
+                    outline: 1px solid slategrey;
+                }
+
+                .send-btn {
+                    background-color: $color-green-0;
+
+                    .send-icon {
+                        color: $color-green-3;
+                    }
+
+                    &:hover {
+                        background-color: $color-green-3;
+
+                        .send-icon {
+                            color: $color-green-0;
+                        }
+                    }
                 }
             }
         }

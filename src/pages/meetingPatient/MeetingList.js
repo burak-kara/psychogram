@@ -1,5 +1,5 @@
 import React from 'react';
-import ChatCard from './ChatCard';
+import MeetingCard from './MeetingCard';
 import * as ROLES from '../../_constants/roles';
 
 const MeetingList = props => {
@@ -7,14 +7,18 @@ const MeetingList = props => {
 
     const listMeetings = () => {
         if (chatPairs && meetings) {
-            return chatPairs.map(value => {
-                let meeting = meetings.find(item =>
+            let cards = [];
+            for (let [key, value] of chatPairs) {
+                const meeting = meetings.find(item =>
                     authUser.role === ROLES.PATIENT
-                        ? item.doctorId === value.uid
-                        : item.userId === value.uid
+                        ? item.doctorId === key
+                        : item.userId === key
                 );
-                return <ChatCard user={value} message={meeting.lastMessage} />;
-            });
+                cards.push(
+                    <MeetingCard user={value} message={meeting.lastMessage} />
+                );
+            }
+            return cards;
         } else {
             // TODO styling
             return <div className="text-center">Konuşma Bulunamadı</div>;

@@ -2,7 +2,7 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import { dateAsString, formatDateAsHours } from '../../_utility/functions';
 
-const ChatCard = props => {
+const MeetingCard = props => {
     const { user, message } = props;
 
     const renderDateCol = () => {
@@ -23,7 +23,7 @@ const ChatCard = props => {
                     ''
                 )}
                 <div className="row">
-                    <div className="col-12 font-14 font-weight-lighter font-italic text-right pr-2">
+                    <div className="col-12 font-14 font-weight-lighter text-right pt-1 pr-2">
                         <span>{formatted}</span>
                     </div>
                 </div>
@@ -57,4 +57,4 @@ const ChatCard = props => {
     ) : null;
 };
 
-export default ChatCard;
+export default MeetingCard;
