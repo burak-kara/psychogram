@@ -11,6 +11,7 @@ const PatientMeetingPage = props => {
     const { authUser, firebase } = props;
     const [meetings, setMeetings] = useState([]);
     const [chatPairs, setChatPairs] = useState(new Map());
+    const [currentMeeting, setCurrentMeeting] = useState(null);
 
     useEffect(() => {
         // TODO loading indicator
@@ -37,23 +38,36 @@ const PatientMeetingPage = props => {
             });
     }, [authUser, firebase]);
 
+    const handleMeetingClick = meeting => {
+        setCurrentMeeting(meeting);
+    };
+
+    const renderChatSection = () => {
+        return (
+            <div className="col chat-section-container">
+                {currentMeeting ? (
+                    <ChatSection {...props} meeting={currentMeeting} />
+                ) : null}
+            </div>
+        );
+    };
+
     return (
         <div className="container-fluid patient-meeting-container">
             <div className="row h-100">
-                <div className="col m-lg-4 m-md-3 m-sm-2 m-m-0 padding-0">
+                <div className="col padding-0 ">
                     <div className="container-fluid h-100 main-container">
                         <div className="row h-100">
-                            <div className="col-7 col-lg-3 border-right meetings-list-container">
+                            <div className="col border-right meetings-list-container">
                                 <Search />
                                 <MeetingList
+                                    onClick={handleMeetingClick}
                                     chatPairs={chatPairs}
                                     meetings={meetings}
                                     authUser={authUser}
                                 />
                             </div>
-                            <div className="col-5 col-lg-9 chat-section-container">
-                                <ChatSection {...props} />
-                            </div>
+                            {renderChatSection()}
                         </div>
                     </div>
                 </div>

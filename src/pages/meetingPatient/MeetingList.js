@@ -3,7 +3,7 @@ import MeetingCard from './MeetingCard';
 import * as ROLES from '../../_constants/roles';
 
 const MeetingList = props => {
-    const { chatPairs, meetings, authUser } = props;
+    const { chatPairs, meetings, authUser, onClick } = props;
 
     const listMeetings = () => {
         if (chatPairs && meetings) {
@@ -15,7 +15,12 @@ const MeetingList = props => {
                         : item.userId === key
                 );
                 cards.push(
-                    <MeetingCard user={value} message={meeting.lastMessage} />
+                    <div onClick={() => onClick(meeting)}>
+                        <MeetingCard
+                            user={value}
+                            message={meeting.lastMessage}
+                        />
+                    </div>
                 );
             }
             return cards;
