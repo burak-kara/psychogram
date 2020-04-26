@@ -1,7 +1,7 @@
 import React from 'react';
-import { compose } from 'recompose';
 import psycho from '../../assets/logo/psycho.jpg';
-import { withAuthorization } from '../../_session';
+import { withFirebase } from '../../_firebase';
+import { Link, withRouter } from 'react-router-dom';
 
 const Home = () => {
     return (
@@ -75,10 +75,39 @@ const Home = () => {
             </article>
             <footer>
                 <p>©Copyright 2020 by CS476. All rights reversed.</p>
+                <p>
+                    <h>
+                        <Link
+                            id="about-us"
+                            className="common-link"
+                            to={'/about-us'}
+                        >
+                            About Us
+                        </Link>
+                    </h>
+                    <h>
+                        <Link
+                            id="contact"
+                            className="common-link"
+                            to={'/contact'}
+                        >
+                            Contact
+                        </Link>
+                    </h>
+
+                    <Link id="faq" className="common-link" to={'/faq'}>
+                        FAQ
+                    </Link>
+                    <Link id="home" className="common-link" to={''}>
+                        Home
+                    </Link>
+                    <Link id="home" className="common-link" to={'/sign-in'}>
+                        Sign in
+                    </Link>
+                </p>
             </footer>
         </div>
     );
 };
-const condition = authUser => authUser;
 
-export default compose(withAuthorization(condition))(Home);
+export default withFirebase(Home);

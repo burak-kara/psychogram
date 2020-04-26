@@ -194,12 +194,43 @@ class SignInFormBase extends Component {
                     severity={severity}
                     duration={5000}
                 />
+                <footer>
+                    <p>
+                        <h>
+                            <Link
+                                id="about-us"
+                                className="common-link"
+                                to={'/about-us'}
+                            >
+                                About Us
+                            </Link>
+                        </h>
+                        <h>
+                            <Link
+                                id="contact"
+                                className="common-link"
+                                to={'/contact'}
+                            >
+                                Contact
+                            </Link>
+                        </h>
+
+                        <Link id="faq" className="common-link" to={'/faq'}>
+                            FAQ
+                        </Link>
+                        <Link id="home" className="common-link" to={''}>
+                            Home
+                        </Link>
+                        <Link id="home" className="common-link" to={'/sign-in'}>
+                            Sign in
+                        </Link>
+                    </p>
+                </footer>
             </div>
         );
     }
 }
 
 const SignInForm = compose(withRouter, withFirebase)(SignInFormBase);
-
 export default SignIn;
 export { SignInForm };
