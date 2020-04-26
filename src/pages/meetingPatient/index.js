@@ -5,22 +5,22 @@ import { snapshotToArray } from '../../_utility/functions';
 import Search from './Search';
 import MeetingList from './MeetingList';
 import * as ROLES from '../../_constants/roles';
-import moment from 'moment';
+import ChatSection from './ChatSection';
 
 const PatientMeetingPage = props => {
     const { authUser, firebase } = props;
     const [meetings, setMeetings] = useState([]);
-    const [chatPairs, setChatPairs] = useState([]);
+    const [chatPairs, setChatPairs] = useState(new Map());
 
     useEffect(() => {
+        // TODO loading indicator
         const sort = authUser.role === ROLES.PATIENT ? 'userId' : 'doctorId';
         firebase
             .meetings()
             .orderByChild(sort)
             .equalTo(authUser.uid)
             .on('value', snapshot => {
-                setMeetings(snapshotToArray(snapshot));
-                setChatPairs([]);
+                setMeetings([...snapshotToArray(snapshot)]);
                 meetings.map(meeting => {
                     const uid =
                         authUser.role === ROLES.PATIENT
@@ -31,28 +31,11 @@ const PatientMeetingPage = props => {
                         .once('value')
                         .then(snapshot => snapshot.val())
                         .then(data => {
-                            setChatPairs(chatPairs => [
-                                ...chatPairs,
-                                { uid, ...data },
-                            ]);
+                            setChatPairs(new Map(chatPairs.set(uid, data)));
                         });
                 });
             });
     }, [authUser, firebase]);
-
-    const onClick = () => {
-        props.firebase
-            .meeting(
-                'p5p8ilVyjhNPkJF5zRLP6UUFoWh1_dC2wgD4HhbZnWAz4nKwAJlLA8JJ2'
-            )
-            .child('lastMessage')
-            .set({
-                message:
-                    'van gogh sent messagegogh sent messagegogh sent message',
-                userId: props.authUser.uid,
-                date: moment().format(),
-            });
-    };
 
     return (
         <div className="container-fluid patient-meeting-container">
@@ -65,11 +48,11 @@ const PatientMeetingPage = props => {
                                 <MeetingList
                                     chatPairs={chatPairs}
                                     meetings={meetings}
-                                    {...props}
+                                    authUser={authUser}
                                 />
                             </div>
-                            <div className="col-8 col-lg-9 padding-0">
-                                <button onClick={onClick}>Test</button>
+                            <div className="col-5 col-lg-9 chat-section-container">
+                                <ChatSection {...props} />
                             </div>
                         </div>
                     </div>
