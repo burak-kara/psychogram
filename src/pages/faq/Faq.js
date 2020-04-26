@@ -6,8 +6,8 @@ import {
     AccordionItemButton,
     AccordionItemPanel,
 } from 'react-accessible-accordion';
-import { compose } from 'recompose';
-import { withAuthorization } from '../../_session';
+import { withFirebase } from '../../_firebase';
+import { Link, withRouter } from 'react-router-dom';
 
 const FAQ = props => {
     const [faqs, setFaqs] = useState([]);
@@ -34,8 +34,38 @@ const FAQ = props => {
               ))
             : null;
 
-    return <Accordion>{renderAccordionItems()}</Accordion>;
-};
-const condition = authUser => authUser;
+    return (
+        <footer>
+            <p>
+                <Accordion>{renderAccordionItems()}</Accordion>
 
-export default compose(withAuthorization(condition))(FAQ);
+                <h>
+                    <Link
+                        id="about-us"
+                        className="common-link"
+                        to={'/about-us'}
+                    >
+                        About Us
+                    </Link>
+                </h>
+                <h>
+                    <Link id="contact" className="common-link" to={'/contact'}>
+                        Contact
+                    </Link>
+                </h>
+
+                <Link id="faq" className="common-link" to={'/faq'}>
+                    FAQ
+                </Link>
+                <Link id="home" className="common-link" to={''}>
+                    Home
+                </Link>
+                <Link id="home" className="common-link" to={'/sign-in'}>
+                    Sign in
+                </Link>
+            </p>
+        </footer>
+    );
+};
+
+export default withFirebase(FAQ);
