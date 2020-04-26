@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import { ChatFeed, Message } from 'react-chat-ui';
 import MessageTextField from './TextField';
-import { TextField } from '@material-ui/core';
 
 const ChatSection = props => {
     const { authUser, firebase } = props;
@@ -12,8 +11,11 @@ const ChatSection = props => {
             id: 1,
             message: "I'm the recipient! (The person you're talking to)",
             senderName: 'gray',
-        }), // Gray bubble
-        new Message({ id: 0, message: "I'm you -- the blue bubble!" }), // Blue bubble
+        }),
+        new Message({
+            id: 0,
+            message: "I'm yo/ Boolean: list of message objects",
+        }), // Blue bubble
     ]);
 
     const sendMessage = message => {
@@ -48,8 +50,14 @@ const ChatSection = props => {
     };
 
     const handleMessageType = e => {
-        console.log(e.target.value);
         setNewMessage(e.target.value);
+    };
+
+    const handleEnter = e => {
+        if (e.key === 'Enter') {
+            setNewMessage('');
+            e.preventDefault();
+        }
     };
 
     const handleMessageSend = () => {
@@ -80,6 +88,7 @@ const ChatSection = props => {
                 <MessageTextField
                     value={newMessage}
                     onChange={handleMessageType}
+                    onEnter={handleEnter}
                     onSend={handleMessageSend}
                 />
             </div>

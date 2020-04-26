@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { TextField, InputAdornment } from '@material-ui/core';
 import { IoIosSend } from 'react-icons/all';
@@ -28,7 +28,7 @@ const styles = () => ({
 });
 
 const MessageTextField = props => {
-    const { value, onChange, classes, onSend } = props;
+    const { value, classes, onChange, onEnter, onSend } = props;
 
     return (
         <TextField
@@ -41,6 +41,7 @@ const MessageTextField = props => {
             rowsMax={4}
             value={value}
             onChange={onChange}
+            onKeyDown={onEnter}
             InputProps={{
                 endAdornment: (
                     <InputAdornment position="end">
