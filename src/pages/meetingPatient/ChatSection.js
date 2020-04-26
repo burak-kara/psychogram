@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { ChatFeed, Message } from 'react-chat-ui';
 import MessageTextField from './TextField';
 
 const ChatSection = props => {
-    const { authUser, firebase } = props;
+    const { authUser, firebase, meeting } = props;
     const [newMessage, setNewMessage] = useState('');
     const [messages, setMessages] = useState([
         new Message({
@@ -17,36 +17,30 @@ const ChatSection = props => {
             message: "I'm yo/ Boolean: list of message objects",
         }), // Blue bubble
     ]);
+    const [test, setTest] = useState('test');
+
+    useEffect(() => {
+        if (meeting) {
+            if (meeting.messages) {
+                console.log(meeting.messages);
+            } else {
+                // TODO start new meeting
+            }
+        } else {
+            //    TODO loading indicator
+        }
+    }, [meeting]);
 
     const sendMessage = message => {
         firebase
-            .meeting(
-                'p5p8ilVyjhNPkJF5zRLP6UUFoWh1_dC2wgD4HhbZnWAz4nKwAJlLA8JJ2'
-            )
+            .meeting(meeting.key)
             .child('messages')
-            .push(message);
-    };
-
-    const setLastMessage = message => {
-        firebase
-            .meeting(
-                'p5p8ilVyjhNPkJF5zRLP6UUFoWh1_dC2wgD4HhbZnWAz4nKwAJlLA8JJ2'
-            )
-            .child('lastMessage')
+            .child(moment().valueOf().toString())
             .set(message);
     };
 
-    const onClick = () => {
-        const message = {
-            message: `${authUser.role} send message at ${moment().format(
-                'HH:mm:s'
-            )}`,
-            senderId: authUser.uid,
-            date: moment().format(),
-        };
-
-        sendMessage(message);
-        setLastMessage(message);
+    const setLastMessage = message => {
+        firebase.meeting(meeting.key).child('lastMessage').set(message);
     };
 
     const handleMessageType = e => {
@@ -55,18 +49,28 @@ const ChatSection = props => {
 
     const handleEnter = e => {
         if (e.key === 'Enter') {
-            setNewMessage('');
+            handleMessageSend();
             e.preventDefault();
         }
     };
 
     const handleMessageSend = () => {
-        alert('clicked');
+        if (newMessage !== '') {
+            const message = {
+                message: newMessage,
+                senderId: authUser.uid,
+                date: moment().format(),
+            };
+
+            sendMessage(message);
+            setLastMessage(message);
+            setNewMessage('');
+        }
     };
 
     return (
-        <div className="row d-flex align-items-end h-100">
-            <div className="col-12">
+        <div className="row h-100 bg-success">
+            <div className="col-12 bg-danger align-self-end">
                 <ChatFeed
                     messages={messages} // Boolean: list of message objects
                     // isTyping={this.state.is_typing} // Boolean: is the recipient typing
@@ -84,7 +88,7 @@ const ChatSection = props => {
                     }}
                 />
             </div>
-            <div className="col-12 padding-0 border-top pb-1">
+            <div className="col-12 text-field-container border-top pb-1 align-self-end">
                 <MessageTextField
                     value={newMessage}
                     onChange={handleMessageType}

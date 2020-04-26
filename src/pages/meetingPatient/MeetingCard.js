@@ -8,7 +8,7 @@ const MeetingCard = props => {
     const renderDateCol = () => {
         const formatted = message ? dateAsString(message.date) : ' ';
         return (
-            <div className="col-4 col-md-3">
+            <div className="col-4 col-md-3 date-info">
                 {formatted.includes('ago') ? (
                     <div className="row">
                         <div className="col-12 font-14 font-weight-light text-right pt-1 pr-2">
@@ -34,12 +34,12 @@ const MeetingCard = props => {
     return user ? (
         <div className="container-fluid card">
             <div className="row h-100">
-                <div className="col-2 d-flex align-items-center justify-content-center">
+                <div className="col col-sm-2 d-flex align-items-center justify-content-center">
                     <Avatar src={user.profilePictureSource}>
                         {`${user.name[0]}${user.surname[0]}`}
                     </Avatar>
                 </div>
-                <div className="col-6 col-md-7">
+                <div className="col-6 col-md-7 message-info">
                     <div className="row">
                         <div className="col-12 font-16 font-weight-normal padding-0">
                             <span>{`${user.name} ${user.surname}`}</span>

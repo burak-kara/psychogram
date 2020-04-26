@@ -1,17 +1,17 @@
 @import '../../../_utility/colors';
 
 .patient-meeting-container {
-    height: 696px;
     background-color: $color-light-green-1;
 
     .main-container {
         box-shadow: 0 0 5px 0 $color-green-3;
         border-radius: 5px;
         background-color: $color-light-green-0;
+        max-width: 98% !important;
 
         .meetings-list-container {
             height: 100%;
-            box-shadow: inset 0 0 3px 0 $color-green-3;
+            box-shadow: 0 0 3px 0 $color-green-3;
 
             .search-row {
                 padding: 3px;
@@ -60,33 +60,38 @@
         }
 
         .chat-section-container {
-            .text-field {
-                *::-webkit-scrollbar {
-                    width: 0.7em;
-                    border-radius: 10px;
-                    background-color: $color-green-0;
-                }
-                *::-webkit-scrollbar-track {
-                    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
-                }
-                *::-webkit-scrollbar-thumb {
-                    background-color: $color-green-3;
-                    border-radius: 5px;
-                    outline: 1px solid slategrey;
-                }
+            .text-field-container {
+                padding: 0;
+                height: 55px !important;
 
-                .send-btn {
-                    background-color: $color-green-0;
-
-                    .send-icon {
-                        color: $color-green-3;
+                .text-field {
+                    *::-webkit-scrollbar {
+                        width: 0.7em;
+                        border-radius: 10px;
+                        background-color: $color-green-0;
+                    }
+                    *::-webkit-scrollbar-track {
+                        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
+                    }
+                    *::-webkit-scrollbar-thumb {
+                        background-color: $color-green-3;
+                        border-radius: 5px;
+                        outline: 1px solid slategrey;
                     }
 
-                    &:hover {
-                        background-color: $color-green-3;
+                    .send-btn {
+                        background-color: $color-green-0;
 
                         .send-icon {
-                            color: $color-green-0;
+                            color: $color-green-3;
+                        }
+
+                        &:hover {
+                            background-color: $color-green-3;
+
+                            .send-icon {
+                                color: $color-green-0;
+                            }
                         }
                     }
                 }
@@ -96,5 +101,115 @@
 
     .padding-0 {
         padding: 0 !important;
+    }
+}
+
+@media only screen and (min-width: 350px) {
+    .patient-meeting-container {
+        height: calc(100vh - 75px);
+    }
+
+    .main-container {
+        margin: 5px 1%;
+    }
+
+    .meetings-list-container {
+        min-width: 10% !important;
+        max-width: 20% !important;
+
+        .message-info {
+            display: none;
+        }
+
+        .date-info {
+            display: none;
+        }
+    }
+    .chat-section-container {
+        max-width: 80% !important;
+    }
+
+    .search-row {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    .meetings-list-container {
+        min-width: 20% !important;
+        max-width: 30% !important;
+
+        .message-info {
+            display: flex;
+        }
+
+        .date-info {
+            display: flex;
+        }
+    }
+    .chat-section-container {
+        max-width: 80% !important;
+    }
+
+    .search-row {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .meetings-list-container {
+        min-width: 20% !important;
+        max-width: 30% !important;
+    }
+    .chat-section-container {
+        max-width: 80% !important;
+    }
+
+    .search-row {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    .patient-meeting-container {
+        height: calc(100vh - 81px);
+    }
+
+    .main-container {
+        margin: 8px 1%;
+    }
+
+    .meetings-list-container {
+        min-width: 20% !important;
+        max-width: 30% !important;
+    }
+    .chat-section-container {
+        max-width: 80% !important;
+    }
+
+    .search-row {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .patient-meeting-container {
+        height: calc(100vh - 85px);
+    }
+
+    .main-container {
+        margin: 10px 1%;
+    }
+
+    .meetings-list-container {
+        min-width: 20% !important;
+        max-width: 30% !important;
+    }
+    .chat-section-container {
+        max-width: 80% !important;
+    }
+
+    .search-row {
+        display: none;
     }
 }
