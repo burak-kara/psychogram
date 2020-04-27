@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { useState } from 'react';
 
 // Returns data keys from snapshot.val()
 export const getKeys = data => Object.keys(data);
@@ -35,6 +36,7 @@ export const snapshotToArray = snapshot => {
     });
     return array;
 };
+
 export const snapshotToData = (snapshot, keyField) => {
     if (!snapshot.exists) {
         return undefined;
@@ -52,3 +54,13 @@ export const snapshotToData = (snapshot, keyField) => {
 
 export const isObject = val =>
     val != null && typeof val === 'object' && Array.isArray(val) === false;
+
+export const useAsyncState = initialValue => {
+    const [value, setValue] = useState(initialValue);
+    const setter = x =>
+        new Promise(resolve => {
+            setValue(x);
+            resolve(x);
+        });
+    return [value, setter];
+};

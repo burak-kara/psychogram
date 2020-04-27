@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { TextField, InputAdornment } from '@material-ui/core';
 import { IoIosSend } from 'react-icons/all';
@@ -37,8 +37,6 @@ const MessageTextField = props => {
             placeholder="Type a message"
             fullWidth
             variant="outlined"
-            multiline
-            rowsMax={4}
             value={value}
             onChange={onChange}
             onKeyDown={onEnter}

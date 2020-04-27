@@ -109,19 +109,11 @@ class Firebase {
 
     users = () => this.db.ref('users');
 
-    getUserMeetings = userId => this.db.ref(`users/${userId}/meetings`);
-
     meeting = uid => this.db.ref(`meetings/${uid}`);
 
     meetings = () => this.db.ref('meetings');
 
-    meetingUserEnrolments = id => this.db.ref(`meeting_user_enrolments/${id}`);
-
-    userMeetingEnrolments = id => this.db.ref(`user_meeting_enrolments/${id}`);
-
-    message = uid => this.db.ref(`messages/${uid}`);
-
-    messages = () => this.db.ref('messages');
+    messages = uid => this.db.ref(`messages/${uid}`);
     // Add new backend methods here
 }
 
