@@ -43,11 +43,29 @@
                 .card {
                     height: 72px;
                     cursor: pointer;
+                    color: $color-green-3;
 
-                    .message {
-                        white-space: nowrap;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
+                    .picture-container {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                    .message-info {
+                        .name {
+                            font-size: 16px;
+                            font-weight: normal;
+                            padding: 0 !important;
+                        }
+
+                        .message {
+                            font-size: 14px;
+                            padding: 0 !important;
+                            font-weight: lighter;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
                     }
                 }
 
@@ -62,7 +80,7 @@
         .chat-section-container {
             .text-field-container {
                 padding: 0;
-                height: 55px !important;
+                min-height: 56px !important;
 
                 .text-field {
                     *::-webkit-scrollbar {
@@ -96,6 +114,9 @@
                     }
                 }
             }
+
+            .chat-feed-container {
+            }
         }
     }
 
@@ -104,7 +125,7 @@
     }
 }
 
-@media only screen and (min-width: 350px) {
+@media only screen and (min-width: 300px) {
     .patient-meeting-container {
         height: calc(100vh - 75px);
     }
@@ -115,18 +136,23 @@
 
     .meetings-list-container {
         min-width: 10% !important;
-        max-width: 20% !important;
+        max-width: 15% !important;
+
+        .picture-container {
+            max-width: 100% !important;
+        }
 
         .message-info {
-            display: none;
+            display: none !important;
         }
 
         .date-info {
-            display: none;
+            display: none !important;
         }
     }
+
     .chat-section-container {
-        max-width: 80% !important;
+        max-width: 85% !important;
     }
 
     .search-row {
@@ -134,17 +160,31 @@
     }
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 576px) {
     .meetings-list-container {
         min-width: 20% !important;
         max-width: 30% !important;
 
+        .picture-container {
+            max-width: 40% !important;
+        }
+
         .message-info {
-            display: flex;
+            display: flex !important;
+
+            .name {
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .message {
+                display: none !important;
+            }
         }
 
         .date-info {
-            display: flex;
+            display: none !important;
         }
     }
     .chat-section-container {
@@ -160,7 +200,33 @@
     .meetings-list-container {
         min-width: 20% !important;
         max-width: 30% !important;
+
+        .picture-container {
+            max-width: 30% !important;
+        }
+
+        .message-info {
+            display: grid !important;
+
+            .name {
+                display: flex !important;
+                align-items: center;
+                justify-content: start;
+            }
+
+            .message {
+                display: flex !important;
+                align-items: start;
+                justify-content: start;
+                max-width: 150px !important;
+            }
+        }
+
+        .date-info {
+            display: none !important;
+        }
     }
+
     .chat-section-container {
         max-width: 80% !important;
     }
@@ -181,14 +247,32 @@
 
     .meetings-list-container {
         min-width: 20% !important;
-        max-width: 30% !important;
+        max-width: 40% !important;
+
+        .picture-container {
+            max-width: 20% !important;
+        }
+
+        .message-info {
+            max-width: 50% !important;
+
+            .message {
+                max-width: 200px !important;
+            }
+        }
+
+        .date-info {
+            max-width: 30% !important;
+            display: grid !important;
+        }
     }
+
     .chat-section-container {
-        max-width: 80% !important;
+        max-width: 70% !important;
     }
 
     .search-row {
-        display: none;
+        display: grid !important;
     }
 }
 
@@ -204,12 +288,29 @@
     .meetings-list-container {
         min-width: 20% !important;
         max-width: 30% !important;
+
+        .picture-container {
+            max-width: 20% !important;
+        }
+
+        .message-info {
+            max-width: 60% !important;
+
+            .message {
+                max-width: 200px !important;
+            }
+        }
+
+        .date-info {
+            max-width: 20% !important;
+            display: grid !important;
+        }
     }
     .chat-section-container {
         max-width: 80% !important;
     }
 
     .search-row {
-        display: none;
+        display: grid !important;
     }
 }
