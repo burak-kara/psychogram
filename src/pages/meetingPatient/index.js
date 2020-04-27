@@ -42,33 +42,24 @@ const PatientMeetingPage = props => {
         setCurrentMeeting(meeting);
     };
 
-    const renderChatSection = () => {
-        return (
-            <div className="col chat-section-container">
-                {currentMeeting ? (
-                    <ChatSection {...props} meeting={currentMeeting} />
-                ) : null}
-            </div>
-        );
-    };
-
+    // TODO implement ui for meeting not chosen case
     return (
-        <div className="container-fluid patient-meeting-container">
-            <div className="row h-100">
-                <div className="col padding-0 ">
-                    <div className="container-fluid h-100 main-container">
-                        <div className="row h-100">
-                            <div className="col border-right meetings-list-container">
-                                <Search />
-                                <MeetingList
-                                    onClick={handleMeetingClick}
-                                    chatPairs={chatPairs}
-                                    meetings={meetings}
-                                    authUser={authUser}
-                                />
-                            </div>
-                            {renderChatSection()}
-                        </div>
+        <div className="patient-meeting-container">
+            <div className="container-fluid main-container">
+                <div className="row h-100">
+                    <div className="col border-right meetings-list-container">
+                        <Search />
+                        <MeetingList
+                            onClick={handleMeetingClick}
+                            chatPairs={chatPairs}
+                            meetings={meetings}
+                            authUser={authUser}
+                        />
+                    </div>
+                    <div className="col chat-section-container">
+                        {currentMeeting ? (
+                            <ChatSection {...props} meeting={currentMeeting} />
+                        ) : null}
                     </div>
                 </div>
             </div>
