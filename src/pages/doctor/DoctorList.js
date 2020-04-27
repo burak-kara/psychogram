@@ -59,17 +59,17 @@ class DoctorList extends Component {
 const Rating = ({ user }) => {
     let rating = user.rating;
     let star = five_star;
-    if (rating == 5) {
+    if (rating === 5) {
         star = five_star;
-    } else if (rating == 4) {
+    } else if (rating === 4) {
         star = four_star;
-    } else if (rating == 3) {
+    } else if (rating === 3) {
         star = three_star;
-    } else if (rating == 2) {
+    } else if (rating === 2) {
         star = two_star;
-    } else if (rating == 1) {
+    } else if (rating === 1) {
         star = one_star;
-    } else if (rating == 0) {
+    } else if (rating === 0) {
         star = zero_star;
     }
 
@@ -86,7 +86,7 @@ const Rating = ({ user }) => {
 const DoctorCount = ({ users }) => {
     let i = 0;
     users.map(user => {
-        if (user.role == 'DOCTOR') {
+        if (user.role === 'DOCTOR') {
             i = i + 1;
         }
     });
@@ -95,7 +95,7 @@ const DoctorCount = ({ users }) => {
 
 const UserList = ({ users }) => {
     return users.map(user => {
-        if (user.role == 'DOCTOR') {
+        if (user.role === 'DOCTOR') {
             return <DoctorFrame user={user} />;
         }
     });
@@ -122,6 +122,7 @@ const DoctorFrame = ({ user }) => (
         >
             <div className="row">
                 <div className="col-sm-2">
+                    {/* TODO: link to doctor profile with related userId */}
                     <img
                         src={user.profilePictureSource}
                         className="rounded-circle"
@@ -139,6 +140,7 @@ const DoctorFrame = ({ user }) => (
                     >
                         BOOK
                     </button>
+                    {/* TODO: link to patient reservation page with related userId */}
                 </div>
                 <div className="col-sm-6">
                     <h5>About me</h5>
