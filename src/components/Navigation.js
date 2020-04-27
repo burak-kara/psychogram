@@ -44,7 +44,7 @@ const NavigationAuth = ({ authUser, firebase }) => {
             .then(url => {
                 setLogo(url);
             });
-    }, []);
+    }, [firebase]);
 
     return (
         <nav className="navbar navbar-expand-lg navigator">
