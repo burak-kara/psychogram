@@ -1,12 +1,20 @@
+@import '../../../_utility/colors';
+
 .patient-meeting-container {
-    height: 696px;
+    background-color: $color-light-green-1;
+    padding-top: 10px !important;
+    margin-top: -10px !important;
+    height: calc(100vh - 55px);
 
     .main-container {
-        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0 2px 0 $color-green-3;
         border-radius: 5px;
+        background-color: $color-light-green-0;
+        max-width: 98% !important;
 
         .meetings-list-container {
             height: 100%;
+            box-shadow: 0 0 3px 0 $color-green-3;
 
             .search-row {
                 padding: 3px;
@@ -19,29 +27,151 @@
                     border-right: solid 1px #ccc;
                 }
 
-                .button {
-                    margin: 2px 0 0 0;
-                    background: none;
-                    box-shadow: none;
-                    border: 0;
-                    color: #666666;
-                    padding: 0 8px 0 10px;
-                }
+                .search-btn {
+                    background-color: $color-green-0;
 
-                .button:hover {
-                    box-shadow: none;
-                    border-left: solid 1px #ccc;
+                    .search-icon {
+                        color: $color-green-3;
+                    }
+
+                    &:hover {
+                        background-color: $color-green-3;
+
+                        .search-icon {
+                            color: $color-green-0;
+                        }
+                    }
                 }
             }
 
             .list-row {
                 .card {
-                    height: 60px;
+                    height: 64px;
                     cursor: pointer;
+                    color: $color-green-3;
+
+                    &:hover {
+                        //background-color: $color-light-green-1;
+                        box-shadow: 0 0 3px 0 $color-green-3;
+                        z-index: 2 !important;
+                    }
+
+                    .picture-container {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                    .message-info {
+                        .name {
+                            font-size: 16px;
+                            font-weight: normal;
+                            padding: 0 !important;
+                        }
+
+                        .message {
+                            font-size: 14px;
+                            padding: 0 !important;
+                            font-weight: lighter;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                    }
+
+                    .date-info {
+                        font-size: 14px;
+                        font-weight: lighter;
+                        text-align: right;
+                        padding-right: 10px;
+
+                        .hours {
+                            align-self: center;
+                        }
+
+                        .text {
+                            align-self: center;
+                        }
+                    }
+                }
+            }
+        }
+
+        .chat-section-container {
+            height: calc(100vh - 85px);
+
+            .text-field-container {
+                padding: 0;
+                min-height: 56px !important;
+
+                .text-field {
+                    *::-webkit-scrollbar {
+                        width: 0.7em;
+                        border-radius: 10px;
+                        background-color: $color-green-0;
+                    }
+                    *::-webkit-scrollbar-track {
+                        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
+                    }
+                    *::-webkit-scrollbar-thumb {
+                        background-color: $color-green-3;
+                        border-radius: 5px;
+                        outline: 1px solid slategrey;
+                    }
+
+                    .send-btn {
+                        background-color: $color-green-0;
+
+                        .send-icon {
+                            color: $color-green-3;
+                        }
+
+                        &:hover {
+                            background-color: $color-green-3;
+
+                            .send-icon {
+                                color: $color-green-0;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .chat-feed-container {
+                height: calc(100vh - 141px);
+                padding: 5px 1px 5px 0 !important;
+                box-shadow: inset 0 0 3px 0 $color-green-3;
+                background-color: $color-light-green-1;
+
+                ::-webkit-scrollbar {
+                    padding: 0 !important;
+                    width: 0.7em;
+                    height: 0.7em;
+                    border-radius: 10px;
+                    background-color: $color-green-0;
                 }
 
-                .card:hover {
-                    background-color: rgba(0, 0, 0, 0.1);
+                ::-webkit-scrollbar-track {
+                    -webkit-box-shadow: inset 0 0 6px $color-green-3;
+                    background: $color-green-0;
+                    border-radius: 10px;
+                    padding: 0 !important;
+                }
+
+                ::-webkit-scrollbar-thumb {
+                    background-color: $color-green-3;
+                    border-radius: 10px;
+                    padding: 0 !important;
+                }
+
+                ::-webkit-scrollbar-thumb:hover {
+                    background: $color-green-2;
+                }
+
+                .chat-history {
+                    height: calc(100vh - 141px);
+                    padding: 0 10px 0 10px !important;
+                    cursor: default;
                 }
             }
         }
@@ -49,5 +179,206 @@
 
     .padding-0 {
         padding: 0 !important;
+    }
+}
+
+@media only screen and (min-width: 300px) {
+    .main-container {
+        margin: 5px 1%;
+        height: calc(100vh - 75px);
+    }
+
+    .meetings-list-container {
+        min-width: 10% !important;
+        max-width: 15% !important;
+
+        .picture-container {
+            max-width: 100% !important;
+        }
+
+        .message-info {
+            display: none !important;
+        }
+
+        .date-info {
+            display: none !important;
+        }
+    }
+
+    .chat-section-container {
+        max-width: 85% !important;
+        height: calc(100vh - 75px) !important;
+
+        .chat-feed-container {
+            height: calc(100vh - 131px) !important;
+
+            .chat-history {
+                height: calc(100vh - 141px) !important;
+            }
+        }
+    }
+
+    .search-row {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 576px) {
+    .meetings-list-container {
+        min-width: 20% !important;
+        max-width: 30% !important;
+
+        .picture-container {
+            max-width: 40% !important;
+        }
+
+        .message-info {
+            display: flex !important;
+
+            .name {
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .message {
+                display: none !important;
+            }
+        }
+
+        .date-info {
+            display: none !important;
+        }
+    }
+
+    .chat-section-container {
+        max-width: 80% !important;
+    }
+
+    .search-row {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .meetings-list-container {
+        min-width: 20% !important;
+        max-width: 30% !important;
+
+        .picture-container {
+            max-width: 30% !important;
+        }
+
+        .message-info {
+            display: grid !important;
+
+            .name {
+                display: flex !important;
+                align-items: flex-end;
+                justify-content: start;
+            }
+
+            .message {
+                display: flex !important;
+                align-items: start;
+                justify-content: start;
+                max-width: 150px !important;
+            }
+        }
+
+        .date-info {
+            display: none !important;
+        }
+    }
+
+    .chat-section-container {
+        max-width: 80% !important;
+    }
+
+    .search-row {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    .main-container {
+        margin: 8px 1%;
+        height: calc(100vh - 85px);
+    }
+
+    .meetings-list-container {
+        min-width: 20% !important;
+        max-width: 40% !important;
+
+        .picture-container {
+            max-width: 20% !important;
+        }
+
+        .message-info {
+            max-width: 50% !important;
+
+            .message {
+                max-width: 200px !important;
+            }
+        }
+
+        .date-info {
+            max-width: 30% !important;
+            display: grid !important;
+        }
+    }
+
+    .chat-section-container {
+        max-width: 70% !important;
+        height: calc(100vh - 85px) !important;
+
+        .chat-feed-container {
+            height: calc(100vh - 141px) !important;
+
+            .chat-history {
+                height: calc(100vh - 151px) !important;
+            }
+        }
+    }
+
+    .search-row {
+        display: grid !important;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .main-container {
+        margin: 10px 1%;
+        height: calc(100vh - 85px);
+    }
+
+    .meetings-list-container {
+        min-width: 20% !important;
+        max-width: 30% !important;
+
+        .picture-container {
+            max-width: 20% !important;
+        }
+
+        .message-info {
+            max-width: 60% !important;
+
+            .message {
+                max-width: 200px !important;
+            }
+        }
+
+        .date-info {
+            max-width: 20% !important;
+            display: grid !important;
+        }
+    }
+
+    .chat-section-container {
+        max-width: 80% !important;
+    }
+
+    .search-row {
+        display: grid !important;
     }
 }
