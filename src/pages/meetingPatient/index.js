@@ -11,7 +11,8 @@ const PatientMeetingPage = props => {
     const { authUser, firebase } = props;
     const [meetings, setMeetings] = useState([]);
     const [chatPairs, setChatPairs] = useState(new Map());
-    const [currentMeeting, setCurrentMeeting] = useState(null);
+    const [currentMeetingKey, setCurrentMeetingKey] = useState(null);
+    const [search, setSearch] = useState('');
 
     useEffect(() => {
         // TODO loading indicator
@@ -38,8 +39,12 @@ const PatientMeetingPage = props => {
             });
     }, [authUser, firebase]);
 
-    const handleMeetingClick = meeting => {
-        setCurrentMeeting(meeting);
+    const handleMeetingClick = key => {
+        setCurrentMeetingKey(key);
+    };
+
+    const handleSearchType = e => {
+        setSearch(e.target.value);
     };
 
     // TODO implement ui for meeting not chosen case
@@ -48,7 +53,7 @@ const PatientMeetingPage = props => {
             <div className="container-fluid main-container">
                 <div className="row h-100">
                     <div className="col border-right meetings-list-container">
-                        <Search />
+                        <Search onChange={handleSearchType} />
                         <MeetingList
                             onClick={handleMeetingClick}
                             chatPairs={chatPairs}
@@ -57,8 +62,11 @@ const PatientMeetingPage = props => {
                         />
                     </div>
                     <div className="col chat-section-container">
-                        {currentMeeting ? (
-                            <ChatSection {...props} meeting={currentMeeting} />
+                        {currentMeetingKey ? (
+                            <ChatSection
+                                {...props}
+                                currentMeetingKey={currentMeetingKey}
+                            />
                         ) : null}
                     </div>
                 </div>

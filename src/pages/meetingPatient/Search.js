@@ -1,7 +1,9 @@
 import React from 'react';
 import { GoSearch } from 'react-icons/go';
+import { IconContext } from 'react-icons';
 
-const Search = () => {
+const Search = props => {
+    const { onChange } = props;
     return (
         <div className="row search-row border-bottom">
             <div className="input-group col-12 padding-0">
@@ -9,12 +11,18 @@ const Search = () => {
                     type="text"
                     className="form-control input-lg input"
                     placeholder="Search"
+                    onChange={onChange}
                 />
-                <span className="input-group-btn">
-                    <button className="btn btn-primary button" type="button">
+                <button className="btn search-btn">
+                    <IconContext.Provider
+                        value={{
+                            className: 'search-icon',
+                            size: '18',
+                        }}
+                    >
                         <GoSearch />
-                    </button>
-                </span>
+                    </IconContext.Provider>
+                </button>
             </div>
         </div>
     );

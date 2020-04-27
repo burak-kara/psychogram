@@ -11,7 +11,7 @@ const MeetingCard = props => {
             <div className="col date-info">
                 {formatted.includes('ago') ? (
                     <div className="row">
-                        <div className="col font-14 font-weight-light text-right pt-1 pr-2">
+                        <div className="col hours">
                             <span>{formatDateAsHours(message.date)}</span>
                         </div>
                     </div>
@@ -19,7 +19,7 @@ const MeetingCard = props => {
                     ''
                 )}
                 <div className="row">
-                    <div className="col font-14 font-weight-lighter text-right pt-1 pr-2">
+                    <div className="col text">
                         <span>{formatted}</span>
                     </div>
                 </div>

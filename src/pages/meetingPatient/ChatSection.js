@@ -1,55 +1,43 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { ChatFeed, Message } from 'react-chat-ui';
 import MessageTextField from './TextField';
-import { getKeys } from '../../_utility/functions';
 
 const ChatSection = props => {
-    const { authUser, firebase, meeting } = props;
+    const { authUser, firebase, currentMeetingKey } = props;
     const [newMessage, setNewMessage] = useState('');
-    const [messages, setMessages] = useState([]);
-    // const prevMeeting = usePrevious({ meeting });
+    const [messages, setMessages] = useState(new Map());
 
     useEffect(() => {
-        setMessages([]);
-        if (meeting) {
-            if (meeting.messages) {
-                for (let key in meeting.messages) {
-                    const message = meeting.messages[key];
-                    setMessages(messages => [
-                        ...messages,
+        if (currentMeetingKey) {
+            firebase.messages(currentMeetingKey).on('value', snapshot => {
+                let map = new Map();
+                snapshot.forEach(snap => {
+                    const message = snap.val();
+                    map.set(
+                        snap.key,
                         new Message({
                             id: message.senderId === authUser.uid ? 0 : 1,
                             message: message.message,
-                        }),
-                    ]);
-                }
-            } else {
-                // TODO start new meeting
-            }
+                        })
+                    );
+                });
+                setMessages(map);
+            });
         } else {
             //    TODO loading indicator
         }
-    }, [meeting]);
-
-    const usePrevious = value => {
-        const ref = useRef();
-        useEffect(() => {
-            ref.current = value;
-        });
-        return ref.current;
-    };
+    }, [firebase, currentMeetingKey]);
 
     const sendMessage = message => {
         firebase
-            .meeting(meeting.key)
-            .child('messages')
+            .messages(currentMeetingKey)
             .child(moment().valueOf().toString())
             .set(message);
     };
 
     const setLastMessage = message => {
-        firebase.meeting(meeting.key).child('lastMessage').set(message);
+        firebase.meeting(currentMeetingKey).child('lastMessage').set(message);
     };
 
     const handleMessageType = e => {
@@ -82,14 +70,20 @@ const ChatSection = props => {
             <div className="row">
                 <div className="col chat-feed-container">
                     <ChatFeed
-                        messages={messages}
+                        messages={[...messages.values()]}
                         bubblesCentered={false}
                         bubbleStyles={{
                             text: {
                                 fontSize: 16,
+                                color: '#f8fcf9',
                             },
                             userBubble: {
-                                borderRadius: 50,
+                                borderRadius: 20,
+                                padding: 5,
+                                backgroundColor: '#3b6978',
+                            },
+                            chatbubble: {
+                                borderRadius: 20,
                                 padding: 5,
                             },
                         }}
