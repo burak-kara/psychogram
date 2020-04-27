@@ -2,6 +2,9 @@
 
 .patient-meeting-container {
     background-color: $color-light-green-1;
+    padding-top: 10px !important;
+    margin-top: -10px !important;
+    height: calc(100vh - 55px);
 
     .main-container {
         box-shadow: 0 0 5px 0 $color-green-3;
@@ -78,6 +81,8 @@
         }
 
         .chat-section-container {
+            height: calc(100vh - 85px);
+
             .text-field-container {
                 padding: 0;
                 min-height: 56px !important;
@@ -116,6 +121,35 @@
             }
 
             .chat-feed-container {
+                height: calc(100vh - 141px);
+                padding: 0 !important;
+
+                ::-webkit-scrollbar {
+                    width: 0.7em;
+                    height: 8px;
+                    border-radius: 10px;
+                    background-color: $color-green-0;
+                }
+
+                ::-webkit-scrollbar-track {
+                    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
+                    background: #f1f3f4;
+                }
+
+                ::-webkit-scrollbar-thumb {
+                    background-color: $color-green-3;
+                    border-radius: 10px;
+                    outline: 1px solid slategrey;
+                }
+
+                ::-webkit-scrollbar-thumb:hover {
+                    background: #555;
+                }
+
+                .chat-history {
+                    height: calc(100vh - 141px);
+                    padding: 5px 10px 0 10px !important;
+                }
             }
         }
     }
@@ -126,12 +160,9 @@
 }
 
 @media only screen and (min-width: 300px) {
-    .patient-meeting-container {
-        height: calc(100vh - 75px);
-    }
-
     .main-container {
         margin: 5px 1%;
+        height: calc(100vh - 75px);
     }
 
     .meetings-list-container {
@@ -153,6 +184,15 @@
 
     .chat-section-container {
         max-width: 85% !important;
+        height: calc(100vh - 75px) !important;
+
+        .chat-feed-container {
+            height: calc(100vh - 131px) !important;
+
+            .chat-history {
+                height: calc(100vh - 131px) !important;
+            }
+        }
     }
 
     .search-row {
@@ -187,6 +227,7 @@
             display: none !important;
         }
     }
+
     .chat-section-container {
         max-width: 80% !important;
     }
@@ -237,12 +278,9 @@
 }
 
 @media only screen and (min-width: 992px) {
-    .patient-meeting-container {
-        height: calc(100vh - 81px);
-    }
-
     .main-container {
         margin: 8px 1%;
+        height: calc(100vh - 85px);
     }
 
     .meetings-list-container {
@@ -269,6 +307,15 @@
 
     .chat-section-container {
         max-width: 70% !important;
+        height: calc(100vh - 85px) !important;
+
+        .chat-feed-container {
+            height: calc(100vh - 141px) !important;
+
+            .chat-history {
+                height: calc(100vh - 141px) !important;
+            }
+        }
     }
 
     .search-row {
@@ -277,12 +324,9 @@
 }
 
 @media only screen and (min-width: 1200px) {
-    .patient-meeting-container {
-        height: calc(100vh - 85px);
-    }
-
     .main-container {
         margin: 10px 1%;
+        height: calc(100vh - 85px);
     }
 
     .meetings-list-container {
@@ -306,6 +350,7 @@
             display: grid !important;
         }
     }
+
     .chat-section-container {
         max-width: 80% !important;
     }

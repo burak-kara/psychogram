@@ -1,28 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import moment from 'moment';
 import { ChatFeed, Message } from 'react-chat-ui';
 import MessageTextField from './TextField';
+import { getKeys } from '../../_utility/functions';
 
 const ChatSection = props => {
     const { authUser, firebase, meeting } = props;
     const [newMessage, setNewMessage] = useState('');
-    const [messages, setMessages] = useState([
-        new Message({
-            id: 1,
-            message: "I'm the recipient! (The person you're talking to)",
-            senderName: 'gray',
-        }),
-        new Message({
-            id: 0,
-            message: "I'm yo/ Boolean: list of message objects",
-        }), // Blue bubble
-    ]);
-    const [test, setTest] = useState('test');
+    const [messages, setMessages] = useState([]);
+    // const prevMeeting = usePrevious({ meeting });
 
     useEffect(() => {
+        setMessages([]);
         if (meeting) {
             if (meeting.messages) {
-                console.log(meeting.messages);
+                for (let key in meeting.messages) {
+                    const message = meeting.messages[key];
+                    setMessages(messages => [
+                        ...messages,
+                        new Message({
+                            id: message.senderId === authUser.uid ? 0 : 1,
+                            message: message.message,
+                        }),
+                    ]);
+                }
             } else {
                 // TODO start new meeting
             }
@@ -30,6 +31,14 @@ const ChatSection = props => {
             //    TODO loading indicator
         }
     }, [meeting]);
+
+    const usePrevious = value => {
+        const ref = useRef();
+        useEffect(() => {
+            ref.current = value;
+        });
+        return ref.current;
+    };
 
     const sendMessage = message => {
         firebase
@@ -69,34 +78,35 @@ const ChatSection = props => {
     };
 
     return (
-        <div className="row h-100">
-            <div className="col-12 chat-feed-container bg-danger align-self-end">
-                <ChatFeed
-                    messages={messages} // Boolean: list of message objects
-                    // isTyping={this.state.is_typing} // Boolean: is the recipient typing
-                    showSenderName={true} // show the name of the user who sent the message
-                    bubblesCentered={false} //Boolean should the bubbles be centered in the feed?
-                    // JSON: Custom bubble styles
-                    bubbleStyles={{
-                        text: {
-                            fontSize: 16,
-                        },
-                        userBubble: {
-                            borderRadius: 50,
-                            padding: 5,
-                        },
-                    }}
-                />
+        <>
+            <div className="row">
+                <div className="col chat-feed-container">
+                    <ChatFeed
+                        messages={messages}
+                        bubblesCentered={false}
+                        bubbleStyles={{
+                            text: {
+                                fontSize: 16,
+                            },
+                            userBubble: {
+                                borderRadius: 50,
+                                padding: 5,
+                            },
+                        }}
+                    />
+                </div>
             </div>
-            <div className="col-12 text-field-container border-top align-self-end">
-                <MessageTextField
-                    value={newMessage}
-                    onChange={handleMessageType}
-                    onEnter={handleEnter}
-                    onSend={handleMessageSend}
-                />
+            <div className="row">
+                <div className="col text-field-container border-top align-self-end">
+                    <MessageTextField
+                        value={newMessage}
+                        onChange={handleMessageType}
+                        onEnter={handleEnter}
+                        onSend={handleMessageSend}
+                    />
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 
