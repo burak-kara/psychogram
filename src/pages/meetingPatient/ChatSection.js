@@ -69,8 +69,8 @@ const ChatSection = props => {
     };
 
     return (
-        <div className="row h-100 bg-success">
-            <div className="col-12 bg-danger align-self-end">
+        <div className="row h-100">
+            <div className="col-12 chat-feed-container bg-danger align-self-end">
                 <ChatFeed
                     messages={messages} // Boolean: list of message objects
                     // isTyping={this.state.is_typing} // Boolean: is the recipient typing
@@ -88,7 +88,7 @@ const ChatSection = props => {
                     }}
                 />
             </div>
-            <div className="col-12 text-field-container border-top pb-1 align-self-end">
+            <div className="col-12 text-field-container border-top align-self-end">
                 <MessageTextField
                     value={newMessage}
                     onChange={handleMessageType}
