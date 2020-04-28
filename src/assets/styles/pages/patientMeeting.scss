@@ -275,13 +275,13 @@
             .name {
                 display: flex !important;
                 align-items: flex-end;
-                justify-content: start;
+                justify-content: flex-start;
             }
 
             .message {
                 display: flex !important;
-                align-items: start;
-                justify-content: start;
+                align-items: flex-start;
+                justify-content: flex-start;
                 max-width: 150px !important;
             }
         }
