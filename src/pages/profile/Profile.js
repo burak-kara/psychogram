@@ -6,6 +6,7 @@ import Alert from '../../components/Alert';
 import { compose } from 'recompose';
 import { withAuthorization, withEmailVerification } from '../../_session';
 import * as ROLES from '../../_constants/roles';
+import { Link, withRouter } from 'react-router-dom';
 
 const Profile = props => {
     const [settingsOpen, setSettingsOpen] = useState(false);
@@ -83,7 +84,44 @@ const Profile = props => {
                 className="bg-secondary text-center font-weight-bolder"
                 style={{ height: '64px' }}
             >
-                FOOTER
+                <footer>
+                    <p>
+                        <h>Useful Links</h>
+                    </p>
+                    <p>
+                        <Link
+                            id="about-us"
+                            className="common-link"
+                            to={'/about-us'}
+                        >
+                            About Us
+                        </Link>
+                    </p>
+                    <p>
+                        <Link
+                            id="contact"
+                            className="common-link"
+                            to={'/contact'}
+                        >
+                            Contact
+                        </Link>
+                    </p>
+                    <p>
+                        <Link id="faq" className="common-link" to={'/faq'}>
+                            FAQ
+                        </Link>
+                    </p>
+                    <p>
+                        <Link id="home" className="common-link" to={''}>
+                            Home
+                        </Link>
+                    </p>
+                    <p>
+                        <Link id="home" className="common-link" to={'/sign-in'}>
+                            Sign in
+                        </Link>
+                    </p>
+                </footer>
             </div>
         </div>
     ) : null;
