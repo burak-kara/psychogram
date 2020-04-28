@@ -92,7 +92,7 @@ const NavigationAuth = ({ authUser, firebase }) => {
                     </li>
                     <li className="nav-item">
                         <a className="nav-link" href={ROUTES.DOCTOR_LIST}>
-                            List All Doctors
+                            Doctors
                         </a>
                     </li>
                 </ul>
