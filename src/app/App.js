@@ -10,6 +10,7 @@ import Forum from '../pages/forum/Forum';
 import AboutUs from '../pages/aboutus/AboutUs';
 import Faq from '../pages/faq/Faq';
 import PatientMeetingPage from '../pages/meetingPatient';
+import DoctorList from '../pages/doctor/DoctorList';
 import * as ROUTES from '../_constants/routeConstants';
 import Navigation from '../components/Navigation';
 import { withAuthentication } from '../_session';
@@ -28,6 +29,7 @@ const App = () => (
         <Route path={ROUTES.ABOUT_US} component={AboutUs} />
         <Route path={ROUTES.FAQ} component={Faq} />
         <Route path={ROUTES.PATIENT_MEETING} component={PatientMeetingPage} />
+        <Route path={ROUTES.DOCTOR_LIST} component={DoctorList} />
         <Route path={ROUTES.ADMIN} component={AdminPage} />
         <Route path="/create" component={TestMeetingCreate} />
     </Router>

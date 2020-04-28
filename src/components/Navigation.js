@@ -90,6 +90,11 @@ const NavigationAuth = ({ authUser, firebase }) => {
                             Meetings
                         </a>
                     </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href={ROUTES.DOCTOR_LIST}>
+                            Doctors
+                        </a>
+                    </li>
                 </ul>
                 <ul className="navbar-nav dots">
                     <IconContext.Provider
