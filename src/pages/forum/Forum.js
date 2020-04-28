@@ -6,6 +6,7 @@ import { Route } from 'react-router-dom';
 import ForumNavigation from '../../components/forumComponents/ForumNavigation';
 import { compose } from 'recompose';
 import { withAuthorization, withEmailVerification } from '../../_session';
+import { Link, withRouter } from 'react-router-dom';
 
 class Forum extends Component {
     constructor(props) {
@@ -44,6 +45,44 @@ class Forum extends Component {
                 <Route exact path="/forum/create">
                     <PostEditor addPost={this.addPost} />
                 </Route>
+                <footer>
+                    <p>
+                        <h>Useful Links</h>
+                    </p>
+                    <p>
+                        <Link
+                            id="about-us"
+                            className="common-link"
+                            to={'/about-us'}
+                        >
+                            About Us
+                        </Link>
+                    </p>
+                    <p>
+                        <Link
+                            id="contact"
+                            className="common-link"
+                            to={'/contact'}
+                        >
+                            Contact
+                        </Link>
+                    </p>
+                    <p>
+                        <Link id="faq" className="common-link" to={'/faq'}>
+                            FAQ
+                        </Link>
+                    </p>
+                    <p>
+                        <Link id="home" className="common-link" to={''}>
+                            Home
+                        </Link>
+                    </p>
+                    <p>
+                        <Link id="home" className="common-link" to={'/sign-in'}>
+                            Sign in
+                        </Link>
+                    </p>
+                </footer>
             </div>
         );
     }

@@ -35,11 +35,15 @@ const FAQ = props => {
             : null;
 
     return (
-        <footer>
+        <div>
             <p>
                 <Accordion>{renderAccordionItems()}</Accordion>
-
-                <h>
+            </p>
+            <footer>
+                <p>
+                    <h>Useful Links</h>
+                </p>
+                <p>
                     <Link
                         id="about-us"
                         className="common-link"
@@ -47,24 +51,29 @@ const FAQ = props => {
                     >
                         About Us
                     </Link>
-                </h>
-                <h>
+                </p>
+                <p>
                     <Link id="contact" className="common-link" to={'/contact'}>
                         Contact
                     </Link>
-                </h>
-
-                <Link id="faq" className="common-link" to={'/faq'}>
-                    FAQ
-                </Link>
-                <Link id="home" className="common-link" to={''}>
-                    Home
-                </Link>
-                <Link id="home" className="common-link" to={'/sign-in'}>
-                    Sign in
-                </Link>
-            </p>
-        </footer>
+                </p>
+                <p>
+                    <Link id="faq" className="common-link" to={'/faq'}>
+                        FAQ
+                    </Link>
+                </p>
+                <p>
+                    <Link id="home" className="common-link" to={''}>
+                        Home
+                    </Link>
+                </p>
+                <p>
+                    <Link id="home" className="common-link" to={'/sign-in'}>
+                        Sign in
+                    </Link>
+                </p>
+            </footer>
+        </div>
     );
 };
 
