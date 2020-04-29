@@ -9,6 +9,7 @@ const ChatSection = props => {
     const [messages, setMessages] = useState(new Map());
 
     useEffect(() => {
+        setNewMessage('');
         if (currentMeetingKey) {
             firebase.messages(currentMeetingKey).on('value', snapshot => {
                 let map = new Map();
@@ -80,11 +81,8 @@ const ChatSection = props => {
                             userBubble: {
                                 borderRadius: 20,
                                 padding: 5,
+                                marginTop: 5,
                                 backgroundColor: '#3b6978',
-                            },
-                            chatbubble: {
-                                borderRadius: 20,
-                                padding: 5,
                             },
                         }}
                     />

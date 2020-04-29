@@ -9,7 +9,7 @@ const MeetingCard = props => {
         const formatted = message ? dateAsString(message.date) : ' ';
         return (
             <div className="col date-info">
-                {formatted.includes('ago') ? (
+                {!formatted.includes('ago') ? (
                     <div className="row">
                         <div className="col hours">
                             <span>{formatDateAsHours(message.date)}</span>
