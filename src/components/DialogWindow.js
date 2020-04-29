@@ -12,6 +12,7 @@ const DialogWindow = props => {
             aria-labelledby="customized-dialog-title"
             onClose={props.handleClose}
             open={props.open}
+            maxWidth={props.width ? props.width : 'lg'}
         >
             <DialogTitle id="customized-dialog-title">
                 {props.title}

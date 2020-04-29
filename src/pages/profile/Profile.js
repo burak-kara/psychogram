@@ -8,11 +8,12 @@ import { withAuthorization, withEmailVerification } from '../../_session';
 
 const Profile = props => {
     const { authUser, firebase } = props;
-    const [settingsOpen, setSettingsOpen] = useState(false);
+    const [settingsOpen, setSettingsOpen] = useState(true);
     const [alertOpen, setAlertsOpen] = useState(false);
     const [message, setMessage] = useState('');
     const [severity, setSeverity] = useState('');
     const [user, setUser] = useState(null);
+    const [settings, setSettings] = useState();
 
     const handleSettingsOpen = () => {
         setSettingsOpen(true);
@@ -43,6 +44,7 @@ const Profile = props => {
         if (authUser && authUser.uid !== '') {
             firebase.user(authUser.uid).on('value', snapshot => {
                 setUser(snapshot.val());
+                setSettings(snapshot.val());
             });
         }
     }, [authUser, firebase]);
@@ -60,6 +62,7 @@ const Profile = props => {
             </div>
             <Settings
                 open={settingsOpen}
+                settings={settings}
                 handleClose={handleSettingsClose}
                 handleSave={handleSettingsSave}
             />
