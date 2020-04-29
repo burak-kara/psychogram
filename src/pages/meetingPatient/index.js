@@ -6,6 +6,7 @@ import Search from './Search';
 import MeetingList from './MeetingList';
 import * as ROLES from '../../_constants/roles';
 import ChatSection from './ChatSection';
+import moment from 'moment';
 
 const PatientMeetingPage = props => {
     const { authUser, firebase } = props;
@@ -22,7 +23,8 @@ const PatientMeetingPage = props => {
             .orderByChild(sort)
             .equalTo(authUser.uid)
             .on('value', snapshot => {
-                setMeetings([...snapshotToArray(snapshot)]);
+                const data = snapshotToArray(snapshot);
+                setMeetings(sortByDate(data));
                 meetings.map(meeting => {
                     const uid =
                         authUser.role === ROLES.PATIENT
@@ -38,6 +40,14 @@ const PatientMeetingPage = props => {
                 });
             });
     }, [authUser, firebase]);
+
+    const sortByDate = data => (data ? data.sort(compare) : data);
+
+    const compare = (item1, item2) => {
+        const item1Date = item1.lastMessage.date;
+        const item2Date = item2.lastMessage.date;
+        return moment(item1Date).isBefore(item2Date) ? 1 : -1;
+    };
 
     const handleMeetingClick = key => {
         setCurrentMeetingKey(key);
