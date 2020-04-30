@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const Footer = () => {
     return (
         <div>
-            <footer class="fixed_footer">
+            <footer class="fixed-footer">
                 <p>
                     <h>Useful Links</h>
                 </p>
