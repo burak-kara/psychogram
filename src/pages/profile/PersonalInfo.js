@@ -7,24 +7,12 @@ import moment from 'moment';
 
 const PersonalInfo = props => {
     const { user, openSettings, handleStatus } = props;
-    const [anchorEl, setAnchorEl] = useState(null);
-
-    const handleClick = event => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    const open = Boolean(anchorEl);
 
     const renderOverlay = () => (
         <OverlayTrigger
             placement="right"
             trigger="click"
             delay={{ show: 250, hide: 400 }}
-            onClick={handleClick}
             overlay={
                 <Popover id="popover-basic">
                     <Popover.Title as="h3">Durumunu Değiştir</Popover.Title>
