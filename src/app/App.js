@@ -13,6 +13,7 @@ import * as ROUTES from '../_constants/routeConstants';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import { withAuthentication } from '../_session';
+import { withFirebase } from '../_firebase';
 
 const App = () => (
     <Router>
@@ -29,4 +30,4 @@ const App = () => (
     </Router>
 );
 
-export default withAuthentication(App);
+export default withFirebase(App);
