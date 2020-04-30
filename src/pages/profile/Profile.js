@@ -13,25 +13,30 @@ const Profile = props => {
     const [message, setMessage] = useState('');
     const [severity, setSeverity] = useState('');
     const [user, setUser] = useState(null);
+    const [settings, setSettings] = useState(null);
 
-    const handleSettingsOpen = () => {
-        setSettingsOpen(true);
+    const handleSettingShow = () => {
+        setSettingsOpen(!settingsOpen);
     };
 
-    const handleSettingsClose = () => {
-        setSettingsOpen(false);
+    const handleSettingsChange = event => {
+        const name = event.target.name;
+        const value =
+            name === 'private' ? event.target.checked : event.target.value;
+        setSettings({ ...settings, [name]: value });
     };
 
     const handleSettingsSave = () => {
         setSettingsOpen(false);
-        // TODO implement when backend is ready
-        if (true) {
-            setMessage('Yeni ayarlar kaydedildi.');
-            setSeverity('success');
-        } else {
-            setMessage('Yeni ayarlar kaydedilirken hata oluştu!');
-            setSeverity('error');
-        }
+        firebase.user(authUser.uid).set(settings, error => {
+            if (error) {
+                setMessage('Yeni ayarlar kaydedilirken hata oluştu!');
+                setSeverity('error');
+            } else {
+                setMessage('Yeni ayarlar kaydedildi.');
+                setSeverity('success');
+            }
+        });
         setAlertsOpen(true);
     };
 
@@ -39,10 +44,15 @@ const Profile = props => {
         setAlertsOpen(false);
     };
 
+    const handleStatusChange = status => {
+        firebase.user(`${authUser.uid}/status`).set(status);
+    };
+
     useEffect(() => {
         if (authUser && authUser.uid !== '') {
             firebase.user(authUser.uid).on('value', snapshot => {
                 setUser(snapshot.val());
+                setSettings(snapshot.val());
             });
         }
     }, [authUser, firebase]);
@@ -53,15 +63,18 @@ const Profile = props => {
                 <div className="row h-auto">
                     <PersonalInfo
                         user={user}
-                        openSettings={handleSettingsOpen}
+                        openSettings={handleSettingShow}
+                        handleStatus={handleStatusChange}
                     />
                     <ProfileDetails user={user} />
                 </div>
             </div>
             <Settings
                 open={settingsOpen}
-                handleClose={handleSettingsClose}
+                settings={settings}
+                handleClose={handleSettingShow}
                 handleSave={handleSettingsSave}
+                onChange={handleSettingsChange}
             />
             <Alert
                 open={alertOpen}
