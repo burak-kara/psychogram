@@ -48,7 +48,7 @@ const DoctorProfile = props => {
         }
     }, []);
 
-    return user ? (
+    return (user = 'DOCTOR' ? (
         <div>
             <div className="container-fluid h-auto patient-profile">
                 <div className="row h-auto">
@@ -67,14 +67,8 @@ const DoctorProfile = props => {
                 message={message}
                 severity={severity}
             />
-            <div
-                className="bg-secondary text-center font-weight-bolder"
-                style={{ height: '64px' }}
-            >
-                FOOTER
-            </div>
         </div>
-    ) : null;
+    ) : null);
 };
 
 const condition = authUser => authUser && authUser.role === ROLES.DOCTOR;
