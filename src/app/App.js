@@ -11,6 +11,7 @@ import AboutUs from '../pages/aboutus/AboutUs';
 import Faq from '../pages/faq/Faq';
 import * as ROUTES from '../_constants/routeConstants';
 import Navigation from '../components/Navigation';
+import Footer from '../components/Footer';
 import { withAuthentication } from '../_session';
 
 const App = () => (
@@ -24,6 +25,7 @@ const App = () => (
         <Route path={ROUTES.FORUM} component={Forum} />
         <Route path={ROUTES.ABOUT_US} component={AboutUs} />
         <Route path={ROUTES.FAQ} component={Faq} />
+        <Footer />
     </Router>
 );
 
