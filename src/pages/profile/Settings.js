@@ -2,19 +2,18 @@ import React from 'react';
 import DialogWindow from '../../components/DialogWindow';
 
 const Settings = props => {
-    const { open, settings, handleClose, handleSave } = props;
+    const { open, settings, handleClose, handleSave, onChange } = props;
     const renderContent = () => {
-        console.log(settings);
         return (
-            <form className="profile-settings">
+            <form className="profile-settings" onChange={onChange}>
                 <div className="form-row">
                     <div className="form-group col-md-6">
                         <label htmlFor="username">Username</label>
                         <input
                             className="form-control"
                             type="text"
-                            name="name"
-                            id="name"
+                            name="username"
+                            id="username"
                             disabled
                             value={settings.username}
                         />
@@ -23,18 +22,42 @@ const Settings = props => {
                         <label htmlFor="private" className="col-12 no-padding">
                             Profile Accessibility
                         </label>
-                        {/* TODO*/}
-                        {/*<input*/}
-                        {/*    className="form-control"*/}
-                        {/*    type="text"*/}
-                        {/*    name="private"*/}
-                        {/*    id="private"*/}
-                        {/*    value={settings.private}*/}
-                        {/*/>*/}
-                        <div className="switch">
-                            <input className="slider-input" type="checkbox" />
-                            <span className="slider round" />
+                        <div className="switch-container">
+                            <label className="switch">
+                                <input
+                                    className="primary"
+                                    id="private"
+                                    name="private"
+                                    type="checkbox"
+                                    checked={settings.private}
+                                />
+                                <span className="slider round" />
+                            </label>
                         </div>
+                    </div>
+                </div>
+                <div className="form-row">
+                    <div className="form-group col-md-6">
+                        <label htmlFor="email">Email</label>
+                        <input
+                            className="form-control"
+                            type="email"
+                            name="email"
+                            id="email"
+                            value={settings.email}
+                            disabled
+                        />
+                    </div>
+                    <div className="form-group col-md-6">
+                        <label htmlFor="phone">Phone</label>
+                        <input
+                            className="form-control"
+                            type="tel"
+                            name="phone"
+                            id="phone"
+                            value={settings.phone}
+                            placeholder="05xx.."
+                        />
                     </div>
                 </div>
                 <div className="form-row">
@@ -115,7 +138,7 @@ const Settings = props => {
             actions={renderActions()}
             open={open}
             handleClose={handleClose}
-            width="lg"
+            width="sm"
         />
     );
 };
