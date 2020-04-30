@@ -14,7 +14,7 @@ const Footer = () => {
                         className="common-link"
                         to={'/about-us'}
                     >
-                        About Us
+                        About us
                     </Link>
                 </p>
                 <p>
