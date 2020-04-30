@@ -140,6 +140,11 @@ const DoctorInfo = props => {
                             </span>
                         </div>
                     </div>
+                    <div className="row">
+                        <div className="col-12 no-padding">
+                            <span className="align-middle ml-2">{` ${props.user.experties}`}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
