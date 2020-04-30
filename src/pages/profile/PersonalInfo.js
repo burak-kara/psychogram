@@ -6,25 +6,13 @@ import { Tooltip, Zoom } from '@material-ui/core';
 import moment from 'moment';
 
 const PersonalInfo = props => {
-    const [anchorEl, setAnchorEl] = useState(null);
-    const [emojiStatus, setEmojiStatus] = useState('Angry Face');
-
-    const handleClick = event => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    const open = Boolean(anchorEl);
+    const { user, openSettings, handleStatus } = props;
 
     const renderOverlay = () => (
         <OverlayTrigger
             placement="right"
             trigger="click"
             delay={{ show: 250, hide: 400 }}
-            onClick={handleClick}
             overlay={
                 <Popover id="popover-basic">
                     <Popover.Title as="h3">Durumunu Değiştir</Popover.Title>
@@ -36,7 +24,7 @@ const PersonalInfo = props => {
                 </Popover>
             }
         >
-            <Emoji symbol={faceEmojis.get(emojiStatus)} className="emoji-32" />
+            <Emoji symbol={faceEmojis.get(user.status)} className="emoji-32" />
         </OverlayTrigger>
     );
 
@@ -48,9 +36,7 @@ const PersonalInfo = props => {
                     <div className="col-3">
                         <Emoji
                             symbol={value}
-                            onClick={e => {
-                                setEmojiStatus(key);
-                            }}
+                            onClick={() => handleStatus(key)}
                             style={{ fontSize: '32px', cursor: 'pointer' }}
                         />
                     </div>
@@ -66,7 +52,7 @@ const PersonalInfo = props => {
             <div className="row d-flex justify-content-center">
                 <div className="col-lg-12 col-md-12 col-sm-6 col-6 h-auto text-center">
                     <img
-                        src={props.user.profilePictureSource}
+                        src={user.profilePictureSource}
                         className="img-fluid rounded-circle"
                         alt=""
                     />
@@ -75,10 +61,10 @@ const PersonalInfo = props => {
             <div className="row mt-2">
                 <div className="col-lg-9 col-9">
                     <div className="row font-18 font-weight-bold">
-                        <span>{`${props.user.name} ${props.user.surname}`}</span>
+                        <span>{`${user.name} ${user.surname}`}</span>
                     </div>
                     <div className="row font-weight-lighter font-italic">
-                        <span>{`${props.user.username}`}</span>
+                        <span>{`${user.username}`}</span>
                     </div>
                 </div>
                 <Tooltip
@@ -92,13 +78,13 @@ const PersonalInfo = props => {
                 </Tooltip>
             </div>
             <div className="row mt-2 h-auto">
-                <span>{`${props.user.description}`}</span>
+                <span>{`${user.description}`}</span>
             </div>
             <div className="row mt-3">
                 <button
                     className="btn btn-secondary btn-block"
                     type="button"
-                    onClick={props.openSettings}
+                    onClick={openSettings}
                 >
                     Profili Düzenle
                 </button>
@@ -112,7 +98,7 @@ const PersonalInfo = props => {
                                 className="font-18 ml-1"
                             />
                             <span className="align-middle ml-1">
-                                {` ${props.user.location}`}
+                                {` ${user.location}`}
                             </span>
                         </div>
                     </div>
@@ -122,7 +108,7 @@ const PersonalInfo = props => {
                                 symbol={profileInfoEmojis.get('E-Mail')}
                                 className="font-18"
                             />
-                            <span className="align-middle">{` ${props.user.email}`}</span>
+                            <span className="align-middle">{` ${user.email}`}</span>
                         </div>
                     </div>
                     <div className="row">
@@ -134,9 +120,7 @@ const PersonalInfo = props => {
                                 className="font-18"
                             />
                             <span className="align-middle ml-1">
-                                {moment(props.user.birthday).format(
-                                    'DD.MM.YYYY'
-                                )}
+                                {moment(user.birthday).format('DD.MM.YYYY')}
                             </span>
                         </div>
                     </div>
