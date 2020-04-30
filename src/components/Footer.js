@@ -27,16 +27,6 @@ const Footer = () => {
                         FAQ
                     </Link>
                 </p>
-                <p>
-                    <Link id="home" className="common-link" to={''}>
-                        Home
-                    </Link>
-                </p>
-                <p>
-                    <Link id="sing-in" className="common-link" to={'/sign-in'}>
-                        Sign in
-                    </Link>
-                </p>
                 <p>©Copyright 2020 by CS476. All rights reversed.</p>
             </footer>
         </div>

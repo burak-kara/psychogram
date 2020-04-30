@@ -33,13 +33,7 @@ const FAQ = props => {
               ))
             : null;
 
-    return (
-        <div>
-            <p>
-                <Accordion>{renderAccordionItems()}</Accordion>
-            </p>
-        </div>
-    );
+    return <Accordion>{renderAccordionItems()}</Accordion>;
 };
 
 export default withFirebase(FAQ);
