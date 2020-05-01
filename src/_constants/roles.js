@@ -1,3 +1,3 @@
 export const ADMIN = 'ADMIN';
 export const DOCTOR = 'DOCTOR';
-export const USER = 'USER';
+export const USER = 'PATIENT';
