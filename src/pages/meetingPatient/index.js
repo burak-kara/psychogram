@@ -44,9 +44,13 @@ const PatientMeetingPage = props => {
     const sortByDate = data => (data ? data.sort(compare) : data);
 
     const compare = (item1, item2) => {
-        const item1Date = item1.lastMessage.date;
-        const item2Date = item2.lastMessage.date;
-        return moment(item1Date).isBefore(item2Date) ? 1 : -1;
+        if (item1.lastMessage && item2.lastMessage) {
+            const item1Date = item1.lastMessage.date;
+            const item2Date = item2.lastMessage.date;
+            return moment(item1Date).isBefore(item2Date) ? 1 : -1;
+        } else {
+            return -1;
+        }
     };
 
     const handleMeetingClick = key => {
