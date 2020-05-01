@@ -9,25 +9,22 @@ import { MenuItem, ListItemIcon, Menu } from '@material-ui/core';
 import { FaUserAlt, FaSignOutAlt } from 'react-icons/fa';
 import { IoIosMore } from 'react-icons/io';
 import { IconContext } from 'react-icons';
-import SignIn from './signPages/sign-in/SignIn';
+import { compose } from 'recompose';
 
-const Navigation = () => (
+const condition = authUser => authUser;
+
+const Navigation = props => (
     <AuthUserContext.Consumer>
         {authUser =>
             authUser ? (
                 <>
-                    if(authUser={authUser.roles[ROLES.DOCTOR]})
-                    {
-                        <NavigationDoctor
-                            authUser={authUser.roles[ROLES.DOCTOR]}
-                        />
-                    }
-                    else if(authUser={authUser.roles[ROLES.ADMIN]})
-                    {<NavigationAuth authUser={authUser.roles[ROLES.ADMIN]} />}
-                    else{<NavigationAuth authUser={authUser} />}
+                    <NavigationAuth
+                        authUser={authUser}
+                        firebase={props.firebase}
+                    />
                 </>
             ) : (
-                <NavigationNoAuth authUser={authUser} />
+                <NavigationAuth authUser={authUser} firebase={props.firebase} />
             )
         }
     </AuthUserContext.Consumer>
@@ -72,6 +69,11 @@ const NavigationAuth = ({ authUser }) => {
                             Forum
                         </a>
                     </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href={ROUTES.SIGN_IN}>
+                            Sign In
+                        </a>
+                    </li>
                 </ul>
                 <ul className="navbar-nav dots">
                     <IconContext.Provider
@@ -96,9 +98,7 @@ const NavigationAuth = ({ authUser }) => {
                         }}
                     >
                         <MenuItem>
-                            {authUser &&
-                            authUser.roles[ROLES.ADMIN] &&
-                            authUser.roles[ROLES.ADMIN] === ROLES.ADMIN ? (
+                            {authUser ? (
                                 <>
                                     <ListItemIcon>
                                         <FaUserAlt fontSize="small" />
@@ -123,191 +123,5 @@ const NavigationAuth = ({ authUser }) => {
         </nav>
     );
 };
-const NavigationDoctor = ({ authUser }) => {
-    const [anchorEl, setAnchorEl] = React.useState(null);
 
-    const handleClick = event => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    return (
-        <nav className="navbar navbar-expand-lg navigator">
-            <a className="navbar-brand" href="/">
-                <img src={logo} width="50" height="50" alt="" />
-            </a>
-            <button
-                className="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarNav"
-                aria-controls="navbarNav"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-            >
-                <span className="navbar-toggler-icon" />
-            </button>
-            <div className="collapse navbar-collapse" id="navbarNav">
-                <ul className="navbar-nav mr-auto">
-                    <li className="nav-item active">
-                        <a className="nav-link " href={ROUTES.LANDING}>
-                            Home
-                        </a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href={ROUTES.FORUM}>
-                            Forum
-                        </a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href={ROUTES.FORUM}>
-                            Meetings
-                        </a>
-                    </li>
-                </ul>
-                <ul className="navbar-nav dots">
-                    <IconContext.Provider
-                        value={{ color: 'white', size: '2em' }}
-                    >
-                        <div>
-                            <IoIosMore onClick={handleClick} />
-                        </div>
-                    </IconContext.Provider>
-                    <Menu
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={Boolean(anchorEl)}
-                        onClose={handleClose}
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'center',
-                        }}
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'center',
-                        }}
-                    >
-                        <MenuItem>
-                            {authUser &&
-                            authUser.roles[ROLES.ADMIN] &&
-                            authUser.roles[ROLES.ADMIN] === ROLES.ADMIN ? (
-                                <>
-                                    <ListItemIcon>
-                                        <FaUserAlt fontSize="small" />
-                                    </ListItemIcon>
-                                    <li>
-                                        <Link to={ROUTES.PROFILE}>Profile</Link>
-                                    </li>
-                                </>
-                            ) : null}
-                        </MenuItem>
-                        <MenuItem>
-                            <ListItemIcon>
-                                <FaSignOutAlt fontSize="small" />
-                            </ListItemIcon>
-                            <li>
-                                <SignOut />
-                            </li>
-                        </MenuItem>
-                    </Menu>
-                </ul>
-            </div>
-        </nav>
-    );
-};
-const NavigationNoAuth = ({ authUser }) => {
-    const [anchorEl, setAnchorEl] = React.useState(null);
-
-    const handleClick = event => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    return (
-        <nav className="navbar navbar-expand-lg navigator">
-            <a className="navbar-brand" href="/">
-                <img src={logo} width="50" height="50" alt="" />
-            </a>
-            <button
-                className="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarNav"
-                aria-controls="navbarNav"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-            >
-                <span className="navbar-toggler-icon" />
-            </button>
-            <div className="collapse navbar-collapse" id="navbarNav">
-                <ul className="navbar-nav mr-auto">
-                    <li className="nav-item active">
-                        <a className="nav-link " href={ROUTES.LANDING}>
-                            Home
-                        </a>
-                    </li>
-                </ul>
-                <ul className="navbar-nav dots">
-                    <IconContext.Provider
-                        value={{ color: 'white', size: '2em' }}
-                    >
-                        <div>
-                            <IoIosMore onClick={handleClick} />
-                        </div>
-                    </IconContext.Provider>
-                    <Menu
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={Boolean(anchorEl)}
-                        onClose={handleClose}
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'center',
-                        }}
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'center',
-                        }}
-                    >
-                        <MenuItem>
-                            {authUser &&
-                            authUser.roles[ROLES.ADMIN] &&
-                            authUser.roles[ROLES.ADMIN] === ROLES.ADMIN ? (
-                                <>
-                                    <ListItemIcon>
-                                        <FaUserAlt fontSize="small" />
-                                    </ListItemIcon>
-                                    <li>
-                                        <Link to={ROUTES.PROFILE}>Profile</Link>
-                                    </li>
-                                </>
-                            ) : null}
-                        </MenuItem>
-                        <MenuItem>
-                            <ListItemIcon>
-                                <FaSignOutAlt fontSize="small" />
-                            </ListItemIcon>
-                            <li>
-                                <Link
-                                    id="sing-in"
-                                    className="common-link"
-                                    to={'/sign-in'}
-                                >
-                                    Sign in
-                                </Link>
-                            </li>
-                        </MenuItem>
-                    </Menu>
-                </ul>
-            </div>
-        </nav>
-    );
-};
-
-export default Navigation;
+export default compose(condition)(Navigation);
