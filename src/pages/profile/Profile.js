@@ -5,6 +5,7 @@ import Settings from './Settings';
 import Alert from '../../components/Alert';
 import { compose } from 'recompose';
 import { withAuthorization, withEmailVerification } from '../../_session';
+import * as ROLES from '../../_constants/roles';
 
 const Profile = props => {
     const [settingsOpen, setSettingsOpen] = useState(false);
@@ -79,7 +80,8 @@ const Profile = props => {
     ) : null;
 };
 
-const condition = authUser => authUser;
+const condition = authUser =>
+    authUser.role === ROLES.USER || authUser.role === ROLES.DOCTOR;
 
 export default compose(
     withEmailVerification,

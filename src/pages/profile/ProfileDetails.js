@@ -1,5 +1,8 @@
 import React from 'react';
 import CardContainer from '../../components/CardContainer';
+import * as ROLES from '../../_constants/roles';
+
+const condition = authUser => authUser.role === ROLES.DOCTOR;
 
 const ProfileDetails = props => {
     return (
@@ -10,12 +13,15 @@ const ProfileDetails = props => {
                 data={props.user.meetings}
                 type={'meetings'}
             />
-            <CardContainer
-                title="Favori Doktorlarım"
-                seeAll={() => alert('see all fav docs')}
-                data={props.user.favDocs}
-                type={'favDocs'}
-            />
+
+            {!condition ? (
+                <CardContainer
+                    title="Favori Doktorlarım"
+                    seeAll={() => alert('see all fav docs')}
+                    data={props.user.favDocs}
+                    type={'favDocs'}
+                />
+            ) : null}
             <CardContainer
                 title="Favori Makalelerim"
                 seeAll={() => alert('see all fav articles')}

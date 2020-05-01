@@ -4,6 +4,7 @@ import Emoji from 'a11y-react-emoji';
 import { faceEmojis, profileInfoEmojis } from '../../_utilitiy/emojis';
 import { Tooltip, Zoom } from '@material-ui/core';
 import moment from 'moment';
+import * as ROLES from '../../_constants/roles';
 
 const PersonalInfo = props => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -60,6 +61,8 @@ const PersonalInfo = props => {
 
         return allEmojis;
     };
+
+    const conditio = authUser => authUser.role === ROLES.USER;
 
     return (
         <div className="col-lg-3 col-md-3 col-sm-12 col-12 pl-5 pr-5 pt-2 pb-4 profile-info">
@@ -140,6 +143,22 @@ const PersonalInfo = props => {
                             </span>
                         </div>
                     </div>
+                    {conditio ? (
+                        <div className="row">
+                            <div className="col-12 no-padding">
+                                <span className="align-middle ml-2">
+                                    {' '}
+                                    {` ${props.user.experties}`}
+                                </span>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="row">
+                            <div className="col-12 no-padding">
+                                <span className="align-middle ml-2"></span>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
