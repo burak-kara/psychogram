@@ -17,6 +17,7 @@ import {
     AppointmentForm,
     AppointmentTooltip,
     TodayButton,
+    AllDayPanel,
 } from '@devexpress/dx-react-scheduler-material-ui';
 
 const URL = 'https://js.devexpress.com/Demos/Mvc/api/SchedulerData/Get';
@@ -64,7 +65,7 @@ const Reservations = props => {
     const { authUser, firebase } = props;
     const [loading, setLoading] = useState(true);
     const [currentDate, setCurrentDate] = useState('2017-05-23');
-    const [currentViewName, setCurrentViewName] = useState('Day');
+    const [currentViewName, setCurrentViewName] = useState('Week');
     const [data, setData] = useState(null);
     const [lastQuery, setLastQuery] = useState('');
 
@@ -79,6 +80,7 @@ const Reservations = props => {
         fetch(queryString)
             .then(response => response.json())
             .then(({ data }) => {
+                console.log(data);
                 setTimeout(() => {
                     setLoading(false);
                     setData(data);
@@ -100,7 +102,7 @@ const Reservations = props => {
 
     return (
         <Paper>
-            <Scheduler data={formattedData} height={660}>
+            <Scheduler data={formattedData} height={700}>
                 <ViewState
                     currentDate={currentDate}
                     currentViewName={currentViewName}
@@ -108,7 +110,11 @@ const Reservations = props => {
                     onCurrentDateChange={handleCurrentDateChange}
                 />
                 <DayView startDayHour={9} endDayHour={18} />
-                <WeekView startDayHour={9} endDayHour={18} />
+                <WeekView
+                    startDayHour={9}
+                    endDayHour={18}
+                    excludedDays={[0, 6]}
+                />
                 <Appointments />
                 <Toolbar
                     {...(loading
@@ -116,10 +122,11 @@ const Reservations = props => {
                         : null)}
                 />
                 <DateNavigator />
+                <AllDayPanel />
                 <TodayButton />
                 <ViewSwitcher />
                 <AppointmentTooltip showOpenButton showCloseButton />
-                <AppointmentForm readOnly />
+                <AppointmentForm />
             </Scheduler>
         </Paper>
     );
