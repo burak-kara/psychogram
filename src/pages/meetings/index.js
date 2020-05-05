@@ -8,7 +8,7 @@ import * as ROLES from '../../_constants/roles';
 import ChatSection from './ChatSection';
 import moment from 'moment';
 
-const PatientMeetingPage = props => {
+const Meetings = props => {
     const { authUser, firebase } = props;
     const [meetings, setMeetings] = useState([]);
     const [chatPairs, setChatPairs] = useState(new Map());
@@ -94,4 +94,4 @@ const condition = authUser => authUser;
 export default compose(
     withEmailVerification,
     withAuthorization(condition)
-)(PatientMeetingPage);
+)(Meetings);

@@ -9,13 +9,14 @@ import Contact from '../pages/home/Contact';
 import Forum from '../pages/forum/Forum';
 import AboutUs from '../pages/aboutus/AboutUs';
 import Faq from '../pages/faq/Faq';
-import PatientMeetingPage from '../pages/meetings';
+import Meetings from '../pages/meetings';
 import DoctorList from '../pages/doctor/DoctorList';
-import * as ROUTES from '../_constants/routeConstants';
 import Navigation from '../components/Navigation';
-import { withAuthentication } from '../_session';
 import AdminPage from '../pages/admin/Admin';
+import Reservations from '../pages/reservations';
 import TestMeetingCreate from '../pages/testCreateMeeting';
+import { withAuthentication } from '../_session';
+import * as ROUTES from '../_constants/routeConstants';
 
 const App = () => (
     <Router>
@@ -28,9 +29,10 @@ const App = () => (
         <Route path={ROUTES.FORUM} component={Forum} />
         <Route path={ROUTES.ABOUT_US} component={AboutUs} />
         <Route path={ROUTES.FAQ} component={Faq} />
-        <Route path={ROUTES.PATIENT_MEETING} component={PatientMeetingPage} />
+        <Route path={ROUTES.MEETINGS} component={Meetings} />
         <Route path={ROUTES.DOCTOR_LIST} component={DoctorList} />
         <Route path={ROUTES.ADMIN} component={AdminPage} />
+        <Route path={ROUTES.RESERVATIONS} component={Reservations} />
         <Route path="/create" component={TestMeetingCreate} />
     </Router>
 );
