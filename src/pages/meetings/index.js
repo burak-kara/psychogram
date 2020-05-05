@@ -63,7 +63,7 @@ const PatientMeetingPage = props => {
 
     // TODO implement ui for meeting not chosen case
     return (
-        <div className="patient-meeting-container">
+        <div className="meeting-container">
             <div className="container-fluid main-container">
                 <div className="row h-100">
                     <div className="col border-right meetings-list-container">
