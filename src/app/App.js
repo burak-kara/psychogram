@@ -9,7 +9,7 @@ import Contact from '../pages/home/Contact';
 import Forum from '../pages/forum/Forum';
 import AboutUs from '../pages/aboutus/AboutUs';
 import Faq from '../pages/faq/Faq';
-import PatientMeetingPage from '../pages/meetingPatient';
+import PatientMeetingPage from '../pages/meetings';
 import DoctorList from '../pages/doctor/DoctorList';
 import * as ROUTES from '../_constants/routeConstants';
 import Navigation from '../components/Navigation';
