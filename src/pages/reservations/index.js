@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { compose } from 'recompose';
 import moment from 'moment';
-import { withAuthorization, withEmailVerification } from '../../_session';
+import { compose } from 'recompose';
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import { Paper, LinearProgress } from '@material-ui/core';
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import {
     Scheduler,
@@ -17,8 +15,9 @@ import {
     AppointmentForm,
     AppointmentTooltip,
     TodayButton,
-    AllDayPanel,
 } from '@devexpress/dx-react-scheduler-material-ui';
+import { withAuthorization, withEmailVerification } from '../../_session';
+import { snapshotToArray } from '../../_utility/functions';
 
 const URL = 'https://js.devexpress.com/Demos/Mvc/api/SchedulerData/Get';
 
@@ -43,7 +42,34 @@ const styles = {
         bottom: 0,
         left: 0,
     },
+    dayScaleCell: {
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+    },
 };
+
+const formatDayScaleDate = (date, options) => {
+    const momentDate = moment(date);
+    const { weekday } = options;
+    return momentDate.format(weekday ? 'dddd' : 'D');
+};
+
+const formatTimeScaleDate = date => moment(date).format('HH:mm');
+
+const DayScaleCell = withStyles(
+    styles,
+    'DayScaleCell'
+)(({ formatDate, classes, ...restProps }) => (
+    <WeekView.DayScaleCell
+        {...restProps}
+        formatDate={formatDayScaleDate}
+        className={classes.dayScaleCell}
+    />
+));
+
+const TimeScaleCells = restProps => (
+    <WeekView.TimeScaleLabel {...restProps} formatDate={formatTimeScaleDate} />
+);
 
 const ToolbarWithLoading = withStyles(styles, { name: 'Toolbar' })(
     ({ children, classes, ...restProps }) => (
@@ -64,31 +90,39 @@ const mapAppointmentData = appointment => ({
 const Reservations = props => {
     const { authUser, firebase } = props;
     const [loading, setLoading] = useState(true);
-    const [currentDate, setCurrentDate] = useState('2017-05-23');
+    const [currentDate, setCurrentDate] = useState('2020-05-06');
     const [currentViewName, setCurrentViewName] = useState('Week');
-    const [data, setData] = useState(null);
+    const [data, setData] = useState([]);
     const [lastQuery, setLastQuery] = useState('');
 
     const formattedData = data ? data.map(mapAppointmentData) : [];
 
+    // TODO delete
+    // useEffect(() => {
+    //     const queryString = makeQueryString(currentDate, currentViewName);
+    //     if (queryString === lastQuery) {
+    //         setLoading(false);
+    //         return;
+    //     }
+    //     fetch(queryString)
+    //         .then(response => response.json())
+    //         .then(({ data }) => {
+    //             console.log(data);
+    //             setTimeout(() => {
+    //                 setLoading(false);
+    //                 setData(data);
+    //             }, 600);
+    //         })
+    //         .catch(() => setLoading(false));
+    //     setLastQuery(queryString);
+    // }, []);
+
     useEffect(() => {
-        const queryString = makeQueryString(currentDate, currentViewName);
-        if (queryString === lastQuery) {
+        firebase.reservations().on('value', snapshot => {
+            setData(snapshotToArray(snapshot));
             setLoading(false);
-            return;
-        }
-        fetch(queryString)
-            .then(response => response.json())
-            .then(({ data }) => {
-                console.log(data);
-                setTimeout(() => {
-                    setLoading(false);
-                    setData(data);
-                }, 600);
-            })
-            .catch(() => setLoading(false));
-        setLastQuery(queryString);
-    }, []);
+        });
+    }, [authUser, firebase]);
 
     const handleCurrentViewNameChange = currentViewName => {
         setCurrentViewName(currentViewName);
@@ -114,6 +148,8 @@ const Reservations = props => {
                     startDayHour={9}
                     endDayHour={18}
                     excludedDays={[0, 6]}
+                    dayScaleCellComponent={DayScaleCell}
+                    timeScaleLabelComponent={TimeScaleCells}
                 />
                 <Appointments />
                 <Toolbar
@@ -122,7 +158,6 @@ const Reservations = props => {
                         : null)}
                 />
                 <DateNavigator />
-                <AllDayPanel />
                 <TodayButton />
                 <ViewSwitcher />
                 <AppointmentTooltip showOpenButton showCloseButton />
