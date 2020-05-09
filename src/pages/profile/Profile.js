@@ -81,7 +81,7 @@ const Profile = props => {
 };
 
 const condition = authUser =>
-    authUser.role === ROLES.USER || authUser.role === ROLES.DOCTOR;
+    authUser.role === ROLES.USER && authUser.role === ROLES.USER;
 
 export default compose(
     withEmailVerification,
