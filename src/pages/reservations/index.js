@@ -3,7 +3,11 @@ import moment from 'moment';
 import { compose } from 'recompose';
 import { withStyles } from '@material-ui/core/styles';
 import { Paper, LinearProgress } from '@material-ui/core';
-import { ViewState } from '@devexpress/dx-react-scheduler';
+import {
+    EditingState,
+    IntegratedEditing,
+    ViewState,
+} from '@devexpress/dx-react-scheduler';
 import {
     Scheduler,
     WeekView,
@@ -15,22 +19,10 @@ import {
     AppointmentForm,
     AppointmentTooltip,
     TodayButton,
+    ConfirmationDialog,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { withAuthorization, withEmailVerification } from '../../_session';
 import { snapshotToArray } from '../../_utility/functions';
-
-const URL = 'https://js.devexpress.com/Demos/Mvc/api/SchedulerData/Get';
-
-const makeQueryString = (currentDate, currentViewName) => {
-    const format = 'YYYY-MM-DDTHH:mm:ss';
-    const start = moment(currentDate).startOf(currentViewName.toLowerCase());
-    const end = start.clone().endOf(currentViewName.toLowerCase());
-    return encodeURI(
-        `${URL}?filter=[["EndDate", ">", "${start.format(
-            format
-        )}"],["StartDate", "<", "${end.format(format)}"]]`
-    );
-};
 
 const styles = {
     toolbarRoot: {
@@ -80,63 +72,56 @@ const ToolbarWithLoading = withStyles(styles, { name: 'Toolbar' })(
     )
 );
 
-const mapAppointmentData = appointment => ({
-    ...appointment,
-    startDate: appointment.StartDate,
-    endDate: appointment.EndDate,
-    title: appointment.Text,
-});
-
 const Reservations = props => {
-    const { authUser, firebase } = props;
+    const { authUser, firebase, history } = props;
     const [loading, setLoading] = useState(true);
-    const [currentDate, setCurrentDate] = useState('2020-05-06');
+    const [currentDate, setCurrentDate] = useState(moment());
     const [currentViewName, setCurrentViewName] = useState('Week');
     const [data, setData] = useState([]);
-    const [lastQuery, setLastQuery] = useState('');
-
-    const formattedData = data ? data.map(mapAppointmentData) : [];
-
-    // TODO delete
-    // useEffect(() => {
-    //     const queryString = makeQueryString(currentDate, currentViewName);
-    //     if (queryString === lastQuery) {
-    //         setLoading(false);
-    //         return;
-    //     }
-    //     fetch(queryString)
-    //         .then(response => response.json())
-    //         .then(({ data }) => {
-    //             console.log(data);
-    //             setTimeout(() => {
-    //                 setLoading(false);
-    //                 setData(data);
-    //             }, 600);
-    //         })
-    //         .catch(() => setLoading(false));
-    //     setLastQuery(queryString);
-    // }, []);
+    const formattedData = data ? data.map(item => ({ ...item })) : [];
 
     useEffect(() => {
+        isDoctorCalendar() ? getDoctorCalendar() : getPatientCalendar();
+    }, [authUser, firebase]);
+
+    const getPatientCalendar = () => {
         firebase.reservations().on('value', snapshot => {
             setData(snapshotToArray(snapshot));
             setLoading(false);
         });
-    }, [authUser, firebase]);
+    };
+
+    const getDoctorCalendar = () => {
+        setLoading(false);
+    };
 
     const handleCurrentViewNameChange = currentViewName => {
         setCurrentViewName(currentViewName);
-        setLoading(true);
     };
 
     const handleCurrentDateChange = currentDate => {
         setCurrentDate(currentDate);
-        setLoading(true);
     };
+
+    const handleChanges = ({ added, changed, deleted }) => {
+        if (added) {
+            firebase.reservations().push({
+                ...added,
+                startDate: moment(added.startDate).format(),
+                endDate: moment(added.endDate).format(),
+            });
+        }
+    };
+
+    const isDoctorCalendar = () =>
+        history &&
+        history.location &&
+        history.location.state &&
+        history.location.state.doctorId;
 
     return (
         <Paper>
-            <Scheduler data={formattedData} height={700}>
+            <Scheduler data={formattedData} height={780}>
                 <ViewState
                     currentDate={currentDate}
                     currentViewName={currentViewName}
@@ -157,6 +142,12 @@ const Reservations = props => {
                         ? { rootComponent: ToolbarWithLoading }
                         : null)}
                 />
+                {isDoctorCalendar() ? (
+                    <EditingState onCommitChanges={handleChanges} />
+                ) : null}
+                {isDoctorCalendar() ? <IntegratedEditing /> : null}
+                {isDoctorCalendar() ? <ConfirmationDialog /> : null}
+
                 <DateNavigator />
                 <TodayButton />
                 <ViewSwitcher />
