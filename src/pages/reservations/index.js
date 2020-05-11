@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { compose } from 'recompose';
+import * as ROLES from '../../_constants/roles';
 import { withStyles } from '@material-ui/core/styles';
 import { Paper, LinearProgress } from '@material-ui/core';
+import { snapshotToArray } from '../../_utility/functions';
+import { withAuthorization, withEmailVerification } from '../../_session';
 import {
     EditingState,
     IntegratedEditing,
@@ -21,8 +24,6 @@ import {
     TodayButton,
     ConfirmationDialog,
 } from '@devexpress/dx-react-scheduler-material-ui';
-import { withAuthorization, withEmailVerification } from '../../_session';
-import { snapshotToArray } from '../../_utility/functions';
 
 const styles = {
     toolbarRoot: {
@@ -48,6 +49,8 @@ const formatDayScaleDate = (date, options) => {
 
 const formatTimeScaleDate = date => moment(date).format('HH:mm');
 
+const currentUser = JSON.parse(localStorage.getItem('authUser'));
+
 const DayScaleCell = withStyles(
     styles,
     'DayScaleCell'
@@ -63,20 +66,73 @@ const TimeScaleCells = restProps => (
     <WeekView.TimeScaleLabel {...restProps} formatDate={formatTimeScaleDate} />
 );
 
-const Appointment = ({ children, style, ...restProps }) => {
-    console.log(children[1].props.data); // TODO continue
-    return (
-        <Appointments.Appointment
-            {...restProps}
-            style={{
-                ...style,
-                backgroundColor: '#FFC107',
-                borderRadius: '8px',
-            }}
-        >
-            {children}
-        </Appointments.Appointment>
-    );
+const Appointment = ({ children, data, style, ...restProps }) => {
+    if (currentUser.role === ROLES.PATIENT) {
+        if (data.userId === currentUser.uid) {
+            return (
+                <Appointments.Appointment
+                    {...restProps}
+                    style={{
+                        ...style,
+                        backgroundColor: '#84a9ac',
+                        borderRadius: '8px',
+                    }}
+                >
+                    {children}
+                </Appointments.Appointment>
+            );
+        } else {
+            return (
+                <Appointments.Appointment
+                    {...restProps}
+                    style={{
+                        ...style,
+                        backgroundColor: '#3b6978',
+                        borderRadius: '8px',
+                    }}
+                    onClick={() => {}}
+                    onDoubleClick={() => {}}
+                >
+                    {children}
+                </Appointments.Appointment>
+            );
+        }
+    } else {
+        return (
+            <Appointments.Appointment
+                {...restProps}
+                style={{
+                    ...style,
+                    backgroundColor: '#3b6978',
+                    borderRadius: '8px',
+                }}
+            >
+                {children}
+            </Appointments.Appointment>
+        );
+    }
+};
+
+const AppointmentContent = ({ data, ...restProps }) => {
+    if (currentUser.role === ROLES.PATIENT) {
+        if (data.userId === currentUser.uid) {
+            return (
+                <Appointments.AppointmentContent {...restProps} data={data} />
+            );
+        } else {
+            return (
+                <Appointments.AppointmentContent {...restProps} data={data}>
+                    Not Available
+                </Appointments.AppointmentContent>
+            );
+        }
+    } else {
+        return (
+            <Appointments.AppointmentContent {...restProps} data={data}>
+                selam
+            </Appointments.AppointmentContent>
+        );
+    }
 };
 
 const ToolbarWithLoading = withStyles(styles, { name: 'Toolbar' })(
@@ -100,18 +156,6 @@ const Reservations = props => {
         isDoctorCalendar() ? getDoctorCalendar() : getPatientCalendar();
     }, [authUser, firebase, currentDate]);
 
-    const getPatientCalendar = () => {
-        firebase
-            .reservations()
-            .orderByChild('endDate')
-            .startAt(moment(currentDate).startOf('week').format())
-            .endAt(moment(currentDate).endOf('week').format())
-            .on('value', snapshot => {
-                setData(snapshotToArray(snapshot));
-                setLoading(false);
-            });
-    };
-
     const getDoctorCalendar = () => {
         setData([]);
         firebase
@@ -123,6 +167,24 @@ const Reservations = props => {
                 const temp = [];
                 snapshotToArray(snapshot).map(item => {
                     if (item.doctorId === history.location.state.doctorId) {
+                        temp.push(item);
+                    }
+                });
+                setData(temp);
+                setLoading(false);
+            });
+    };
+
+    const getPatientCalendar = () => {
+        firebase
+            .reservations()
+            .orderByChild('endDate')
+            .startAt(moment(currentDate).startOf('week').format())
+            .endAt(moment(currentDate).endOf('week').format())
+            .on('value', snapshot => {
+                const temp = [];
+                snapshotToArray(snapshot).map(item => {
+                    if (item.userId === authUser.uid) {
                         temp.push(item);
                     }
                 });
@@ -174,7 +236,10 @@ const Reservations = props => {
                     dayScaleCellComponent={DayScaleCell}
                     timeScaleLabelComponent={TimeScaleCells}
                 />
-                <Appointments appointmentComponent={Appointment} />
+                <Appointments
+                    appointmentComponent={Appointment}
+                    appointmentContentComponent={AppointmentContent}
+                />
                 <Toolbar
                     {...(loading
                         ? { rootComponent: ToolbarWithLoading }
