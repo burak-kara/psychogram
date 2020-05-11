@@ -63,6 +63,22 @@ const TimeScaleCells = restProps => (
     <WeekView.TimeScaleLabel {...restProps} formatDate={formatTimeScaleDate} />
 );
 
+const Appointment = ({ children, style, ...restProps }) => {
+    console.log(children[1].props.data); // TODO continue
+    return (
+        <Appointments.Appointment
+            {...restProps}
+            style={{
+                ...style,
+                backgroundColor: '#FFC107',
+                borderRadius: '8px',
+            }}
+        >
+            {children}
+        </Appointments.Appointment>
+    );
+};
+
 const ToolbarWithLoading = withStyles(styles, { name: 'Toolbar' })(
     ({ children, classes, ...restProps }) => (
         <div className={classes.toolbarRoot}>
@@ -82,17 +98,37 @@ const Reservations = props => {
 
     useEffect(() => {
         isDoctorCalendar() ? getDoctorCalendar() : getPatientCalendar();
-    }, [authUser, firebase]);
+    }, [authUser, firebase, currentDate]);
 
     const getPatientCalendar = () => {
-        firebase.reservations().on('value', snapshot => {
-            setData(snapshotToArray(snapshot));
-            setLoading(false);
-        });
+        firebase
+            .reservations()
+            .orderByChild('endDate')
+            .startAt(moment(currentDate).startOf('week').format())
+            .endAt(moment(currentDate).endOf('week').format())
+            .on('value', snapshot => {
+                setData(snapshotToArray(snapshot));
+                setLoading(false);
+            });
     };
 
     const getDoctorCalendar = () => {
-        setLoading(false);
+        setData([]);
+        firebase
+            .reservations()
+            .orderByChild('endDate')
+            .startAt(moment(currentDate).startOf('week').format())
+            .endAt(moment(currentDate).endOf('week').format())
+            .on('value', snapshot => {
+                const temp = [];
+                snapshotToArray(snapshot).map(item => {
+                    if (item.doctorId === history.location.state.doctorId) {
+                        temp.push(item);
+                    }
+                });
+                setData(temp);
+                setLoading(false);
+            });
     };
 
     const handleCurrentViewNameChange = currentViewName => {
@@ -107,6 +143,8 @@ const Reservations = props => {
         if (added) {
             firebase.reservations().push({
                 ...added,
+                userId: authUser.uid,
+                doctorId: history.location.state.doctorId,
                 startDate: moment(added.startDate).format(),
                 endDate: moment(added.endDate).format(),
             });
@@ -136,7 +174,7 @@ const Reservations = props => {
                     dayScaleCellComponent={DayScaleCell}
                     timeScaleLabelComponent={TimeScaleCells}
                 />
-                <Appointments />
+                <Appointments appointmentComponent={Appointment} />
                 <Toolbar
                     {...(loading
                         ? { rootComponent: ToolbarWithLoading }
