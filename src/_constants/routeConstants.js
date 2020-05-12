@@ -11,3 +11,4 @@ export const ABOUT_US = '/about-us';
 export const FAQ = '/faq';
 export const PATIENT_MEETING = '/meeting';
 export const DOCTOR_PROFILE = '/doctor-profile';
+export const RESERVATIONS = '/reservations';
