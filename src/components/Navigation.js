@@ -44,7 +44,7 @@ const NavigationAuth = ({ authUser, firebase }) => {
             .then(url => {
                 setLogo(url);
             });
-    }, []);
+    }, [firebase]);
     switch (authUser.role) {
         case ROLES.DOCTOR:
             return (
