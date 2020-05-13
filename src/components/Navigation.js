@@ -128,9 +128,19 @@ const NavigationAuth = ({ authUser, firebase }) => {
                                 <FaUserAlt fontSize="small" />
                             </ListItemIcon>
                             <li>
-                                <Link to={ROUTES.PROFILE}>Profile</Link>
+                                <Link
+                                    to={
+                                        authUser.role === ROLES.DOCTOR ||
+                                        ROLES.PATIENT
+                                            ? ROUTES.PROFILE
+                                            : null
+                                    }
+                                >
+                                    Profile
+                                </Link>
                             </li>
                         </MenuItem>
+
                         {authUser &&
                         authUser.role &&
                         authUser.role === ROLES.ADMIN ? (
