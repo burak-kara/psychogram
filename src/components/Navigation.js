@@ -123,14 +123,18 @@ const NavigationAuth = ({ authUser, firebase }) => {
                             horizontal: 'center',
                         }}
                     >
-                        <MenuItem>
-                            <ListItemIcon>
-                                <FaUserAlt fontSize="small" />
-                            </ListItemIcon>
-                            <li>
-                                <Link to={ROUTES.PROFILE}>Profile</Link>
-                            </li>
-                        </MenuItem>
+                        {authUser &&
+                        authUser.role &&
+                        authUser.role === ROLES.PATIENT ? (
+                            <MenuItem>
+                                <ListItemIcon>
+                                    <FaUserAlt fontSize="small" />
+                                </ListItemIcon>
+                                <li>
+                                    <Link to={ROUTES.PROFILE}>Profile</Link>
+                                </li>
+                            </MenuItem>
+                        ) : null}
                         {authUser &&
                         authUser.role &&
                         authUser.role === ROLES.ADMIN ? (
@@ -140,6 +144,20 @@ const NavigationAuth = ({ authUser, firebase }) => {
                                 </ListItemIcon>
                                 <li>
                                     <Link to={ROUTES.ADMIN}>Admin</Link>
+                                </li>
+                            </MenuItem>
+                        ) : null}
+                        {authUser &&
+                        authUser.role &&
+                        authUser.role === ROLES.DOCTOR ? (
+                            <MenuItem>
+                                <ListItemIcon>
+                                    <FaUserAlt fontSize="small" />
+                                </ListItemIcon>
+                                <li>
+                                    <Link to={ROUTES.DOCTOR_PROFILE}>
+                                        Profile
+                                    </Link>
                                 </li>
                             </MenuItem>
                         ) : null}

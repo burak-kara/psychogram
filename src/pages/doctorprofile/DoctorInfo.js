@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import Emoji from 'a11y-react-emoji';
-import { faceEmojis, profileInfoEmojis } from '../../_utilitiy/emojis';
+import { faceEmojis, profileInfoEmojis } from '../../_utility/emojis';
 import { Tooltip, Zoom } from '@material-ui/core';
 import moment from 'moment';
+import * as ROLES from '../../_constants/roles';
 
 const DoctorInfo = props => {
     const [anchorEl, setAnchorEl] = useState(null);
