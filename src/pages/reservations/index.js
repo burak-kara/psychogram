@@ -4,7 +4,7 @@ import { compose } from 'recompose';
 import * as ROLES from '../../_constants/roles';
 import { withStyles } from '@material-ui/core/styles';
 import { Paper, LinearProgress } from '@material-ui/core';
-import { snapshotToArray } from '../../_utility/functions';
+import { formatDateAsHours, snapshotToArray } from '../../_utility/functions';
 import { withAuthorization, withEmailVerification } from '../../_session';
 import {
     EditingState,
@@ -53,7 +53,7 @@ const currentUser = JSON.parse(localStorage.getItem('authUser'));
 
 const DayScaleCell = withStyles(
     styles,
-    'DayScaleCell'
+    'dayScaleCell'
 )(({ formatDate, classes, ...restProps }) => (
     <WeekView.DayScaleCell
         {...restProps}
@@ -68,20 +68,14 @@ const TimeScaleCells = restProps => (
 
 const Appointment = ({ children, data, style, ...restProps }) => {
     if (currentUser.role === ROLES.PATIENT) {
+        // If the paged is being opened by a patient.
         if (data.userId === currentUser.uid) {
-            return (
-                <Appointments.Appointment
-                    {...restProps}
-                    style={{
-                        ...style,
-                        backgroundColor: '#84a9ac',
-                        borderRadius: '8px',
-                    }}
-                >
-                    {children}
-                </Appointments.Appointment>
-            );
+            // Show patients' appointments
+            return getAppointment(style, children, restProps, '#84a9ac');
         } else {
+            // When a patient on the doctor calendar
+            // Block interactions with others' appointments
+            // Also change the color
             return (
                 <Appointments.Appointment
                     {...restProps}
@@ -98,38 +92,86 @@ const Appointment = ({ children, data, style, ...restProps }) => {
             );
         }
     } else {
-        return (
-            <Appointments.Appointment
-                {...restProps}
-                style={{
-                    ...style,
-                    backgroundColor: '#3b6978',
-                    borderRadius: '8px',
-                }}
-            >
-                {children}
-            </Appointments.Appointment>
-        );
+        return getAppointment(style, children, restProps, '#84a9ac');
     }
 };
+
+const getAppointment = (style, children, restProps, bgColor) => (
+    <Appointments.Appointment
+        {...restProps}
+        style={{
+            ...style,
+            backgroundColor: bgColor,
+            borderRadius: '8px',
+        }}
+    >
+        {children}
+    </Appointments.Appointment>
+);
 
 const AppointmentContent = ({ data, ...restProps }) => {
     if (currentUser.role === ROLES.PATIENT) {
         if (data.userId === currentUser.uid) {
             return (
-                <Appointments.AppointmentContent {...restProps} data={data} />
+                <Appointments.AppointmentContent
+                    {...restProps}
+                    data={data}
+                    className="user-appointment-container"
+                >
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-12 no-padding">
+                                <div className="title">{data.title}</div>
+                            </div>
+                            <div className="col-12no-padding ">
+                                <div className="date">{`Start: ${formatDateAsHours(
+                                    data.startDate
+                                )}`}</div>
+                            </div>
+                            <div className="col-12 no-padding">
+                                <div className="date">{`End: ${formatDateAsHours(
+                                    data.endDate
+                                )}`}</div>
+                            </div>
+                        </div>
+                    </div>
+                </Appointments.AppointmentContent>
             );
         } else {
             return (
-                <Appointments.AppointmentContent {...restProps} data={data}>
+                <Appointments.AppointmentContent
+                    {...restProps}
+                    data={data}
+                    className="other-appointment-container"
+                >
                     Not Available
                 </Appointments.AppointmentContent>
             );
         }
     } else {
         return (
-            <Appointments.AppointmentContent {...restProps} data={data}>
-                selam
+            <Appointments.AppointmentContent
+                {...restProps}
+                data={data}
+                className="user-appointment-container"
+            >
+                <div className="container">
+                    <div className="row">
+                        <div className="col-12 no-padding">
+                            <div className="title">{data.title}</div>
+                        </div>
+                        <div className="col-12no-padding ">
+                            <div className="date">{`Start: ${formatDateAsHours(
+                                data.startDate
+                            )}`}</div>
+                        </div>
+                        <div className="col-12 no-padding">
+                            <div className="date">{`End: ${formatDateAsHours(
+                                data.endDate
+                            )}`}</div>
+                        </div>
+                    </div>
+                </div>
             </Appointments.AppointmentContent>
         );
     }
@@ -150,11 +192,18 @@ const Reservations = props => {
     const [currentDate, setCurrentDate] = useState(moment());
     const [currentViewName, setCurrentViewName] = useState('Week');
     const [data, setData] = useState([]);
+
     const formattedData = data ? data.map(item => ({ ...item })) : [];
 
     useEffect(() => {
-        isDoctorCalendar() ? getDoctorCalendar() : getPatientCalendar();
+        isDoctorCalendar() ? getDoctorCalendar() : getUserCalendar();
     }, [authUser, firebase, currentDate]);
+
+    const isDoctorCalendar = () =>
+        history &&
+        history.location &&
+        history.location.state &&
+        history.location.state.doctorId;
 
     const getDoctorCalendar = () => {
         setData([]);
@@ -175,7 +224,7 @@ const Reservations = props => {
             });
     };
 
-    const getPatientCalendar = () => {
+    const getUserCalendar = () => {
         firebase
             .reservations()
             .orderByChild('endDate')
@@ -184,7 +233,12 @@ const Reservations = props => {
             .on('value', snapshot => {
                 const temp = [];
                 snapshotToArray(snapshot).map(item => {
-                    if (item.userId === authUser.uid) {
+                    if (
+                        (authUser.role === ROLES.PATIENT &&
+                            item.userId === authUser.uid) ||
+                        (authUser.role === ROLES.DOCTOR &&
+                            item.doctorId === authUser.uid)
+                    ) {
                         temp.push(item);
                     }
                 });
@@ -213,14 +267,8 @@ const Reservations = props => {
         }
     };
 
-    const isDoctorCalendar = () =>
-        history &&
-        history.location &&
-        history.location.state &&
-        history.location.state.doctorId;
-
     return (
-        <Paper>
+        <Paper className="reservation-calendar">
             <Scheduler data={formattedData} height={780}>
                 <ViewState
                     currentDate={currentDate}

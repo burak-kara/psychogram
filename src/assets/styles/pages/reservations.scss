@@ -1,0 +1,27 @@
+.reservation-calendar {
+    .user-appointment-container {
+        display: flex;
+        justify-content: center;
+
+        .title {
+            font-size: 16px;
+            text-align: center;
+        }
+        .date {
+            font-size: 14px;
+        }
+    }
+
+    .other-appointment-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+    }
+
+    .no-padding {
+        padding: 0 !important;
+    }
+}

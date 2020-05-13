@@ -9,7 +9,7 @@ const TestMeetingCreate = props => {
 
     // TODO delete. these value are served from props
     const userId = props.authUser.uid;
-    const doctorId = 'theolZeeaePJjCNZR5LSkz5Y3Jx2';
+    const doctorId = 'oZk79vdoCANyvFh0IY9yDc0827S2';
 
     const onClick = () => {
         const meetingId = `${userId}_${doctorId}`;
