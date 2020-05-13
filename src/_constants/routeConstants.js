@@ -4,7 +4,6 @@ export const SIGN_UP = '/sign-up';
 export const PASSWORD_FORGET = '/password-forget';
 export const HOME = '/home';
 export const PROFILE = '/profile';
-export const DOCTOR_PROFILE = '/doctor-profile';
 export const ADMIN = '/admin';
 export const CONTACT = '/contact';
 export const FORUM = '/forum';

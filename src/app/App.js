@@ -13,7 +13,6 @@ import Meetings from '../pages/meetings';
 import DoctorList from '../pages/doctor/DoctorList';
 import Navigation from '../components/Navigation';
 import AdminPage from '../pages/admin/Admin';
-import DoctorProfile from '../pages/doctorprofile/DoctorProfile';
 import Reservations from '../pages/reservations';
 import TestMeetingCreate from '../pages/testCreateMeeting';
 import { withAuthentication } from '../_session';
@@ -33,7 +32,6 @@ const App = () => (
         <Route path={ROUTES.MEETINGS} component={Meetings} />
         <Route path={ROUTES.DOCTOR_LIST} component={DoctorList} />
         <Route path={ROUTES.ADMIN} component={AdminPage} />
-        <Route path={ROUTES.DOCTOR_PROFILE} component={DoctorProfile} />
         <Route path={ROUTES.RESERVATIONS} component={Reservations} />
         <Route path="/create" component={TestMeetingCreate} />
     </Router>
