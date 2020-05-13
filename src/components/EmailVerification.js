@@ -8,20 +8,18 @@ const EmailVerification = props => {
         setOpen(false);
     };
 
-    const renderContent = () => {
-        return (
-            <>
-                {props.isSent ? (
-                    <p>
-                        Mail gönderildi. Lütfen mailini spam klasörü dahil
-                        kontrol et
-                    </p>
-                ) : (
-                    <p>Bu sayfaya ulaşmak için önce mailini onaylamalısın</p>
-                )}
-            </>
-        );
-    };
+    const renderContent = () => (
+        <>
+            {props.isSent ? (
+                <p>
+                    Mail gönderildi. Lütfen mailini spam klasörü dahil kontrol
+                    et
+                </p>
+            ) : (
+                <p>Bu sayfaya ulaşmak için önce mailini onaylamalısın</p>
+            )}
+        </>
+    );
 
     const renderActions = () => (
         <>
