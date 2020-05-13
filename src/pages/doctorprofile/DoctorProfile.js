@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import DoctorInfo from './PersonalInfo';
-import DoctorDetails from './ProfileDetails';
-import DoctorSettings from './Settings';
+import DoctorInfo from './DoctorInfo';
+import DoctorDetails from './DoctorDetails';
+import DoctorSettings from './DoctorSettings';
 import Alert from '../../components/Alert';
 import { compose } from 'recompose';
 import { withAuthorization, withEmailVerification } from '../../_session';
@@ -61,15 +61,15 @@ const DoctorProfile = props => {
         <div>
             <div className="container-fluid h-auto patient-profile">
                 <div className="row h-auto">
-                    <PersonalInfo
+                    <DoctorInfo
                         user={user}
                         openSettings={handleSettingShow}
                         handleStatus={handleStatusChange}
                     />
-                    <ProfileDetails user={user} />
+                    <DoctorDetails user={user} />
                 </div>
             </div>
-            <Settings
+            <DoctorSettings
                 open={settingsOpen}
                 settings={settings}
                 handleClose={handleSettingShow}
