@@ -5,6 +5,7 @@ import { faceEmojis, profileInfoEmojis } from '../../_utility/emojis';
 import { Tooltip, Zoom } from '@material-ui/core';
 import moment from 'moment';
 import * as ROLES from '../../_constants/roles';
+import { withAuthorization, withEmailVerification } from '../../_session';
 
 const PersonalInfo = props => {
     const { user, openSettings, handleStatus } = props;
@@ -47,8 +48,6 @@ const PersonalInfo = props => {
 
         return allEmojis;
     };
-
-    const conditio = authUser => authUser.role === ROLES.PATIENT;
 
     return (
         <div className="col-lg-3 col-md-3 col-sm-12 col-12 pl-5 pr-5 pt-2 pb-4 profile-info">
@@ -127,6 +126,13 @@ const PersonalInfo = props => {
                             </span>
                         </div>
                     </div>
+                    {user.role && user.role === ROLES.DOCTOR ? (
+                        <div className="row">
+                            <div className="col-12 no-padding">
+                                <span className="align-middle ml-2">{` ${props.user.experties}`}</span>
+                            </div>
+                        </div>
+                    ) : null}
                 </div>
             </div>
         </div>
