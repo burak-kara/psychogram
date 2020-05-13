@@ -6,7 +6,7 @@ import { withFirebase } from '../../../_firebase';
 import { compose } from 'recompose';
 import Alert from '../../Alert';
 import TextField from '@material-ui/core/TextField';
-import * as moment from "moment";
+import * as moment from 'moment';
 
 const SignUp = () => (
     <div>
@@ -23,11 +23,12 @@ const INITIAL_STATE = {
     passwordOne: '',
     passwordTwo: '',
     birthday: '',
-    description:'',
-    isDoctor:false,
-    profilePictureSource:'https://upload.wikimedia.org/wikipedia/commons/3/31/Michael_Jackson_in_1988.jpg',
-    location:'',
-    role:''
+    description: '',
+    isDoctor: false,
+    profilePictureSource:
+        'https://upload.wikimedia.org/wikipedia/commons/3/31/Michael_Jackson_in_1988.jpg',
+    location: '',
+    role: '',
 };
 
 class SignUpFormBase extends Component {
@@ -53,7 +54,7 @@ class SignUpFormBase extends Component {
             description,
             profilePictureSource,
             location,
-            isDoctor
+            isDoctor,
         } = this.state;
 
         this.props.firebase
@@ -65,11 +66,11 @@ class SignUpFormBase extends Component {
                     surname,
                     email,
                     phone,
-                    role: isDoctor ? ROLES.DOCTOR : ROLES.USER,
+                    role: isDoctor ? ROLES.DOCTOR : ROLES.PATIENT,
                     birthday,
                     description,
                     profilePictureSource,
-                    location
+                    location,
                 });
             })
             .then(() => {
@@ -97,7 +98,8 @@ class SignUpFormBase extends Component {
 
     onChange = event => {
         const name = event.target.name;
-        const value = name === 'isDoctor' ? event.target.checked : event.target.value;
+        const value =
+            name === 'isDoctor' ? event.target.checked : event.target.value;
         this.setState({ [name]: value });
     };
 
@@ -118,7 +120,7 @@ class SignUpFormBase extends Component {
             isAlertOpen,
             alertMessage,
             severity,
-            isDoctor
+            isDoctor,
         } = this.state;
 
         const isInvalid =
@@ -140,7 +142,8 @@ class SignUpFormBase extends Component {
                             <label id="labId">
                                 {' '}
                                 <strong>Doctor</strong>
-                            </label> &nbsp;
+                            </label>{' '}
+                            &nbsp;
                             <input
                                 name="isDoctor"
                                 type="checkbox"
