@@ -1,9 +1,11 @@
 import React from 'react';
 import { compose } from 'recompose';
 import { withAuthorization, withEmailVerification } from '../../_session';
+import { useHistory } from 'react-router-dom';
 
 const TestMeetingCreate = props => {
     const { firebase } = props;
+    const history = useHistory();
 
     // TODO delete. these value are served from props
     const userId = props.authUser.uid;
@@ -29,9 +31,18 @@ const TestMeetingCreate = props => {
             });
     };
 
+    const goDoctorCalender = () => {
+        history.push({
+            pathname: '/reservations',
+            search: '?doctor-calendar',
+            state: { doctorId },
+        });
+    };
+
     return (
         <div>
             <button onClick={onClick}>Create Meeting</button>
+            <button onClick={goDoctorCalender}>Go Doctor Calender</button>
         </div>
     );
 };
