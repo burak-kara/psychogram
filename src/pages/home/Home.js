@@ -12,11 +12,11 @@ const Home = props => {
             .then(url => {
                 setPic(url);
             });
-    }, []);
+    }, [props.firebase]);
 
     return (
         <div className="homepage">
-            <img id="picLoc" src={pic} alt="main picture" />
+            <img id="picLoc" src={pic} alt="main" />
             <h2 className="leftLoc">You Are Not Alone</h2>
             <br />
             <br />

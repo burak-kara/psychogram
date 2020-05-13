@@ -43,6 +43,8 @@ class Firebase {
         this.storage = app.storage();
     }
 
+    databaseRef = () => this.db.ref();
+
     // SignIn, SignOut and more session functions
     doCreateUserWithEmailAndPassword = (email, password) =>
         this.auth.createUserWithEmailAndPassword(email, password);
@@ -107,6 +109,13 @@ class Firebase {
 
     users = () => this.db.ref('users');
 
+    meeting = uid => this.db.ref(`meetings/${uid}`);
+
+    meetings = () => this.db.ref('meetings');
+
+    messages = uid => this.db.ref(`messages/${uid}`);
+
+    reservations = uid => this.db.ref(`reservations-burak/${uid}`);
     // Add new backend methods here
 }
 

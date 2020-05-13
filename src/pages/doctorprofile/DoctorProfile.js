@@ -1,37 +1,42 @@
 import React, { useEffect, useState } from 'react';
-import DoctorInfo from './DoctorInfo';
-import DoctorDetails from './DoctorDetails';
-import DoctorSettings from './DoctorSettings';
+import DoctorInfo from './PersonalInfo';
+import DoctorDetails from './ProfileDetails';
+import DoctorSettings from './Settings';
 import Alert from '../../components/Alert';
 import { compose } from 'recompose';
 import { withAuthorization, withEmailVerification } from '../../_session';
-import * as ROLES from '../../_constants/roles';
 
 const DoctorProfile = props => {
+    const { authUser, firebase } = props;
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [alertOpen, setAlertsOpen] = useState(false);
     const [message, setMessage] = useState('');
     const [severity, setSeverity] = useState('');
     const [user, setUser] = useState(null);
+    const [settings, setSettings] = useState(null);
 
-    const handleSettingsOpen = () => {
-        setSettingsOpen(true);
+    const handleSettingShow = () => {
+        setSettingsOpen(!settingsOpen);
     };
 
-    const handleSettingsClose = () => {
-        setSettingsOpen(false);
+    const handleSettingsChange = event => {
+        const name = event.target.name;
+        const value =
+            name === 'private' ? event.target.checked : event.target.value;
+        setSettings({ ...settings, [name]: value });
     };
 
     const handleSettingsSave = () => {
         setSettingsOpen(false);
-        // TODO implement when backend is ready
-        if (true) {
-            setMessage('Yeni ayarlar kaydedildi.');
-            setSeverity('success');
-        } else {
-            setMessage('Yeni ayarlar kaydedilirken hata oluştu!');
-            setSeverity('error');
-        }
+        firebase.user(authUser.uid).set(settings, error => {
+            if (error) {
+                setMessage('Yeni ayarlar kaydedilirken hata oluştu!');
+                setSeverity('error');
+            } else {
+                setMessage('Yeni ayarlar kaydedildi.');
+                setSeverity('success');
+            }
+        });
         setAlertsOpen(true);
     };
 
@@ -39,27 +44,37 @@ const DoctorProfile = props => {
         setAlertsOpen(false);
     };
 
+    const handleStatusChange = status => {
+        firebase.user(`${authUser.uid}/status`).set(status);
+    };
+
     useEffect(() => {
-        const uid = JSON.parse(localStorage.getItem('authUser')).uid;
-        if (uid !== '') {
-            props.firebase.user(uid).on('value', snapshot => {
+        if (authUser && authUser.uid !== '') {
+            firebase.user(authUser.uid).on('value', snapshot => {
                 setUser(snapshot.val());
+                setSettings(snapshot.val());
             });
         }
-    }, []);
+    }, [authUser, firebase]);
 
     return user ? (
         <div>
-            <div className="container-fluid h-auto doctor-profile">
+            <div className="container-fluid h-auto patient-profile">
                 <div className="row h-auto">
-                    <DoctorInfo user={user} openSettings={handleSettingsOpen} />
-                    <DoctorDetails user={user} />
+                    <PersonalInfo
+                        user={user}
+                        openSettings={handleSettingShow}
+                        handleStatus={handleStatusChange}
+                    />
+                    <ProfileDetails user={user} />
                 </div>
             </div>
-            <DoctorSettings
+            <Settings
                 open={settingsOpen}
-                handleClose={handleSettingsClose}
+                settings={settings}
+                handleClose={handleSettingShow}
                 handleSave={handleSettingsSave}
+                onChange={handleSettingsChange}
             />
             <Alert
                 open={alertOpen}
@@ -67,11 +82,17 @@ const DoctorProfile = props => {
                 message={message}
                 severity={severity}
             />
+            <div
+                className="bg-secondary text-center font-weight-bolder"
+                style={{ height: '64px' }}
+            >
+                FOOTER
+            </div>
         </div>
     ) : null;
 };
 
-const condition = authUser => authUser && authUser.role === ROLES.DOCTOR;
+const condition = authUser => authUser;
 
 export default compose(
     withEmailVerification,

@@ -45,115 +45,6 @@ const NavigationAuth = ({ authUser, firebase }) => {
                 setLogo(url);
             });
     }, [firebase]);
-    switch (authUser.role) {
-        case ROLES.DOCTOR:
-            return (
-                <nav className="navbar navbar-expand-lg navigator">
-                    <a className="navbar-brand" href="/">
-                        <img src={logo} width="50" height="50" alt="" />
-                    </a>
-                    {/* TODO  button doesnt work import bootstrap js also add redux as dependency*/}
-                    <button
-                        className="navbar-toggler"
-                        type="button"
-                        data-toggle="collapse"
-                        data-target="#navbarNav"
-                        aria-controls="navbarNav"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
-                    >
-                        <span className="navbar-toggler-icon" />
-                    </button>
-                    <div className="collapse navbar-collapse" id="navbarNav">
-                        <ul className="navbar-nav mr-auto">
-                            <li className="nav-item active">
-                                <a className="nav-link " href={ROUTES.LANDING}>
-                                    Home
-                                </a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href={ROUTES.CONTACT}>
-                                    Contact
-                                </a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href={ROUTES.FORUM}>
-                                    Forum
-                                </a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href={ROUTES.ABOUT_US}>
-                                    About Us
-                                </a>
-                            </li>
-                            <li className="nav-item">
-                                <a
-                                    className="nav-link"
-                                    href={ROUTES.PATIENT_MEETING}
-                                >
-                                    Meetings
-                                </a>
-                            </li>
-                        </ul>
-                        <ul className="navbar-nav dots">
-                            <IconContext.Provider
-                                value={{ color: 'white', size: '2em' }}
-                            >
-                                <div>
-                                    <IoIosMore onClick={handleClick} />
-                                </div>
-                            </IconContext.Provider>
-                            <Menu
-                                anchorEl={anchorEl}
-                                keepMounted
-                                open={Boolean(anchorEl)}
-                                onClose={handleClose}
-                                anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'center',
-                                }}
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'center',
-                                }}
-                            >
-                                <MenuItem>
-                                    <ListItemIcon>
-                                        <FaUserAlt fontSize="small" />
-                                    </ListItemIcon>
-                                    <li>
-                                        <Link to={ROUTES.DOCTOR_PROFILE}>
-                                            Profile
-                                        </Link>
-                                    </li>
-                                </MenuItem>
-                                {authUser &&
-                                authUser.role &&
-                                authUser.role === ROLES.ADMIN ? (
-                                    <MenuItem>
-                                        <ListItemIcon>
-                                            <FaUserAlt fontSize="small" />
-                                        </ListItemIcon>
-                                        <li>
-                                            <Link to={ROUTES.ADMIN}>Admin</Link>
-                                        </li>
-                                    </MenuItem>
-                                ) : null}
-                                <MenuItem>
-                                    <ListItemIcon>
-                                        <FaSignOutAlt fontSize="small" />
-                                    </ListItemIcon>
-                                    <li>
-                                        <SignOut />
-                                    </li>
-                                </MenuItem>
-                            </Menu>
-                        </ul>
-                    </div>
-                </nav>
-            );
-            break;
-    }
 
     return (
         <nav className="navbar navbar-expand-lg navigator">
@@ -195,8 +86,18 @@ const NavigationAuth = ({ authUser, firebase }) => {
                         </a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href={ROUTES.PATIENT_MEETING}>
+                        <a className="nav-link" href={ROUTES.MEETINGS}>
                             Meetings
+                        </a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href={ROUTES.DOCTOR_LIST}>
+                            Doctors
+                        </a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href={ROUTES.RESERVATIONS}>
+                            Reservations
                         </a>
                     </li>
                 </ul>
