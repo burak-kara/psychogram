@@ -1,11 +1,22 @@
 import React from 'react';
-import psycho from '../../assets/logo/psycho.jpg';
 import { withFirebase } from '../../_firebase';
+import React, { useEffect, useState } from 'react';
 
-const Home = () => {
+const Home = props => {
+    const [pic, setPic] = useState('');
+
+    useEffect(() => {
+        props.firebase
+            .getPsychoPic()
+            .getDownloadURL()
+            .then(url => {
+                setPic(url);
+            });
+    }, [props.firebase]);
+
     return (
         <div className="homepage">
-            <img id="picLoc" src={psycho} alt="main picture" />
+            <img id="picLoc" src={pic} alt="main" />
             <h2 className="leftLoc">You Are Not Alone</h2>
             <br />
             <br />

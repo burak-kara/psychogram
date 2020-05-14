@@ -15,7 +15,7 @@ const FAQ = props => {
         props.firebase.getFaqs().on('value', snapshot => {
             setFaqs(snapshot.val());
         });
-    }, []);
+    }, [props.firebase]);
 
     const renderAccordionItems = () =>
         faqs
