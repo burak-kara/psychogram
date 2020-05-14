@@ -61,12 +61,13 @@ const TestMeetingCreate = props => {
             pathname: '/profile',
             search: '?patient',
             state: {
-                description: temp_id.description,
-                location: temp_id.location,
-                name: temp_id.name,
-                surname: temp_id.surname,
-                email: temp_id.email,
-                username: temp_id.username,
+                // description: temp_id.description,
+                // location: temp_id.location,
+                // name: temp_id.name,
+                // surname: temp_id.surname,
+                // email: temp_id.email,
+                // username: temp_id.username,
+                patientId,
             },
         });
     };

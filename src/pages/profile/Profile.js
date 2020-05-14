@@ -7,7 +7,7 @@ import { compose } from 'recompose';
 import { withAuthorization, withEmailVerification } from '../../_session';
 
 const Profile = props => {
-    const { authUser, firebase } = props;
+    const { authUser, firebase, history } = props;
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [alertOpen, setAlertsOpen] = useState(false);
     const [message, setMessage] = useState('');
@@ -49,15 +49,22 @@ const Profile = props => {
     };
 
     useEffect(() => {
-        if (authUser && authUser.uid !== '') {
+        if (history.location.state) {
+            firebase
+                .user(history.location.state.patientId)
+                .on('value', snapshot => {
+                    setUser(snapshot.val());
+                    setSettings(snapshot.val());
+                });
+        } else if (authUser && authUser.uid !== '') {
             firebase.user(authUser.uid).on('value', snapshot => {
                 setUser(snapshot.val());
                 setSettings(snapshot.val());
             });
         }
     }, [authUser, firebase]);
-
-    return user && !props.location.state ? (
+    //&& !props.location.state ?
+    return !history.location.state ? (
         <div>
             <div className="container-fluid h-auto patient-profile">
                 <div className="row h-auto">
@@ -94,7 +101,7 @@ const Profile = props => {
             <div className="container-fluid h-auto patient-profile">
                 <div className="row h-auto">
                     <PersonalInfo
-                        user={props.location.state}
+                        user={user}
                         openSettings={handleSettingShow}
                         handleStatus={handleStatusChange}
                     />
