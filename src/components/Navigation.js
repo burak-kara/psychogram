@@ -130,7 +130,7 @@ const NavigationAuth = ({ authUser, firebase }) => {
                                         authUser.role === ROLES.DOCTOR ||
                                         ROLES.PATIENT
                                             ? ROUTES.PROFILE
-                                            : null
+                                            : ROUTES.SIGN_IN
                                     }
                                 >
                                     Profile
