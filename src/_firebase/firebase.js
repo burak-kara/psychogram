@@ -43,6 +43,9 @@ class Firebase {
         this.storage = app.storage();
     }
 
+    databaseRef = () => this.db.ref();
+
+    // SignIn, SignOut and more session functions
     doCreateUserWithEmailAndPassword = (email, password) =>
         this.auth.createUserWithEmailAndPassword(email, password);
 
@@ -54,27 +57,6 @@ class Firebase {
             // TODO in Production change this domain name such that https://mydomain.com
             url: 'http://localhost:3000',
         });
-
-    doSignOut = () => this.auth.signOut();
-
-    doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
-
-    doPasswordUpdate = password =>
-        this.auth.currentUser.updatePassword(password);
-
-    getUser = () => this.db.ref('user');
-
-    getUserProfilePic = () =>
-        this.storage.ref().child('profile_pics').child('profile_pic.jpg');
-
-    getAboutUsInfo = () => this.db.ref('aboutUs');
-
-    getLogo = () => this.storage.ref().child('app_pics').child('logo.jpg');
-
-    getPsychoPic = () =>
-        this.storage.ref().child('app_pics').child('psycho.jpg');
-
-    getFaqs = () => this.db.ref('faqs');
 
     onAuthUserListener = (next, fallback) =>
         this.auth.onAuthStateChanged(authUser => {
@@ -105,10 +87,37 @@ class Firebase {
             }
         });
 
+    doSignOut = () => this.auth.signOut();
+
+    doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
+
+    doPasswordUpdate = password =>
+        this.auth.currentUser.updatePassword(password);
+
+    // App's general info pages' functions
+    getAboutUsInfo = () => this.db.ref('aboutUs');
+
+    getFaqs = () => this.db.ref('faqs');
+
+    // Storage functions
+    getLogo = () => this.storage.ref().child('app_pics').child('logo.jpg');
+
+    getPsychoPic = () =>
+        this.storage.ref().child('app_pics').child('psycho.jpg');
+
     user = uid => this.db.ref(`users/${uid}`);
 
     users = () => this.db.ref('users');
 
+    meeting = uid => this.db.ref(`meetings/${uid}`);
+
+    meetings = () => this.db.ref('meetings');
+
+    messages = uid => this.db.ref(`messages/${uid}`);
+
+    reservation = uid => this.db.ref(`reservations-burak/${uid}`);
+
+    reservations = () => this.db.ref(`reservations-burak`);
     // Add new backend methods here
 }
 

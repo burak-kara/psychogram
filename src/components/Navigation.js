@@ -1,17 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthUserContext } from '../_session';
 import * as ROUTES from '../_constants/routeConstants';
 import * as ROLES from '../_constants/roles';
 import SignOut from './signPages/sign-out/SignOut';
-import logo from '../assets/logo/logo.jpg';
 import { MenuItem, ListItemIcon, Menu } from '@material-ui/core';
 import { FaUserAlt, FaSignOutAlt } from 'react-icons/fa';
 import { IoIosMore } from 'react-icons/io';
 import { IconContext } from 'react-icons';
-import { compose } from 'recompose';
-
-const condition = authUser => authUser;
+import { withFirebase } from '../_firebase';
 
 const Navigation = props => (
     <AuthUserContext.Consumer>
@@ -30,8 +27,9 @@ const Navigation = props => (
     </AuthUserContext.Consumer>
 );
 
-const NavigationAuth = ({ authUser }) => {
-    const [anchorEl, setAnchorEl] = React.useState(null);
+const NavigationAuth = ({ authUser, firebase }) => {
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [logo, setLogo] = useState('');
 
     const handleClick = event => {
         setAnchorEl(event.currentTarget);
@@ -41,11 +39,21 @@ const NavigationAuth = ({ authUser }) => {
         setAnchorEl(null);
     };
 
+    useEffect(() => {
+        firebase
+            .getLogo()
+            .getDownloadURL()
+            .then(url => {
+                setLogo(url);
+            });
+    }, [firebase]);
+
     return (
         <nav className="navbar navbar-expand-lg navigator">
             <a className="navbar-brand" href="/">
                 <img src={logo} width="50" height="50" alt="" />
             </a>
+            {/* TODO  button doesnt work import bootstrap js also add redux as dependency*/}
             <button
                 className="navbar-toggler"
                 type="button"
@@ -74,6 +82,21 @@ const NavigationAuth = ({ authUser }) => {
                             Sign In
                         </a>
                     </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href={ROUTES.MEETINGS}>
+                            Meetings
+                        </a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href={ROUTES.DOCTOR_LIST}>
+                            Doctors
+                        </a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href={ROUTES.RESERVATIONS}>
+                            Reservations
+                        </a>
+                    </li>
                 </ul>
                 <ul className="navbar-nav dots">
                     <IconContext.Provider
@@ -98,17 +121,35 @@ const NavigationAuth = ({ authUser }) => {
                         }}
                     >
                         <MenuItem>
-                            {authUser ? (
-                                <>
-                                    <ListItemIcon>
-                                        <FaUserAlt fontSize="small" />
-                                    </ListItemIcon>
-                                    <li>
-                                        <Link to={ROUTES.PROFILE}>Profile</Link>
-                                    </li>
-                                </>
-                            ) : null}
+                            <ListItemIcon>
+                                <FaUserAlt fontSize="small" />
+                            </ListItemIcon>
+                            <li>
+                                <Link
+                                    to={
+                                        authUser.role === ROLES.DOCTOR ||
+                                        ROLES.PATIENT
+                                            ? ROUTES.PROFILE
+                                            : null
+                                    }
+                                >
+                                    Profile
+                                </Link>
+                            </li>
                         </MenuItem>
+
+                        {authUser &&
+                        authUser.role &&
+                        authUser.role === ROLES.ADMIN ? (
+                            <MenuItem>
+                                <ListItemIcon>
+                                    <FaUserAlt fontSize="small" />
+                                </ListItemIcon>
+                                <li>
+                                    <Link to={ROUTES.ADMIN}>Admin</Link>
+                                </li>
+                            </MenuItem>
+                        ) : null}
                         <MenuItem>
                             <ListItemIcon>
                                 <FaSignOutAlt fontSize="small" />
@@ -124,4 +165,4 @@ const NavigationAuth = ({ authUser }) => {
     );
 };
 
-export default compose(condition)(Navigation);
+export default withFirebase(Navigation);
