@@ -49,30 +49,47 @@ const Profile = props => {
     };
 
     useEffect(() => {
-        if (history.location.state) {
-            firebase
-                .user(history.location.state.patientId)
-                .on('value', snapshot => {
-                    setUser(snapshot.val());
-                    setSettings(snapshot.val());
-                });
-        } else if (authUser && authUser.uid !== '') {
+        if (authUser && authUser.uid !== '' && !history.location.state) {
             firebase.user(authUser.uid).on('value', snapshot => {
                 setUser(snapshot.val());
                 setSettings(snapshot.val());
             });
+        } else {
+            if (history.location.state.patientId) {
+                firebase
+                    .user(history.location.state.patientId)
+                    .on('value', snapshot => {
+                        setUser(snapshot.val());
+                        setSettings(snapshot.val());
+                    });
+            } else {
+                firebase
+                    .user(history.location.state.doctorId)
+                    .on('value', snapshot => {
+                        setUser(snapshot.val());
+                        setSettings(snapshot.val());
+                    });
+            }
         }
     }, [authUser, firebase]);
-    //&& !props.location.state ?
     return user ? (
         <div>
             <div className="container-fluid h-auto patient-profile">
                 <div className="row h-auto">
-                    <PersonalInfo
-                        user={user}
-                        openSettings={handleSettingShow}
-                        handleStatus={handleStatusChange}
-                    />
+                    {history.location.state ? (
+                        <PersonalInfo
+                            patient={history.location.state}
+                            user={user}
+                            openSettings={handleSettingShow}
+                            handleStatus={handleStatusChange}
+                        />
+                    ) : (
+                        <PersonalInfo
+                            user={user}
+                            openSettings={handleSettingShow}
+                            handleStatus={handleStatusChange}
+                        />
+                    )}
                     <ProfileDetails user={user} />
                 </div>
             </div>
