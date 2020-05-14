@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import * as ROUTES from '../_constants/routeConstants';
 
 const Footer = () => {
     return (
@@ -12,23 +13,31 @@ const Footer = () => {
                     <Link
                         id="about-us"
                         className="common-link"
-                        to={'/about-us'}
+                        to={ROUTES.ABOUT_US}
                     >
                         About us
                     </Link>
                 </p>
                 <p>
-                    <Link id="contact" className="common-link" to={'/contact'}>
+                    <Link
+                        id="contact"
+                        className="common-link"
+                        to={ROUTES.CONTACT}
+                    >
                         Contact
                     </Link>
                 </p>
                 <p>
-                    <Link id="faq" className="common-link" to={'/faq'}>
+                    <Link id="faq" className="common-link" to={ROUTES.FAQ}>
                         FAQ
                     </Link>
                 </p>
                 <p>
-                    <Link id="sing-in" className="common-link" to={'/sign-in'}>
+                    <Link
+                        id="sing-in"
+                        className="common-link"
+                        to={ROUTES.SIGN_IN}
+                    >
                         Sign In
                     </Link>
                 </p>
