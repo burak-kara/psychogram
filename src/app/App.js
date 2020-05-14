@@ -13,7 +13,6 @@ import Meetings from '../pages/meetings';
 import DoctorList from '../pages/doctor/DoctorList';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
-import { withFirebase } from '../_firebase';
 import AdminPage from '../pages/admin/Admin';
 import Reservations from '../pages/reservations';
 import TestMeetingCreate from '../pages/testCreateMeeting';

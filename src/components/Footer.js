@@ -9,29 +9,17 @@ const Footer = () => {
                 <p>
                     <h>Useful Links</h>
                 </p>
-                <p>
-                    <Link
-                        id="about-us"
-                        className="common-link"
-                        to={ROUTES.ABOUT_US}
-                    >
-                        About us
-                    </Link>
-                </p>
-                <p>
-                    <Link
-                        id="contact"
-                        className="common-link"
-                        to={ROUTES.CONTACT}
-                    >
-                        Contact
-                    </Link>
-                </p>
-                <p>
-                    <Link id="faq" className="common-link" to={ROUTES.FAQ}>
-                        FAQ
-                    </Link>
-                </p>
+                <ul class="footer-links align-left">
+                    <li className="nav-item">
+                        <a href={ROUTES.ABOUT_US}>About Us</a>
+                    </li>
+                    <li className="nav-item">
+                        <a href={ROUTES.CONTACT}>Contact</a>
+                    </li>
+                    <li className="nav-item">
+                        <a href={ROUTES.FAQ}>FAQ</a>
+                    </li>
+                </ul>
                 <p>©Copyright 2020 by CS476. All rights reversed.</p>
             </footer>
         </div>

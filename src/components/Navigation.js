@@ -73,14 +73,16 @@ const NavigationAuth = ({ authUser, firebase }) => {
                         </a>
                     </li>
 
-                    {authUser.role === ROLES.PATIENT || ROLES.DOCTOR ? (
+                    {authUser.role === ROLES.PATIENT ||
+                    authUser.role === ROLES.DOCTOR ? (
                         <li className="nav-item">
                             <a className="nav-link" href={ROUTES.FORUM}>
                                 Forum
                             </a>
                         </li>
                     ) : null}
-                    {authUser.role === ROLES.PATIENT || ROLES.DOCTOR ? (
+                    {authUser.role === ROLES.PATIENT ||
+                    authUser.role === ROLES.DOCTOR ? (
                         <li className="nav-item">
                             <a className="nav-link" href={ROUTES.MEETINGS}>
                                 Meetings
@@ -94,7 +96,8 @@ const NavigationAuth = ({ authUser, firebase }) => {
                             </a>
                         </li>
                     ) : null}
-                    {authUser.role === ROLES.DOCTOR || ROLES.PATIENT ? (
+                    {authUser.role === ROLES.DOCTOR ||
+                    authUser.role === ROLES.PATIENT ? (
                         <li className="nav-item">
                             <a className="nav-link" href={ROUTES.RESERVATIONS}>
                                 Reservations
@@ -132,7 +135,7 @@ const NavigationAuth = ({ authUser, firebase }) => {
                                 <Link
                                     to={
                                         authUser.role === ROLES.DOCTOR ||
-                                        ROLES.PATIENT
+                                        authUser.role === ROLES.PATIENT
                                             ? ROUTES.PROFILE
                                             : null
                                     }
