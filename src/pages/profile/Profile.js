@@ -64,7 +64,7 @@ const Profile = props => {
                     });
             } else {
                 firebase
-                    .user(history.location.state.doctorId)
+                    .user(history.location.state.docId)
                     .on('value', snapshot => {
                         setUser(snapshot.val());
                         setSettings(snapshot.val());
