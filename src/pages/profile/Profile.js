@@ -89,12 +89,6 @@ const Profile = props => {
                 message={message}
                 severity={severity}
             />
-            <div
-                className="bg-secondary text-center font-weight-bolder"
-                style={{ height: '64px' }}
-            >
-                FOOTER
-            </div>
         </div>
     ) : null;
 };

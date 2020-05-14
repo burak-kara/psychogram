@@ -1,6 +1,5 @@
 import React from 'react';
-import { compose } from 'recompose';
-import { withAuthorization } from '../../_session';
+import { withFirebase } from '../../_firebase';
 
 const Contact = () => {
     return (
@@ -13,6 +12,5 @@ const Contact = () => {
         </div>
     );
 };
-const condition = authUser => authUser;
 
-export default compose(withAuthorization(condition))(Contact);
+export default withFirebase(Contact);
