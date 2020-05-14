@@ -64,7 +64,7 @@ const Profile = props => {
         }
     }, [authUser, firebase]);
     //&& !props.location.state ?
-    return !history.location.state ? (
+    return user ? (
         <div>
             <div className="container-fluid h-auto patient-profile">
                 <div className="row h-auto">
@@ -96,26 +96,7 @@ const Profile = props => {
                 FOOTER
             </div>
         </div>
-    ) : (
-        <div>
-            <div className="container-fluid h-auto patient-profile">
-                <div className="row h-auto">
-                    <PersonalInfo
-                        user={user}
-                        openSettings={handleSettingShow}
-                        handleStatus={handleStatusChange}
-                    />
-                </div>
-            </div>
-
-            <div
-                className="bg-secondary text-center font-weight-bolder"
-                style={{ height: '64px' }}
-            >
-                FOOTER
-            </div>
-        </div>
-    );
+    ) : null;
 };
 
 const condition = authUser => authUser;
