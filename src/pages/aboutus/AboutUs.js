@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { withAuthorization } from '../../_session';
-import { compose } from 'recompose';
+import { withFirebase } from '../../_firebase';
 
 const AboutUs = props => {
     const [aboutUs, setAboutUs] = useState('');
@@ -27,6 +26,4 @@ const AboutUs = props => {
         </div>
     );
 };
-const condition = authUser => authUser;
-
-export default compose(withAuthorization(condition))(AboutUs);
+export default withFirebase(AboutUs);

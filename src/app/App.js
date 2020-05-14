@@ -12,11 +12,12 @@ import Faq from '../pages/faq/Faq';
 import Meetings from '../pages/meetings';
 import DoctorList from '../pages/doctor/DoctorList';
 import Navigation from '../components/Navigation';
+import Footer from '../components/Footer';
 import AdminPage from '../pages/admin/Admin';
 import Reservations from '../pages/reservations';
 import TestMeetingCreate from '../pages/testCreateMeeting';
-import { withAuthentication } from '../_session';
 import * as ROUTES from '../_constants/routeConstants';
+import { withAuthentication } from '../_session';
 
 const App = () => (
     <Router>
@@ -34,6 +35,7 @@ const App = () => (
         <Route path={ROUTES.ADMIN} component={AdminPage} />
         <Route path={ROUTES.RESERVATIONS} component={Reservations} />
         <Route path="/create" component={TestMeetingCreate} />
+        <Footer />
     </Router>
 );
 
