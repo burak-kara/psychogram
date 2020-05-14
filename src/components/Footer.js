@@ -32,15 +32,6 @@ const Footer = () => {
                         FAQ
                     </Link>
                 </p>
-                <p>
-                    <Link
-                        id="sing-in"
-                        className="common-link"
-                        to={ROUTES.SIGN_IN}
-                    >
-                        Sign In
-                    </Link>
-                </p>
                 <p>©Copyright 2020 by CS476. All rights reversed.</p>
             </footer>
         </div>
