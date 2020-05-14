@@ -94,7 +94,7 @@ const NavigationAuth = ({ authUser, firebase }) => {
                             </a>
                         </li>
                     ) : null}
-                    {authUser.role === ROLES.DOCTOR ? (
+                    {authUser.role === ROLES.DOCTOR || ROLES.PATIENT ? (
                         <li className="nav-item">
                             <a className="nav-link" href={ROUTES.RESERVATIONS}>
                                 Reservations
