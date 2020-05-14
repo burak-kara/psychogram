@@ -18,6 +18,7 @@ import AdminPage from '../pages/admin/Admin';
 import Reservations from '../pages/reservations';
 import TestMeetingCreate from '../pages/testCreateMeeting';
 import * as ROUTES from '../_constants/routeConstants';
+import { withAuthentication } from '../_session';
 
 const App = () => (
     <Router>
@@ -39,4 +40,4 @@ const App = () => (
     </Router>
 );
 
-export default withFirebase(App);
+export default withAuthentication(App);
