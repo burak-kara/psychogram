@@ -6,8 +6,7 @@ import {
     AccordionItemButton,
     AccordionItemPanel,
 } from 'react-accessible-accordion';
-import { compose } from 'recompose';
-import { withAuthorization } from '../../_session';
+import { withFirebase } from '../../_firebase';
 
 const FAQ = props => {
     const [faqs, setFaqs] = useState([]);
@@ -36,6 +35,5 @@ const FAQ = props => {
 
     return <Accordion>{renderAccordionItems()}</Accordion>;
 };
-const condition = authUser => authUser;
 
-export default compose(withAuthorization(condition))(FAQ);
+export default withFirebase(FAQ);
