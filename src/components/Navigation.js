@@ -9,7 +9,6 @@ import { FaUserAlt, FaSignOutAlt } from 'react-icons/fa';
 import { IoIosMore } from 'react-icons/io';
 import { IconContext } from 'react-icons';
 import { withFirebase } from '../_firebase';
-import SignIn from './signPages/sign-in/SignIn';
 
 const Navigation = props => (
     <AuthUserContext.Consumer>
