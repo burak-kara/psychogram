@@ -11,7 +11,6 @@ const TestMeetingCreate = props => {
     const userId = props.authUser.uid;
     const doctorId = 'theolZeeaePJjCNZR5LSkz5Y3Jx2';
     const patientId = 'p5p8ilVyjhNPkJF5zRLP6UUFoWh1';
-    const docId = 'oZk79vdoCANyvFh0IY9yDc0827S2';
 
     const onClick = () => {
         const meetingId = `${userId}_${doctorId}`;
@@ -54,7 +53,7 @@ const TestMeetingCreate = props => {
             pathname: '/profile',
             search: '?doctor',
             state: {
-                id: docId,
+                id: doctorId,
             },
         });
     };
