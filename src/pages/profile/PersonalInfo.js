@@ -7,7 +7,7 @@ import moment from 'moment';
 import * as ROLES from '../../_constants/roles';
 
 const PersonalInfo = props => {
-    const { user, openSettings, handleStatus } = props;
+    const { user, openSettings, handleStatus, patient } = props;
 
     const renderOverlay = () => (
         <OverlayTrigger
@@ -81,15 +81,17 @@ const PersonalInfo = props => {
             <div className="row mt-2 h-auto">
                 <span>{`${user.description}`}</span>
             </div>
-            <div className="row mt-3">
-                <button
-                    className="btn btn-secondary btn-block"
-                    type="button"
-                    onClick={openSettings}
-                >
-                    Profili Düzenle
-                </button>
-            </div>
+            {!patient ? (
+                <div className="row mt-3">
+                    <button
+                        className="btn btn-secondary btn-block"
+                        type="button"
+                        onClick={openSettings}
+                    >
+                        Profili Düzenle
+                    </button>
+                </div>
+            ) : null}
             <div className="row mt-2">
                 <div className="col-12">
                     <div className="row text-capitalize">
