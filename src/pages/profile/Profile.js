@@ -54,22 +54,13 @@ const Profile = props => {
                 setUser(snapshot.val());
                 setSettings(snapshot.val());
             });
-        } else {
-            if (history.location.state.patientId) {
-                firebase
-                    .user(history.location.state.patientId)
-                    .on('value', snapshot => {
-                        setUser(snapshot.val());
-                        setSettings(snapshot.val());
-                    });
-            } else {
-                firebase
-                    .user(history.location.state.docId)
-                    .on('value', snapshot => {
-                        setUser(snapshot.val());
-                        setSettings(snapshot.val());
-                    });
-            }
+        } else if (history.location.state.patientId) {
+            firebase
+                .user(history.location.state.patientId)
+                .on('value', snapshot => {
+                    setUser(snapshot.val());
+                    setSettings(snapshot.val());
+                });
         }
     }, [authUser, firebase]);
     return user ? (
