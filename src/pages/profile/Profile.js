@@ -7,7 +7,7 @@ import { compose } from 'recompose';
 import { withAuthorization, withEmailVerification } from '../../_session';
 
 const Profile = props => {
-    const { authUser, firebase } = props;
+    const { authUser, firebase, history } = props;
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [alertOpen, setAlertsOpen] = useState(false);
     const [message, setMessage] = useState('');
@@ -49,23 +49,36 @@ const Profile = props => {
     };
 
     useEffect(() => {
-        if (authUser && authUser.uid !== '') {
+        if (authUser && authUser.uid !== '' && !history.location.state) {
             firebase.user(authUser.uid).on('value', snapshot => {
+                setUser(snapshot.val());
+                setSettings(snapshot.val());
+            });
+        } else if (history.location.state.id) {
+            firebase.user(history.location.state.id).on('value', snapshot => {
                 setUser(snapshot.val());
                 setSettings(snapshot.val());
             });
         }
     }, [authUser, firebase]);
-
     return user ? (
         <div>
             <div className="container-fluid h-auto patient-profile">
                 <div className="row h-auto">
-                    <PersonalInfo
-                        user={user}
-                        openSettings={handleSettingShow}
-                        handleStatus={handleStatusChange}
-                    />
+                    {history.location.state ? (
+                        <PersonalInfo
+                            patient={history.location.state}
+                            user={user}
+                            openSettings={handleSettingShow}
+                            handleStatus={handleStatusChange}
+                        />
+                    ) : (
+                        <PersonalInfo
+                            user={user}
+                            openSettings={handleSettingShow}
+                            handleStatus={handleStatusChange}
+                        />
+                    )}
                     <ProfileDetails user={user} />
                 </div>
             </div>
@@ -82,12 +95,6 @@ const Profile = props => {
                 message={message}
                 severity={severity}
             />
-            <div
-                className="bg-secondary text-center font-weight-bolder"
-                style={{ height: '64px' }}
-            >
-                FOOTER
-            </div>
         </div>
     ) : null;
 };

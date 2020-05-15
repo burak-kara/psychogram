@@ -1,6 +1,5 @@
+import { withFirebase } from '../../_firebase';
 import React, { useEffect, useState } from 'react';
-import { compose } from 'recompose';
-import { withAuthorization } from '../../_session';
 
 const Home = props => {
     const [pic, setPic] = useState('');
@@ -83,12 +82,8 @@ const Home = props => {
                     employed with good intention
                 </p>
             </article>
-            <footer>
-                <p>©Copyright 2020 by CS476. All rights reversed.</p>
-            </footer>
         </div>
     );
 };
-const condition = authUser => authUser;
 
-export default compose(withAuthorization(condition))(Home);
+export default withFirebase(Home);
