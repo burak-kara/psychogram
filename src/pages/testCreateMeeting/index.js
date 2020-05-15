@@ -45,16 +45,25 @@ const TestMeetingCreate = props => {
             pathname: '/profile',
             search: '?patient',
             state: {
-                patientId,
+                id: patientId,
             },
         });
     };
-
+    const redirectToDoctor = () => {
+        props.history.push({
+            pathname: '/profile',
+            search: '?doctor',
+            state: {
+                id: docId,
+            },
+        });
+    };
     return (
         <div>
             <button onClick={onClick}>Create Meeting</button>
             <button onClick={goDoctorCalender}>Go Doctor Calender</button>
-            <button onClick={redirectToPatient}> Go to other profile</button>
+            <button onClick={redirectToPatient}> Go to patient profile</button>
+            <button onClick={redirectToDoctor}> Go to doctor profile</button>
         </div>
     );
 };
