@@ -9,7 +9,8 @@ const TestMeetingCreate = props => {
 
     // TODO delete. these value are served from props
     const userId = props.authUser.uid;
-    const doctorId = 'oZk79vdoCANyvFh0IY9yDc0827S2';
+    const doctorId = 'theolZeeaePJjCNZR5LSkz5Y3Jx2';
+    const patientId = 'p5p8ilVyjhNPkJF5zRLP6UUFoWh1';
 
     const onClick = () => {
         const meetingId = `${userId}_${doctorId}`;
@@ -38,11 +39,30 @@ const TestMeetingCreate = props => {
             state: { doctorId },
         });
     };
-
+    const redirectToPatient = () => {
+        props.history.push({
+            pathname: '/profile',
+            search: '?patient',
+            state: {
+                id: patientId,
+            },
+        });
+    };
+    const redirectToDoctor = () => {
+        props.history.push({
+            pathname: '/profile',
+            search: '?doctor',
+            state: {
+                id: doctorId,
+            },
+        });
+    };
     return (
         <div>
             <button onClick={onClick}>Create Meeting</button>
             <button onClick={goDoctorCalender}>Go Doctor Calender</button>
+            <button onClick={redirectToPatient}> Go to patient profile</button>
+            <button onClick={redirectToDoctor}> Go to doctor profile</button>
         </div>
     );
 };

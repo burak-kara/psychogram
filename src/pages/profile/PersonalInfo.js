@@ -4,9 +4,10 @@ import Emoji from 'a11y-react-emoji';
 import { faceEmojis, profileInfoEmojis } from '../../_utility/emojis';
 import { Tooltip, Zoom } from '@material-ui/core';
 import moment from 'moment';
+import * as ROLES from '../../_constants/roles';
 
 const PersonalInfo = props => {
-    const { user, openSettings, handleStatus } = props;
+    const { user, openSettings, handleStatus, patient } = props;
 
     const renderOverlay = () => (
         <OverlayTrigger
@@ -80,15 +81,17 @@ const PersonalInfo = props => {
             <div className="row mt-2 h-auto">
                 <span>{`${user.description}`}</span>
             </div>
-            <div className="row mt-3">
-                <button
-                    className="btn btn-secondary btn-block"
-                    type="button"
-                    onClick={openSettings}
-                >
-                    Profili Düzenle
-                </button>
-            </div>
+            {!patient ? (
+                <div className="row mt-3">
+                    <button
+                        className="btn btn-secondary btn-block"
+                        type="button"
+                        onClick={openSettings}
+                    >
+                        Profili Düzenle
+                    </button>
+                </div>
+            ) : null}
             <div className="row mt-2">
                 <div className="col-12">
                     <div className="row text-capitalize">
@@ -124,6 +127,23 @@ const PersonalInfo = props => {
                             </span>
                         </div>
                     </div>
+                    {user.role && user.role === ROLES.DOCTOR ? (
+                        <div className="row">
+                            <div className="col-12 no-padding">
+                                <span className="align-middle ml-2">{` ${props.user.experties}`}</span>
+                            </div>
+                        </div>
+                    ) : null}
+                    {user.role && user.role === ROLES.DOCTOR ? (
+                        <div className="row">
+                            <div className="col-12 no-padding">
+                                <span className="align-middle ml-2">
+                                    {' '}
+                                    Rating:{` ${props.user.rating}`}/5
+                                </span>
+                            </div>
+                        </div>
+                    ) : null}
                 </div>
             </div>
         </div>
