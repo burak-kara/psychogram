@@ -7,13 +7,17 @@ import MeetingList from './MeetingList';
 import * as ROLES from '../../_constants/roles';
 import ChatSection from './ChatSection';
 import moment from 'moment';
+import * as ROUTES from '../../_constants/routeConstants';
 
 const Meetings = props => {
-    const { authUser, firebase } = props;
+    const { authUser, firebase, history } = props;
     const [meetings, setMeetings] = useState([]);
     const [chatPairs, setChatPairs] = useState(new Map());
     const [currentMeetingKey, setCurrentMeetingKey] = useState(null);
     const [search, setSearch] = useState('');
+    const [user, setUser] = useState({});
+    const [doctorId, setDoctorId] = useState([]);
+    const [doctor, setDoctor] = useState([]);
 
     useEffect(() => {
         // TODO loading indicator
@@ -39,6 +43,10 @@ const Meetings = props => {
                         });
                 });
             });
+        firebase.user(authUser.uid).once('value', snapshot => {
+            const usersObject = snapshot.val();
+            setUser(usersObject);
+        });
     }, [authUser, firebase]);
 
     const sortByDate = data => (data ? data.sort(compare) : data);
@@ -55,10 +63,26 @@ const Meetings = props => {
 
     const handleMeetingClick = key => {
         setCurrentMeetingKey(key);
+        const [uid, drid] = key.split('_');
+        firebase.user(drid).once('value', snapshot => {
+            const usersObject = snapshot.val();
+            setDoctorId(drid);
+            setDoctor(usersObject);
+        });
     };
 
     const handleSearchType = e => {
         setSearch(e.target.value);
+    };
+
+    const handleEnd = () => {
+        if (user.role === ROLES.PATIENT)
+            history.push({
+                pathname: ROUTES.RATING,
+                search: '',
+                state: { detail: { doctor, doctorId } },
+            });
+        else history.push(ROUTES.LANDING);
     };
 
     // TODO implement ui for meeting not chosen case
@@ -81,6 +105,18 @@ const Meetings = props => {
                                 {...props}
                                 currentMeetingKey={currentMeetingKey}
                             />
+                        ) : null}
+                    </div>
+                    <div className="col-sm-1">
+                        {currentMeetingKey ? (
+                            <button
+                                type="button"
+                                className="align-self-end btn btn-block btn-block btn-info"
+                                onClick={handleEnd}
+                            >
+                                {' '}
+                                End Meeting
+                            </button>
                         ) : null}
                     </div>
                 </div>

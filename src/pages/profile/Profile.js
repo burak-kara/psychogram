@@ -5,8 +5,10 @@ import Settings from './Settings';
 import Alert from '../../components/Alert';
 import { compose } from 'recompose';
 import { withAuthorization, withEmailVerification } from '../../_session';
+import { useLocation } from 'react-router-dom';
 
 const Profile = props => {
+    const location = useLocation();
     const { authUser, firebase, history } = props;
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [alertOpen, setAlertsOpen] = useState(false);
@@ -49,7 +51,8 @@ const Profile = props => {
     };
 
     useEffect(() => {
-        if (authUser && authUser.uid !== '' && !history.location.state) {
+        if (location.search == '?dr') setUser(location.state.detail.user);
+        else if (authUser && authUser.uid !== '') {
             firebase.user(authUser.uid).on('value', snapshot => {
                 setUser(snapshot.val());
                 setSettings(snapshot.val());

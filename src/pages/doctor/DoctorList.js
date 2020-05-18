@@ -3,12 +3,17 @@ import { withAuthorization, withEmailVerification } from '../../_session';
 import Star, { Rate } from '../../assets/starLogo/star';
 import '../../assets/styles/pages/doctor.scss';
 import { compose } from 'recompose';
+import * as ROUTES from '../../_constants/routeConstants';
+import { Form, Checkbox } from 'semantic-ui-react';
 
 const DoctorList = props => {
+    const { history, firebase } = props;
     const [loading, setLoading] = useState(false);
     const [users, setUsers] = useState([]);
+    const [value, setValue] = useState('');
 
-    // for componentDidMount
+    const handleChange = (e, { value }) => setValue(value);
+
     useEffect(() => {
         setLoading(true);
         props.firebase
@@ -27,16 +32,26 @@ const DoctorList = props => {
         return () => {
             props.firebase.users().off();
         };
-    }, []);
+    }, [value]);
 
-    const UserList = () => {
-        return users.map(user => {
+    const ListDoctors = () => {
+        let rateArr = [];
+        users.map(user => {
+            rateArr = [...rateArr, user];
+        });
+
+        if (value === 'Ascending')
+            rateArr = rateArr.sort((a, b) => a.rating - b.rating);
+        else if (value === 'Descending')
+            rateArr = rateArr.sort((a, b) => b.rating - a.rating);
+
+        return rateArr.map(user => {
             return <DoctorFrame user={user} />;
         });
     };
 
-    const Rating = ({ user }) => {
-        let rating = user.rating;
+    const RatingPic = ({ user }) => {
+        let rating = Math.round(user.rating);
         let star = Star.five_star;
         if (rating === Rate.FIVE) {
             star = Star.five_star;
@@ -65,15 +80,33 @@ const DoctorList = props => {
                             src={user.profilePictureSource}
                             className="rounded-circle"
                             alt={user.name + ' ' + user.surname}
+                            onClick={() =>
+                                history.push({
+                                    pathname: ROUTES.PROFILE,
+                                    search: 'dr',
+                                    state: { detail: { user } },
+                                })
+                            }
                         />
-                        <Rating user={user} />
+                        <RatingPic user={user} />
                     </div>
                     <div className="col-sm-2" style={{ paddingTop: 'auto' }}>
                         <h5>{user.name + ' ' + user.surname}</h5>
-                        <button type="button" className="btn btn-primary">
+                        <button
+                            type="button"
+                            className="btn btn-primary"
+                            data={user}
+                            onClick={() =>
+                                history.push({
+                                    pathname: ROUTES.RESERVATIONS,
+                                    search: '',
+                                    state: { detail: { user } },
+                                })
+                            }
+                        >
                             BOOK
                         </button>
-                        {/* TODO: link to patient reservation page with related userId */}
+                        {/* TODO: link to Doctor's reservation page with related user parameter and ROUTE.RESERVATION */}
                     </div>
                     <div className="col-sm-6">
                         <h5>About me</h5>
@@ -88,8 +121,33 @@ const DoctorList = props => {
 
     return (
         <div>
+            <Form className="docfil">
+                <Form.Field>
+                    <strong>Sort by rate</strong>
+                </Form.Field>
+                <Form.Field>
+                    <Checkbox
+                        radio
+                        label="Ascending"
+                        name="checkboxRadioGroup"
+                        value="Ascending"
+                        checked={value === 'Ascending'}
+                        onChange={handleChange}
+                    />
+                </Form.Field>
+                <Form.Field>
+                    <Checkbox
+                        radio
+                        label="Descending"
+                        name="checkboxRadioGroup"
+                        value="Descending"
+                        checked={value === 'Descending'}
+                        onChange={handleChange}
+                    />
+                </Form.Field>
+            </Form>
             {!loading && <h3 id="doctorfound">{users.length} Doctors found</h3>}
-            <UserList />
+            <ListDoctors />
         </div>
     );
 };
