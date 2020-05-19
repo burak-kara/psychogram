@@ -15,7 +15,12 @@ const MeetingList = props => {
                         : item.userId === key
                 );
                 cards.push(
-                    <div key={meeting.key} onClick={() => onClick(meeting.key)}>
+                    <div
+                        key={meeting.key}
+                        onClick={() =>
+                            onClick(meeting.key, value, meeting.reservations)
+                        }
+                    >
                         <MeetingCard
                             user={value}
                             message={meeting.lastMessage}
