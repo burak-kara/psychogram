@@ -5,16 +5,19 @@ import MessageTextField from './TextField';
 import Avatar from '@material-ui/core/Avatar';
 import { IconContext } from 'react-icons';
 import { IoMdArrowRoundBack } from 'react-icons/all';
+import { snapshotToArray } from '../../_utility/functions';
+import * as ROLES from '../../_constants/roles';
 
 const ChatSection = props => {
-    const { authUser, firebase, currentMeetingKey, doctorId } = props;
+    const { authUser, firebase, currentMeetingKey, user } = props;
     const [newMessage, setNewMessage] = useState('');
     const [messages, setMessages] = useState(new Map());
-    const [doctor, setDoctor] = useState(null);
+    const [reservations, setReservations] = useState(null);
+    const [isDisabled, setDisabled] = useState(true);
 
     useEffect(() => {
         setNewMessage('');
-        if (currentMeetingKey) {
+        if (currentMeetingKey && props.reservations) {
             firebase.messages(currentMeetingKey).on('value', snapshot => {
                 let map = new Map();
                 snapshot.forEach(snap => {
@@ -29,8 +32,12 @@ const ChatSection = props => {
                 });
                 setMessages(map);
             });
-            firebase.user(doctorId).on('value', snapshot => {
-                setDoctor(snapshot.val());
+            firebase.reservations().on('value', snapshot => {
+                const tempReservs = snapshotToArray(snapshot);
+                tempReservs.filter(value =>
+                    props.reservations.includes(value.key)
+                );
+                setReservations(tempReservs);
             });
         } else {
             //    TODO loading indicator
@@ -73,6 +80,11 @@ const ChatSection = props => {
         }
     };
 
+    const checkDisabled = () => {
+        if (reservations) {
+        }
+    };
+
     return (
         <>
             <div className="row">
@@ -84,19 +96,19 @@ const ChatSection = props => {
                             </IconContext.Provider>
                         </div>
                         <div className="info-container">
-                            {doctor ? (
+                            {user ? (
                                 <>
-                                    <Avatar src={doctor.profilePictureSource}>
-                                        {`${doctor.name[0]}${doctor.surname[0]}`}
+                                    <Avatar src={user.profilePictureSource}>
+                                        {`${user.name[0]}${user.surname[0]}`}
                                     </Avatar>
                                     <div className="col name">
-                                        <span>{`${doctor.name} ${doctor.surname}`}</span>
+                                        <span>{`${user.name} ${user.surname}`}</span>
                                     </div>
                                 </>
                             ) : null}
                         </div>
                         <div className="btn-container">
-                            {currentMeetingKey ? (
+                            {authUser.role === ROLES.PATIENT ? (
                                 <button
                                     className="btn btn-danger"
                                     onClick={props.handleEnd}
@@ -131,6 +143,7 @@ const ChatSection = props => {
                         onChange={handleMessageType}
                         onEnter={handleEnter}
                         onSend={handleMessageSend}
+                        disabled={isDisabled}
                     />
                 </div>
             </div>
