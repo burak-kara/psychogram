@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import moment from 'moment';
 import { ChatFeed, Message } from 'react-chat-ui';
 import MessageTextField from './TextField';
 import Avatar from '@material-ui/core/Avatar';
@@ -7,6 +6,7 @@ import { IconContext } from 'react-icons';
 import { IoMdArrowRoundBack } from 'react-icons/all';
 import { snapshotToArray } from '../../_utility/functions';
 import * as ROLES from '../../_constants/roles';
+import moment from 'moment';
 
 const ChatSection = props => {
     const { authUser, firebase, currentMeetingKey, user } = props;
@@ -18,31 +18,39 @@ const ChatSection = props => {
     useEffect(() => {
         setNewMessage('');
         if (currentMeetingKey && props.reservations) {
-            firebase.messages(currentMeetingKey).on('value', snapshot => {
-                let map = new Map();
-                snapshot.forEach(snap => {
-                    const message = snap.val();
-                    map.set(
-                        snap.key,
-                        new Message({
-                            id: message.senderId === authUser.uid ? 0 : 1,
-                            message: message.message,
-                        })
-                    );
-                });
-                setMessages(map);
-            });
-            firebase.reservations().on('value', snapshot => {
-                const tempReservs = snapshotToArray(snapshot);
-                tempReservs.filter(value =>
-                    props.reservations.includes(value.key)
-                );
-                setReservations(tempReservs);
-            });
+            getMessages();
+            filterReservations();
+            checkDisabled();
         } else {
             //    TODO loading indicator
         }
     }, [firebase, currentMeetingKey]);
+
+    const getMessages = () => {
+        firebase.messages(currentMeetingKey).on('value', snapshot => {
+            let map = new Map();
+            snapshot.forEach(snap => {
+                const message = snap.val();
+                map.set(
+                    snap.key,
+                    new Message({
+                        id: message.senderId === authUser.uid ? 0 : 1,
+                        message: message.message,
+                    })
+                );
+            });
+            setMessages(map);
+        });
+    };
+
+    const filterReservations = () => {
+        firebase.reservations().on('value', snapshot => {
+            const tempReservs = snapshotToArray(snapshot);
+            tempReservs.filter(value => props.reservations.includes(value.key));
+            checkDisabled(tempReservs);
+            setReservations(tempReservs);
+        });
+    };
 
     const sendMessage = message => {
         firebase
@@ -80,8 +88,17 @@ const ChatSection = props => {
         }
     };
 
-    const checkDisabled = () => {
-        if (reservations) {
+    const checkDisabled = temps => {
+        const currentTime = moment().format();
+        if (temps) {
+            temps.map(item => {
+                if (
+                    moment(item.startDate).isBefore(currentTime) &&
+                    moment(item.endDate).isAfter(currentTime)
+                ) {
+                    setDisabled(false);
+                }
+            });
         }
     };
 
