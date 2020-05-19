@@ -17,7 +17,6 @@ const Meetings = props => {
     const [search, setSearch] = useState('');
     const [user, setUser] = useState({});
     const [doctorId, setDoctorId] = useState([]);
-    const [doctor, setDoctor] = useState([]);
 
     useEffect(() => {
         // TODO loading indicator
@@ -43,10 +42,6 @@ const Meetings = props => {
                         });
                 });
             });
-        firebase.user(authUser.uid).once('value', snapshot => {
-            const usersObject = snapshot.val();
-            setUser(usersObject);
-        });
     }, [authUser, firebase]);
 
     const sortByDate = data => (data ? data.sort(compare) : data);
@@ -63,12 +58,9 @@ const Meetings = props => {
 
     const handleMeetingClick = key => {
         setCurrentMeetingKey(key);
-        const [uid, drid] = key.split('_');
-        firebase.user(drid).once('value', snapshot => {
-            const usersObject = snapshot.val();
-            setDoctorId(drid);
-            setDoctor(usersObject);
-        });
+        const [uid, doctorId] = key.split('_');
+        console.log(doctorId);
+        setDoctorId(doctorId);
     };
 
     const handleSearchType = e => {
@@ -77,7 +69,7 @@ const Meetings = props => {
 
     const handleEnd = () => {
         // TODO confirm dialog and also warning for doctor action
-        if (user.role === ROLES.PATIENT)
+        if (authUser.role === ROLES.PATIENT)
             history.push({
                 pathname: ROUTES.RATING,
                 search: '',
@@ -108,6 +100,7 @@ const Meetings = props => {
                             />
                         ) : null}
                     </div>
+                    {/* TODO change*/}
                     <div className="col-sm-1">
                         {currentMeetingKey ? (
                             <button
