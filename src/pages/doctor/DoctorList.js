@@ -1,84 +1,95 @@
 import React, { useEffect, useState } from 'react';
 import { withAuthorization, withEmailVerification } from '../../_session';
-import Star, { Rate } from '../../assets/starLogo/star';
 import '../../assets/styles/pages/doctor.scss';
 import { compose } from 'recompose';
+import { Form, Checkbox } from 'semantic-ui-react';
+import { getStar, snapshotToArray } from '../../_utility/functions';
+import * as ROUTES from '../../_constants/routeConstants';
+import * as ROLES from '../../_constants/roles';
+import Avatar from '@material-ui/core/Avatar';
+import { makeStyles } from '@material-ui/core/styles';
 
 const DoctorList = props => {
+    const { history, firebase } = props;
     const [loading, setLoading] = useState(false);
-    const [users, setUsers] = useState([]);
+    const [doctors, setDoctors] = useState([]);
+    const [value, setValue] = useState('Descending');
 
-    // for componentDidMount
-    useEffect(() => {
-        setLoading(true);
-        props.firebase
-            .users()
-            .orderByChild('role')
-            .equalTo('DOCTOR')
-            .on('value', snapshot => {
-                const usersObject = snapshot.val();
-                const usersList = Object.keys(usersObject).map(key => ({
-                    ...usersObject[key],
-                    uid: key,
-                }));
-                setUsers(usersList);
-                setLoading(false);
-            });
-        return () => {
-            props.firebase.users().off();
-        };
-    }, []);
+    const useStyles = makeStyles(theme => ({
+        large: {
+            width: theme.spacing(14),
+            height: theme.spacing(14),
+        },
+    }));
 
-    const UserList = () => {
-        return users.map(user => {
-            return <DoctorFrame user={user} />;
+    const classes = useStyles();
+
+    const handleChange = (e, { value }) => setValue(value);
+
+    const handleDoctorClick = id => {
+        history.push({
+            pathname: ROUTES.PROFILE,
+            search: '?doctor-profile',
+            state: { id },
         });
     };
 
-    const Rating = ({ user }) => {
-        let rating = user.rating;
-        let star = Star.five_star;
-        if (rating === Rate.FIVE) {
-            star = Star.five_star;
-        } else if (rating === Rate.FOUR) {
-            star = Star.four_star;
-        } else if (rating === Rate.THREE) {
-            star = Star.three_star;
-        } else if (rating === Rate.TWO) {
-            star = Star.two_star;
-        } else if (rating === Rate.ONE) {
-            star = Star.one_star;
-        } else if (rating === Rate.ZERO) {
-            star = Star.zero_star;
-        }
-        return <img id="star" src={star} className="rounded" alt="four_star" />;
+    const handleBookClick = doctorId => {
+        history.push({
+            pathname: ROUTES.RESERVATIONS,
+            search: '?doctor-calendar',
+            state: { doctorId },
+        });
     };
 
-    const DoctorFrame = ({ user }) => (
-        <div id="containerCSS" className="container">
-            <div id="jumboCSS" className="jumbotron">
+    useEffect(() => {
+        // TODO implement loading indicator here
+        setLoading(true);
+        firebase
+            .users()
+            .orderByChild('role')
+            .equalTo(ROLES.DOCTOR)
+            .on('value', snapshot => {
+                setDoctors(snapshotToArray(snapshot));
+                setLoading(false);
+            });
+    }, [value, firebase]);
+
+    const RatingPic = ({ doctor }) => {
+        const star = getStar(Math.round(doctor.rating));
+        return <img src={star} className="rounded star" alt="stars" />;
+    };
+
+    const DoctorFrame = ({ doctor }) => (
+        <div className="container frame-container">
+            <div className="jumbotron jumbo">
                 <div className="row">
                     <div className="col-sm-2">
-                        {/* TODO: link to doctor profile with related userId */}
-                        <img
-                            id="profpic"
-                            src={user.profilePictureSource}
-                            className="rounded-circle"
-                            alt={user.name + ' ' + user.surname}
-                        />
-                        <Rating user={user} />
+                        <div className="picture-container">
+                            <Avatar
+                                src={doctor.profilePictureSource}
+                                className={classes.large}
+                                onClick={() => handleDoctorClick(doctor.key)}
+                            >
+                                {`${doctor.name[0]}${doctor.surname[0]}`}
+                            </Avatar>
+                        </div>
+                        <RatingPic doctor={doctor} />
                     </div>
                     <div className="col-sm-2" style={{ paddingTop: 'auto' }}>
-                        <h5>{user.name + ' ' + user.surname}</h5>
-                        <button type="button" className="btn btn-primary">
+                        <h5>{doctor.name + ' ' + doctor.surname}</h5>
+                        <button
+                            type="button"
+                            className="btn btn-primary"
+                            onClick={() => handleBookClick(doctor.key)}
+                        >
                             BOOK
                         </button>
-                        {/* TODO: link to patient reservation page with related userId */}
                     </div>
                     <div className="col-sm-6">
                         <h5>About me</h5>
                         <p style={{ paddingRight: '1px' }}>
-                            {user.description}
+                            {doctor.description}
                         </p>
                     </div>
                 </div>
@@ -86,15 +97,54 @@ const DoctorList = props => {
         </div>
     );
 
+    const ListDoctors = () => {
+        setDoctors(
+            value === 'Ascending'
+                ? doctors.sort((a, b) => a.rating - b.rating)
+                : doctors.sort((a, b) => b.rating - a.rating)
+        );
+
+        return doctors.map(doctor => <DoctorFrame doctor={doctor} />);
+    };
+
     return (
-        <div>
-            {!loading && <h3 id="doctorfound">{users.length} Doctors found</h3>}
-            <UserList />
+        <div className="doctor-list">
+            <Form className="doctor-filter">
+                <Form.Field>
+                    <strong>Sort by rate</strong>
+                </Form.Field>
+                <Form.Field>
+                    <Checkbox
+                        radio
+                        label=" Ascending"
+                        name="checkboxRadioGroup"
+                        value="Ascending"
+                        checked={value === 'Ascending'}
+                        onChange={handleChange}
+                    />
+                </Form.Field>
+                <Form.Field>
+                    <Checkbox
+                        radio
+                        label=" Descending"
+                        name="checkboxRadioGroup"
+                        value="Descending"
+                        checked={value === 'Descending'}
+                        onChange={handleChange}
+                    />
+                </Form.Field>
+            </Form>
+            {!loading && (
+                <h3 className="doctor-found">{`${doctors.length} Doctors found`}</h3>
+            )}
+            <ListDoctors />
         </div>
     );
 };
 
-const condition = authUser => authUser;
+const condition = authUser =>
+    authUser &&
+    (authUser.role === ROLES.PATIENT || authUser.role === ROLES.ADMIN);
 
 export default compose(
     withEmailVerification,
