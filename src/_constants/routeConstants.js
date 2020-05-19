@@ -13,3 +13,4 @@ export const MEETINGS = '/meeting';
 export const DOCTOR_LIST = '/doctors';
 export const RESERVATIONS = '/reservations';
 export const RATING = '/rating';
+export const ARTICLES = '/articles';
