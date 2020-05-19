@@ -119,6 +119,8 @@ class Firebase {
 
     reservations = () => this.db.ref(`reservations-burak`);
 
+    articles = () => this.db.ref('articles');
+
     // Add new backend methods here
 }
 
