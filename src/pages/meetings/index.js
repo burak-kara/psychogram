@@ -7,13 +7,15 @@ import MeetingList from './MeetingList';
 import * as ROLES from '../../_constants/roles';
 import ChatSection from './ChatSection';
 import moment from 'moment';
+import * as ROUTES from '../../_constants/routeConstants';
 
 const Meetings = props => {
-    const { authUser, firebase } = props;
+    const { authUser, firebase, history } = props;
     const [meetings, setMeetings] = useState([]);
     const [chatPairs, setChatPairs] = useState(new Map());
     const [currentMeetingKey, setCurrentMeetingKey] = useState(null);
     const [search, setSearch] = useState('');
+    const [doctorId, setDoctorId] = useState([]);
 
     useEffect(() => {
         // TODO loading indicator
@@ -55,10 +57,27 @@ const Meetings = props => {
 
     const handleMeetingClick = key => {
         setCurrentMeetingKey(key);
+        const [uid, doctorId] = key.split('_');
+        setDoctorId(doctorId);
+    };
+
+    const handleBack = () => {
+        setCurrentMeetingKey(null);
     };
 
     const handleSearchType = e => {
         setSearch(e.target.value);
+    };
+
+    const handleEnd = () => {
+        // TODO confirm dialog and also warning for doctor action
+        if (authUser.role === ROLES.PATIENT)
+            history.push({
+                pathname: ROUTES.RATING,
+                search: '',
+                state: { doctorId },
+            });
+        else history.push(ROUTES.LANDING);
     };
 
     // TODO implement ui for meeting not chosen case
@@ -80,6 +99,9 @@ const Meetings = props => {
                             <ChatSection
                                 {...props}
                                 currentMeetingKey={currentMeetingKey}
+                                doctorId={doctorId}
+                                handleEnd={handleEnd}
+                                onClick={handleBack}
                             />
                         ) : null}
                     </div>
