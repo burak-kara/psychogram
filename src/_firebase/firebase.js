@@ -119,14 +119,6 @@ class Firebase {
 
     reservations = () => this.db.ref(`reservations-burak`);
 
-    static dowriteRatingData(uid, rating, totalRate, rateCount) {
-        app.database().ref(`users/${uid}`).update({
-            rating: rating,
-            totalRate: totalRate,
-            rateCount: rateCount,
-        });
-    }
-
     // Add new backend methods here
 }
 

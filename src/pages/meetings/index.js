@@ -76,11 +76,12 @@ const Meetings = props => {
     };
 
     const handleEnd = () => {
+        // TODO confirm dialog and also warning for doctor action
         if (user.role === ROLES.PATIENT)
             history.push({
                 pathname: ROUTES.RATING,
                 search: '',
-                state: { detail: { doctor, doctorId } },
+                state: { doctorId },
             });
         else history.push(ROUTES.LANDING);
     };

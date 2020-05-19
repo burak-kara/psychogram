@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { useState } from 'react';
+import Star, { Rate } from '../assets/starLogo/star';
 
 // Returns data keys from snapshot.val()
 export const getKeys = data => Object.keys(data);
@@ -55,12 +56,18 @@ export const snapshotToData = (snapshot, keyField) => {
 export const isObject = val =>
     val != null && typeof val === 'object' && Array.isArray(val) === false;
 
-export const useAsyncState = initialValue => {
-    const [value, setValue] = useState(initialValue);
-    const setter = x =>
-        new Promise(resolve => {
-            setValue(x);
-            resolve(x);
-        });
-    return [value, setter];
+export const getStar = rating => {
+    if (rating === Rate.FIVE) {
+        return Star.five_star;
+    } else if (rating === Rate.FOUR) {
+        return Star.four_star;
+    } else if (rating === Rate.THREE) {
+        return Star.three_star;
+    } else if (rating === Rate.TWO) {
+        return Star.two_star;
+    } else if (rating === Rate.ONE) {
+        return Star.one_star;
+    } else {
+        return Star.zero_star;
+    }
 };
