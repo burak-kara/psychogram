@@ -58,8 +58,11 @@ const Meetings = props => {
     const handleMeetingClick = key => {
         setCurrentMeetingKey(key);
         const [uid, doctorId] = key.split('_');
-        console.log(doctorId);
         setDoctorId(doctorId);
+    };
+
+    const handleBack = () => {
+        setCurrentMeetingKey(null);
     };
 
     const handleSearchType = e => {
@@ -96,20 +99,10 @@ const Meetings = props => {
                             <ChatSection
                                 {...props}
                                 currentMeetingKey={currentMeetingKey}
+                                doctorId={doctorId}
+                                handleEnd={handleEnd}
+                                onClick={handleBack}
                             />
-                        ) : null}
-                    </div>
-                    {/* TODO change*/}
-                    <div className="col-sm-1">
-                        {currentMeetingKey ? (
-                            <button
-                                type="button"
-                                className="align-self-end btn btn-block btn-block btn-info"
-                                onClick={handleEnd}
-                            >
-                                {' '}
-                                End Meeting
-                            </button>
                         ) : null}
                     </div>
                 </div>

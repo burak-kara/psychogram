@@ -139,9 +139,49 @@
 
             .chat-feed-container {
                 height: calc(100vh - 141px);
-                padding: 5px 1px 5px 0 !important;
+                padding: 1px 1px 5px 0 !important;
                 box-shadow: inset 0 0 3px 0 $color-green-3;
                 background-color: $color-light-green-1;
+
+                .chat-header {
+                    height: 50px;
+                    width: 100%;
+                    box-shadow: 0 1px 3px 0 $color-green-3;
+                    background-color: $color-green-3;
+                    z-index: 50 !important;
+                    border-top-right-radius: 5px;
+                    margin-bottom: 5px !important;
+                    padding: 6px;
+                    display: flex !important;
+
+                    .back-container {
+                        cursor: pointer;
+                        display: flex !important;
+                        align-items: center;
+                        justify-content: flex-end;
+                        color: white;
+                    }
+
+                    .info-container {
+                        width: 50%;
+                        padding-left: 6px;
+                        display: flex !important;
+                        align-items: center;
+                        justify-content: flex-start;
+
+                        .name {
+                            font-size: 20px;
+                            color: white;
+                        }
+                    }
+
+                    .btn-container {
+                        width: 50%;
+                        display: flex !important;
+                        align-items: center;
+                        justify-content: flex-end;
+                    }
+                }
 
                 ::-webkit-scrollbar {
                     padding: 0 !important;
@@ -169,7 +209,7 @@
                 }
 
                 .chat-history {
-                    height: calc(100vh - 141px);
+                    height: calc(100vh - 191px);
                     padding: 0 10px 0 10px !important;
                     cursor: default;
                 }
@@ -213,7 +253,7 @@
             height: calc(100vh - 131px) !important;
 
             .chat-history {
-                height: calc(100vh - 141px) !important;
+                height: calc(100vh - 191px) !important;
             }
         }
     }
@@ -336,7 +376,7 @@
             height: calc(100vh - 141px) !important;
 
             .chat-history {
-                height: calc(100vh - 151px) !important;
+                height: calc(100vh - 201px) !important;
             }
         }
     }

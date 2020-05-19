@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { ChatFeed, Message } from 'react-chat-ui';
 import MessageTextField from './TextField';
+import Avatar from '@material-ui/core/Avatar';
+import { IconContext } from 'react-icons';
+import { IoMdArrowRoundBack } from 'react-icons/all';
 
 const ChatSection = props => {
-    const { authUser, firebase, currentMeetingKey } = props;
+    const { authUser, firebase, currentMeetingKey, doctorId } = props;
     const [newMessage, setNewMessage] = useState('');
     const [messages, setMessages] = useState(new Map());
+    const [doctor, setDoctor] = useState(null);
 
     useEffect(() => {
         setNewMessage('');
@@ -24,6 +28,9 @@ const ChatSection = props => {
                     );
                 });
                 setMessages(map);
+            });
+            firebase.user(doctorId).on('value', snapshot => {
+                setDoctor(snapshot.val());
             });
         } else {
             //    TODO loading indicator
@@ -70,6 +77,35 @@ const ChatSection = props => {
         <>
             <div className="row">
                 <div className="col chat-feed-container">
+                    <div className="chat-header">
+                        <div className="back-container" onClick={props.onClick}>
+                            <IconContext.Provider value={{ size: '30' }}>
+                                <IoMdArrowRoundBack />
+                            </IconContext.Provider>
+                        </div>
+                        <div className="info-container">
+                            {doctor ? (
+                                <>
+                                    <Avatar src={doctor.profilePictureSource}>
+                                        {`${doctor.name[0]}${doctor.surname[0]}`}
+                                    </Avatar>
+                                    <div className="col name">
+                                        <span>{`${doctor.name} ${doctor.surname}`}</span>
+                                    </div>
+                                </>
+                            ) : null}
+                        </div>
+                        <div className="btn-container">
+                            {currentMeetingKey ? (
+                                <button
+                                    className="btn btn-danger"
+                                    onClick={props.handleEnd}
+                                >
+                                    End Meeting
+                                </button>
+                            ) : null}
+                        </div>
+                    </div>
                     <ChatFeed
                         messages={[...messages.values()]}
                         bubblesCentered={false}
