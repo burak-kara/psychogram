@@ -12,7 +12,6 @@ const ChatSection = props => {
     const { authUser, firebase, currentMeetingKey, user } = props;
     const [newMessage, setNewMessage] = useState('');
     const [messages, setMessages] = useState(new Map());
-    const [reservations, setReservations] = useState(null);
     const [isDisabled, setDisabled] = useState(true);
 
     useEffect(() => {
@@ -48,7 +47,6 @@ const ChatSection = props => {
             const tempReservs = snapshotToArray(snapshot);
             tempReservs.filter(value => props.reservations.includes(value.key));
             checkDisabled(tempReservs);
-            setReservations(tempReservs);
         });
     };
 
@@ -81,7 +79,6 @@ const ChatSection = props => {
                 senderId: authUser.uid,
                 date: moment().format(),
             };
-
             sendMessage(message);
             setLastMessage(message);
             setNewMessage('');
