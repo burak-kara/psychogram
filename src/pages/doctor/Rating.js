@@ -1,123 +1,72 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import '../../assets/styles/pages/doctor.scss';
-import Star, { Rate } from '../../assets/starLogo/star';
+import Star from '../../assets/starLogo/star';
 import { Checkbox, Form } from 'semantic-ui-react';
 import * as ROUTES from '../../_constants/routeConstants';
-import Firebase from '../../_firebase';
+import { getStar } from '../../_utility/functions';
+import Avatar from '@material-ui/core/Avatar';
+import { makeStyles } from '@material-ui/core/styles';
+import { compose } from 'recompose';
+import { withAuthorization, withEmailVerification } from '../../_session';
+import * as ROLES from '../../_constants/roles';
 
 const RatingPage = props => {
-    const location = useLocation();
     const { history, firebase } = props;
-    const [settingsOpen, setSettingsOpen] = useState(false);
-    const [user, setUser] = useState('');
-    const [doctorId, setDoctorId] = useState([]);
-    const [doctor, setDoctor] = useState([]);
-    const [value, setValue] = useState('');
+    const [doctor, setDoctor] = useState(null);
+    const [id, setId] = useState('');
+    const [value, setValue] = useState(0);
+
+    const useStyles = makeStyles(theme => ({
+        large: {
+            width: theme.spacing(14),
+            height: theme.spacing(14),
+        },
+    }));
+
+    const classes = useStyles();
+
+    useEffect(() => {
+        isDoctorExist()
+            ? firebase
+                  .user(history.location.state.doctorId)
+                  .on('value', snapshot => {
+                      setDoctor(snapshot.val());
+                      setId(snapshot.key);
+                  })
+            : history.push(ROUTES.LANDING);
+    }, [firebase]);
+
+    const isDoctorExist = () =>
+        history &&
+        history.location &&
+        history.location.state &&
+        history.location.state.doctorId;
 
     const handleChange = (e, { value }) => setValue(value);
 
-    useEffect(() => {
-        setDoctor(location.state.detail.doctor);
-        setUser(location.state.detail.doctor);
-        setDoctorId(location.state.detail.doctorId);
-    }, [user]);
-
-    const handleSettingShow = () => {
-        setSettingsOpen(!settingsOpen);
+    const Rating = () => {
+        const star = getStar(Math.round(doctor.rating));
+        return <img src={star} className="rounded star-dr" alt="stars" />;
     };
 
-    const Rating = ({ user }) => {
-        let rating = user.rating;
-        let star = Star.five_star;
-        if (rating === Rate.FIVE) {
-            star = Star.five_star;
-        } else if (rating === Rate.FOUR) {
-            star = Star.four_star;
-        } else if (rating === Rate.THREE) {
-            star = Star.three_star;
-        } else if (rating === Rate.TWO) {
-            star = Star.two_star;
-        } else if (rating === Rate.ONE) {
-            star = Star.one_star;
-        } else if (rating === Rate.ZERO) {
-            star = Star.zero_star;
-        }
-        return (
-            <img id="starDr" src={star} className="rounded" alt="four_star" />
-        );
-    };
-
-    const DoctorFrame = ({ user }) => (
-        <div id="jumboDrRate" className="jumbotron">
+    const DoctorFrame = () => (
+        <div className="jumbotron jumbo-dr-rate">
             <div className="row">
                 <div className="col-sm-3">
-                    <img
-                        id="profpic_rate"
-                        src={user.profilePictureSource}
-                        className="rounded-circle"
-                        alt={user.name + ' ' + user.surname}
-                    />
+                    <div className="picture-container">
+                        <Avatar
+                            src={doctor.profilePictureSource}
+                            className={classes.large}
+                        >
+                            {`${doctor.name[0]}${doctor.surname[0]}`}
+                        </Avatar>
+                    </div>
                 </div>
                 <div className="col-sm-3" style={{ paddingTop: 'auto' }}>
-                    <h5>{user.name + ' ' + user.surname}</h5>
+                    <h5>{doctor.name + ' ' + doctor.surname}</h5>
                 </div>
                 <div className="col-sm-6">
-                    <Rating user={user} />
-                </div>
-            </div>
-        </div>
-    );
-
-    const handlingRating = () => {
-        let selected_rate = 0;
-        if (value === 'five') selected_rate = 5;
-        else if (value === 'four') selected_rate = 4;
-        else if (value === 'three') selected_rate = 3;
-        else if (value === 'two') selected_rate = 2;
-        else if (value === 'one') selected_rate = 1;
-
-        let rating = user.rating;
-
-        let totalRate = user.totalRate + selected_rate;
-        let rateCount = user.rateCount + 1;
-
-        if (user.totalRate == 0) rating = selected_rate;
-        else rating = totalRate / rateCount;
-
-        user.rating = rating;
-        user.totalRate = totalRate;
-        user.rateCount = rateCount;
-
-        Firebase.dowriteRatingData(doctorId, rating, totalRate, rateCount);
-        history.push(ROUTES.LANDING);
-    };
-
-    const RateButton = ({ user }) => (
-        <div id="jumboDrRate" className="jumbotron">
-            <div className="row">
-                <div className="col-sm-3">
-                    <button
-                        type="button"
-                        className="btn btn-secondary"
-                        data={user}
-                        onClick={() => history.push(ROUTES.LANDING)}
-                    >
-                        IGNORE
-                    </button>
-                </div>
-
-                <div className="col-sm-5"></div>
-
-                <div className="col-sm-3">
-                    <button
-                        type="button"
-                        className="btn btn-primary"
-                        data={user}
-                        onClick={handlingRating}
-                    >
-                        SUBMIT
-                    </button>
+                    <Rating />
                 </div>
             </div>
         </div>
@@ -126,14 +75,8 @@ const RatingPage = props => {
     const StarRate = props => (
         <div className="row">
             <div className="col-sm-3">
-                <img
-                    id="star"
-                    src={props.srcAddr}
-                    className="rounded"
-                    alt={props.star}
-                />
+                <img src={props.srcAddr} className="rounded star" alt="star" />
             </div>
-
             <div className="col-sm-3">
                 <Form.Field>
                     <Checkbox
@@ -150,43 +93,91 @@ const RatingPage = props => {
         </div>
     );
 
-    return user ? (
-        <div>
-            <h3 id="doctorfound">RATING</h3>
-            <div id="containerRate" className="container float">
-                <DoctorFrame user={user} />
+    const handlingRating = () => {
+        const totalRate = doctor.totalRate + value;
+        const rateCount = doctor.rateCount + 1;
 
-                <div id="jumboRate" className="jumbotron">
+        const rating = doctor.totalRate === 0 ? value : totalRate / rateCount;
+
+        firebase.user(id).set({
+            ...doctor,
+            rating,
+            totalRate,
+            rateCount,
+        });
+        // TODO implement success message
+        history.push(ROUTES.LANDING);
+    };
+
+    const RateButton = () => (
+        <div className="jumbotron jumbo-dr-rate">
+            <div className="row">
+                <div className="col-sm-3">
+                    <button
+                        type="button"
+                        className="btn btn-secondary"
+                        onClick={() => history.push(ROUTES.LANDING)}
+                    >
+                        IGNORE
+                    </button>
+                </div>
+                <div className="col-sm-5" />
+                <div className="col-sm-3">
+                    <button
+                        type="button"
+                        className="btn btn-primary"
+                        onClick={handlingRating}
+                    >
+                        SUBMIT
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+
+    return doctor ? (
+        <div>
+            <h3 className="doctor-found">RATING</h3>
+            <div className="container float container-rate">
+                <DoctorFrame user={doctor} />
+                <div className="jumbotron jumbo-rate">
                     <StarRate
                         srcAddr={Star.five_star}
                         star="Five star"
-                        number="five"
+                        number={5}
                     />
                     <StarRate
                         srcAddr={Star.four_star}
                         star="Four star"
-                        number="four"
+                        number={4}
                     />
                     <StarRate
                         srcAddr={Star.three_star}
                         star="Three star"
-                        number="three"
+                        number={3}
                     />
                     <StarRate
                         srcAddr={Star.two_star}
                         star="Two star"
-                        number="two"
+                        number={2}
                     />
                     <StarRate
                         srcAddr={Star.one_star}
                         star="One star"
-                        number="one"
+                        number={1}
                     />
                 </div>
-                <RateButton user={user} />
+                <RateButton />
             </div>
         </div>
     ) : null;
 };
 
-export default RatingPage;
+const condition = authUser =>
+    authUser &&
+    (authUser.role === ROLES.PATIENT || authUser.role === ROLES.ADMIN);
+
+export default compose(
+    withEmailVerification,
+    withAuthorization(condition)
+)(RatingPage);

@@ -5,10 +5,8 @@ import Settings from './Settings';
 import Alert from '../../components/Alert';
 import { compose } from 'recompose';
 import { withAuthorization, withEmailVerification } from '../../_session';
-import { useLocation } from 'react-router-dom';
 
 const Profile = props => {
-    const location = useLocation();
     const { authUser, firebase, history } = props;
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [alertOpen, setAlertsOpen] = useState(false);
@@ -51,19 +49,31 @@ const Profile = props => {
     };
 
     useEffect(() => {
-        if (location.search == '?dr') setUser(location.state.detail.user);
-        else if (authUser && authUser.uid !== '') {
+        // TODO  implement user not found etc
+        isAnotherView() ? getAnotherView() : getUser();
+    }, [authUser, firebase]);
+
+    const isAnotherView = () =>
+        history &&
+        history.location &&
+        history.location.state &&
+        history.location.state.doctorId;
+
+    const getAnotherView = () =>
+        firebase.user(history.location.state.id).on('value', snapshot => {
+            setUser(snapshot.val());
+            setSettings(snapshot.val());
+        });
+
+    const getUser = () => {
+        if (authUser && authUser.uid !== '') {
             firebase.user(authUser.uid).on('value', snapshot => {
                 setUser(snapshot.val());
                 setSettings(snapshot.val());
             });
-        } else if (history.location.state.id) {
-            firebase.user(history.location.state.id).on('value', snapshot => {
-                setUser(snapshot.val());
-                setSettings(snapshot.val());
-            });
         }
-    }, [authUser, firebase]);
+    };
+
     return user ? (
         <div>
             <div className="container-fluid h-auto patient-profile">

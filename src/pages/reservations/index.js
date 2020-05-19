@@ -224,7 +224,7 @@ const Reservations = props => {
             });
     };
 
-    const getUserCalendar = () => {
+    const getUserCalendar = () =>
         firebase
             .reservations()
             .orderByChild('endDate')
@@ -245,7 +245,6 @@ const Reservations = props => {
                 setData(temp);
                 setLoading(false);
             });
-    };
 
     const handleCurrentViewNameChange = currentViewName => {
         setCurrentViewName(currentViewName);

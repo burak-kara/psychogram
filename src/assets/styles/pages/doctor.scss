@@ -1,68 +1,74 @@
-div#containerCSS {
-    margin-left: 100px;
-}
+.doctor-list {
+    .doctor-filter {
+        margin-left: 150px;
+        margin-top: 30px;
+        background-color: #84a9dc;
+        box-shadow: 0 14px 80px rgba(34, 60, 88, 0.2);
+        width: 150px;
+        padding-left: 10px;
+    }
 
-div#containerRate {
-    margin-left: 100px;
-}
+    .check-box {
+        margin-top: 18px;
+    }
 
-h3#doctorfound {
-    margin-top: 40px;
-    padding-left: 152px;
-}
+    .doctor-found {
+        margin-top: 40px;
+        padding-left: 152px;
+    }
 
-img#starDr {
-    width: 40%;
-    padding-top: 20px;
-}
+    .frame-container {
+        margin-left: 100px;
+    }
 
-img#star {
-    width: 100%;
-    padding-top: 20px;
-}
+    .jumbo {
+        width: 80%;
+        margin: 30px;
+        padding-top: 1%;
+        padding-right: 1%;
+        padding-bottom: 2%;
+    }
 
-div#jumboCSS {
-    width: 80%;
-    margin: 30px;
-    padding-top: 1%;
-    padding-right: 1%;
-    padding-bottom: 2%;
-}
-div#jumboRate {
-    width: 50%;
-    margin: 30px;
-    padding-top: 1%;
-    padding-right: 1%;
-    padding-bottom: 2%;
-}
+    .picture-container {
+        min-width: 100% !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
 
-div#jumboDrRate {
-    width: 50%;
-    margin: 30px;
-    padding-top: 1%;
-    padding-right: 1%;
-    padding-bottom: 2%;
-}
+    .star {
+        width: 100%;
+        padding-top: 20px;
+    }
 
-img#profpic_rate {
-    width: 60px;
-    height: 60px;
-}
+    .star-dr {
+        width: 40%;
+        padding-top: 20px;
+    }
 
-img#profpic {
-    width: 90px;
-    height: 90px;
-}
+    .jumbo-dr-rate {
+        width: 50%;
+        margin: 30px;
+        padding-top: 1%;
+        padding-right: 1%;
+        padding-bottom: 2%;
+    }
 
-.docfil {
-    margin-left: 150px;
-    margin-top: 30px;
-    background-color: #84a9dc;
-    box-shadow: 0 14px 80px rgba(34, 60, 88, 0.2);
-    width: 150px;
-    padding-left: 10px;
-}
+    .container-rate {
+        margin-left: 100px;
+    }
 
-.check-box {
-    margin-top: 18px;
+    .jumbo-rate {
+        width: 50%;
+        margin: 30px;
+        padding-top: 1%;
+        padding-right: 1%;
+        padding-bottom: 2%;
+    }
+
+    .prof-pic_rate {
+        width: 60px;
+        height: 60px;
+    }
 }
