@@ -15,7 +15,6 @@ const Meetings = props => {
     const [chatPairs, setChatPairs] = useState(new Map());
     const [currentMeetingKey, setCurrentMeetingKey] = useState(null);
     const [search, setSearch] = useState('');
-    const [user, setUser] = useState({});
     const [doctorId, setDoctorId] = useState([]);
 
     useEffect(() => {
