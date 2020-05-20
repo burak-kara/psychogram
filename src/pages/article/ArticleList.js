@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { withAuthorization, withEmailVerification } from '../../_session';
-import '../../assets/styles/main.scss';
 import { compose } from 'recompose';
 import { snapshotToArray } from '../../_utility/functions';
 
@@ -19,12 +18,8 @@ const ArticleList = props => {
         };
     }, []);
 
-    const ArticlesList = () => {
-        return articleList.map(obj => <ArticleFrame article={obj} />);
-    };
-
     const ArticleFrame = ({ article }) => (
-        <div>
+        <>
             <div style={{ paddingTop: 'auto' }}>
                 <h5>{article.name + '  by ' + article.author}</h5>
             </div>
@@ -32,7 +27,7 @@ const ArticleList = props => {
                 <p style={{ paddingRight: '1px' }}>{article.detail}</p>
             </div>
             <hr className="article-page.grey" />
-        </div>
+        </>
     );
 
     return (
@@ -41,8 +36,9 @@ const ArticleList = props => {
                 <h4>Articles: </h4>
                 <hr className="article-page.grey" />
             </div>
-            <ArticleHeader />
-            <ArticlesList />
+            {articleList
+                ? articleList.map(obj => <ArticleFrame article={obj} />)
+                : null}
             {!loading && <b> Total {articleList.length} Articles found</b>}
         </>
     );

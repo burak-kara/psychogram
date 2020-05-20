@@ -92,7 +92,7 @@ const Profile = props => {
                             handleStatus={handleStatusChange}
                         />
                     )}
-                    <ProfileDetails user={user}  history={history}/>
+                    <ProfileDetails user={user} history={history} />
                 </div>
             </div>
             <Settings
