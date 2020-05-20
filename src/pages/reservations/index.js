@@ -255,15 +255,46 @@ const Reservations = props => {
     };
 
     const handleChanges = ({ added, changed, deleted }) => {
+        const userId = authUser.uid;
+        const doctorId = history.location.state.doctorId;
+
         if (added) {
-            firebase.reservations().push({
+            const pushRef = firebase.reservations().push({
                 ...added,
-                userId: authUser.uid,
-                doctorId: history.location.state.doctorId,
+                userId,
+                doctorId,
                 startDate: moment(added.startDate).format(),
                 endDate: moment(added.endDate).format(),
             });
+            createMeeting(userId, doctorId, pushRef.key);
         }
+    };
+
+    const createMeeting = (userId, doctorId, reservationId) => {
+        const meetingId = `${userId}_${doctorId}`;
+        firebase
+            .meeting(meetingId)
+            .once('value')
+            .then(snapshot => {
+                if (snapshot.val()) {
+                    props.firebase
+                        .meetings()
+                        .child(meetingId)
+                        .child('reservations')
+                        .push(reservationId);
+                } else {
+                    // TODO add success, error handling for promise
+                    props.firebase.meetings().child(meetingId).set({
+                        userId,
+                        doctorId,
+                    });
+                    props.firebase
+                        .meetings()
+                        .child(meetingId)
+                        .child('reservations')
+                        .push(reservationId);
+                }
+            });
     };
 
     return (

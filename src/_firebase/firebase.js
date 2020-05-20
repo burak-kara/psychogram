@@ -115,9 +115,9 @@ class Firebase {
 
     messages = uid => this.db.ref(`messages/${uid}`);
 
-    reservation = uid => this.db.ref(`reservations-burak/${uid}`);
+    reservation = uid => this.db.ref(`reservations/${uid}`);
 
-    reservations = () => this.db.ref(`reservations-burak`);
+    reservations = () => this.db.ref(`reservations`);
 
     // Add new backend methods here
 }

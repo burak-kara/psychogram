@@ -1,5 +1,4 @@
 import moment from 'moment';
-import { useState } from 'react';
 import Star, { Rate } from '../assets/starLogo/star';
 
 // Returns data keys from snapshot.val()
@@ -37,24 +36,6 @@ export const snapshotToArray = snapshot => {
     });
     return array;
 };
-
-export const snapshotToData = (snapshot, keyField) => {
-    if (!snapshot.exists) {
-        return undefined;
-    }
-
-    const val = snapshot.val();
-    if (isObject(val)) {
-        return {
-            ...val,
-            ...(keyField ? { [keyField]: snapshot.key } : null),
-        };
-    }
-    return val;
-};
-
-export const isObject = val =>
-    val != null && typeof val === 'object' && Array.isArray(val) === false;
 
 export const getStar = rating => {
     if (rating === Rate.FIVE) {

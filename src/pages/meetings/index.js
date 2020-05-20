@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import { withAuthorization, withEmailVerification } from '../../_session';
-import { snapshotToArray } from '../../_utility/functions';
+import { getKeys, snapshotToArray } from '../../_utility/functions';
 import Search from './Search';
 import MeetingList from './MeetingList';
 import * as ROLES from '../../_constants/roles';
@@ -13,9 +13,10 @@ const Meetings = props => {
     const { authUser, firebase, history } = props;
     const [meetings, setMeetings] = useState([]);
     const [chatPairs, setChatPairs] = useState(new Map());
-    const [currentMeetingKey, setCurrentMeetingKey] = useState(null);
     const [search, setSearch] = useState('');
-    const [doctorId, setDoctorId] = useState([]);
+    const [currentMeetingKey, setCurrentMeetingKey] = useState(null);
+    const [user, setUser] = useState(null);
+    const [reservations, setReservations] = useState(null);
 
     useEffect(() => {
         // TODO loading indicator
@@ -55,14 +56,15 @@ const Meetings = props => {
         }
     };
 
-    const handleMeetingClick = key => {
+    const handleMeetingClick = (key, user, reservations) => {
         setCurrentMeetingKey(key);
-        const [uid, doctorId] = key.split('_');
-        setDoctorId(doctorId);
+        setReservations(getKeys(reservations));
+        setUser(user);
     };
 
     const handleBack = () => {
         setCurrentMeetingKey(null);
+        setReservations(null);
     };
 
     const handleSearchType = e => {
@@ -75,7 +77,7 @@ const Meetings = props => {
             history.push({
                 pathname: ROUTES.RATING,
                 search: '',
-                state: { doctorId },
+                state: { doctorId: user.key },
             });
         else history.push(ROUTES.LANDING);
     };
@@ -99,7 +101,8 @@ const Meetings = props => {
                             <ChatSection
                                 {...props}
                                 currentMeetingKey={currentMeetingKey}
-                                doctorId={doctorId}
+                                reservations={reservations}
+                                user={user}
                                 handleEnd={handleEnd}
                                 onClick={handleBack}
                             />
