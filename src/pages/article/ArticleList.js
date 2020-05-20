@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { withAuthorization, withEmailVerification } from '../../_session';
 import '../../assets/styles/main.scss';
 import { compose } from 'recompose';
-import {snapshotToArray} from "../../_utility/functions";
+import { snapshotToArray } from '../../_utility/functions';
 
 const ArticleList = props => {
     const [loading, setLoading] = useState(false);
@@ -20,9 +20,7 @@ const ArticleList = props => {
     }, []);
 
     const ArticlesList = () => {
-        return articleList.map(obj => {
-            return   <ArticleFrame article={obj} />;
-        });
+        return articleList.map(obj => <ArticleFrame article={obj} />);
     };
 
     const ArticleHeader = () => {
