@@ -19,12 +19,10 @@ const ArticleList = props => {
         };
     }, []);
 
-    const ArticlesList = () => {
-        return articleList.map(obj => <ArticleFrame article={obj} />);
-    };
+    const ArticlesList = () => {return articleList.map(obj => <ArticleFrame article={obj} />);};
 
     const ArticleFrame = ({ article }) => (
-        <div>
+        <>
             <div style={{ paddingTop: 'auto' }}>
                 <h5>{article.name + '  by ' + article.author}</h5>
             </div>
@@ -32,7 +30,7 @@ const ArticleList = props => {
                 <p style={{ paddingRight: '1px' }}>{article.detail}</p>
             </div>
             <hr className="article-page.grey" />
-        </div>
+        </>
     );
 
     return (
