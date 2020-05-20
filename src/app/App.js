@@ -19,6 +19,7 @@ import TestMeetingCreate from '../pages/testCreateMeeting';
 import * as ROUTES from '../_constants/routeConstants';
 import { withAuthentication } from '../_session';
 import Rating from '../pages/doctor/Rating';
+import ArticleList from '../pages/article/ArticleList';
 
 const App = () => (
     <Router>
@@ -37,6 +38,7 @@ const App = () => (
         <Route path={ROUTES.RESERVATIONS} component={Reservations} />
         <Route path="/create" component={TestMeetingCreate} />
         <Route path={ROUTES.RATING} component={Rating} />
+        <Route path={ROUTES.ARTICLES} component={ArticleList} />
         <Footer />
     </Router>
 );
