@@ -28,7 +28,7 @@ const styles = () => ({
 });
 
 const MessageTextField = props => {
-    const { value, classes, onChange, onEnter, onSend } = props;
+    const { value, classes, onChange, onEnter, onSend, disabled } = props;
 
     return (
         <TextField
@@ -40,6 +40,7 @@ const MessageTextField = props => {
             value={value}
             onChange={onChange}
             onKeyDown={onEnter}
+            disabled={disabled}
             InputProps={{
                 endAdornment: (
                     <InputAdornment position="end">
