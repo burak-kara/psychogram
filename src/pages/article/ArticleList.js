@@ -23,15 +23,6 @@ const ArticleList = props => {
         return articleList.map(obj => <ArticleFrame article={obj} />);
     };
 
-    const ArticleHeader = () => {
-        return (
-            <div>
-                <h4>Articles: </h4>
-                <hr className="article-page.grey" />
-            </div>
-        );
-    };
-
     const ArticleFrame = ({ article }) => (
         <div>
             <div style={{ paddingTop: 'auto' }}>
@@ -46,6 +37,10 @@ const ArticleList = props => {
 
     return (
         <>
+            <div>
+                <h4>Articles: </h4>
+                <hr className="article-page.grey" />
+            </div>
             <ArticleHeader />
             <ArticlesList />
             {!loading && <b> Total {articleList.length} Articles found</b>}

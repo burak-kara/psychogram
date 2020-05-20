@@ -16,7 +16,7 @@ const ProfileDetails = props => {
         <div className="col-lg-9 col-md-9 col-sm-12 pb-2 profile-details">
             <CardContainer
                 title="Favori Makalelerim"
-                seeAll={() => gotoArticles()}
+                seeAll={gotoArticles}
                 data={props.user.favArticles}
                 type={'favArticles'}
             />
