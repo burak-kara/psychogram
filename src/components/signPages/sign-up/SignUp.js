@@ -17,9 +17,15 @@ const SignUp = () => (
 
 var pasLen;
 var strength;
+var policy = {
+    min: 6,
+    max: 8,
+    hasNumber: false,
+    hasMixChar: false,
+    hasSpecial: false,
+};
 var passObj = {
-    pasLen: '',
-    strength: '',
+    policy,
     passwd: '',
 };
 
@@ -58,9 +64,8 @@ class SignUpFormBase extends Component {
 
     componentDidMount() {
         this.props.firebase.policy().on('value', snapshot => {
-            let dene = snapshot.val();
-            pasLen = dene.length;
-            strength = dene.strength;
+            let tempObj = snapshot.val();
+            policy = tempObj;
         });
     }
 
@@ -79,18 +84,11 @@ class SignUpFormBase extends Component {
             isDoctor,
         } = this.state;
 
-        this.props.firebase.policy().on('value', snapshot => {
-            let dene = snapshot.val();
-            pasLen = dene.length;
-            strength = dene.strength;
-        });
-
-        passObj.pasLen = pasLen;
+        passObj.policy = policy;
         passObj.passwd = this.state.passwordOne;
-        passObj.strength = strength;
-        let retObj = passCheck(passObj);
+        const checkResult = passCheck(passObj);
 
-        if (retObj.err == false) {
+        if (checkResult.err === false) {
             this.props.firebase
                 .doCreateUserWithEmailAndPassword(email, passwordOne)
                 .then(authUser => {
@@ -135,7 +133,7 @@ class SignUpFormBase extends Component {
             event.preventDefault();
         } else {
             this.setState({
-                alertMessage: retObj.mess,
+                alertMessage: checkResult.mess,
                 severity: 'error',
                 isAlertOpen: true,
             });
