@@ -121,6 +121,8 @@ class Firebase {
 
     articles = () => this.db.ref('articles');
 
+    policy = () => this.db.ref('policy');
+
     // Add new backend methods here
 }
 
