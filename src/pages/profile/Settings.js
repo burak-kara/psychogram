@@ -2,7 +2,7 @@ import React from 'react';
 import DialogWindow from '../../components/DialogWindow';
 
 const Settings = props => {
-    const { open, settings, handleClose, handleSave, onChange } = props;
+    const { open, settings, handleClose, handleSave, onChange, handleDelete } = props;
 
     const renderContent = () => (
         <form className="profile-settings" onChange={onChange}>
@@ -112,6 +112,11 @@ const Settings = props => {
                         id="birthday"
                         value={settings.birthday}
                     />
+                </div>
+                <div>
+                    <button className="btn btn-danger" onClick={handleDelete}>
+                        Hesabi Sil
+                    </button>
                 </div>
             </div>
         </form>
