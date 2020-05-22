@@ -5,7 +5,7 @@ import Settings from './Settings';
 import Alert from '../../components/Alert';
 import { compose } from 'recompose';
 import { withAuthorization, withEmailVerification } from '../../_session';
-import * as ROUTES from "../../_constants/routeConstants";
+import * as ROUTES from '../../_constants/routeConstants';
 
 const Profile = props => {
     const { authUser, firebase, history } = props;
@@ -29,7 +29,7 @@ const Profile = props => {
 
     const handleProfileDelete = () => {
         firebase.users().remove(authUser.id);
-        firebase.deleteAuthentication();
+        firebase.deleteAccount();
         history.push({
             pathname: ROUTES.SIGN_IN,
         });

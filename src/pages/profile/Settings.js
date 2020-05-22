@@ -2,7 +2,14 @@ import React from 'react';
 import DialogWindow from '../../components/DialogWindow';
 
 const Settings = props => {
-    const { open, settings, handleClose, handleSave, onChange, handleDelete } = props;
+    const {
+        open,
+        settings,
+        handleClose,
+        handleSave,
+        onChange,
+        handleDelete,
+    } = props;
 
     const renderContent = () => (
         <form className="profile-settings" onChange={onChange}>
@@ -113,8 +120,13 @@ const Settings = props => {
                         value={settings.birthday}
                     />
                 </div>
-                <div>
-                    <button className="btn btn-danger" onClick={handleDelete}>
+            </div>
+            <div className="form-row">
+                <div className="form-group col-md-12">
+                    <button
+                        className="btn btn-danger btn-block"
+                        onClick={handleDelete}
+                    >
                         Hesabi Sil
                     </button>
                 </div>
