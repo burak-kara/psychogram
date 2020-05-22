@@ -7,12 +7,21 @@ import { compose } from 'recompose';
 import Alert from '../../Alert';
 import TextField from '@material-ui/core/TextField';
 import * as moment from 'moment';
+import { passCheck } from '../../../pages/admin/PasswordChecker';
 
 const SignUp = () => (
     <div>
         <SignUpForm />
     </div>
 );
+
+var pasLen;
+var strength;
+var passObj = {
+    pasLen: '',
+    strength: '',
+    passwd: '',
+};
 
 const INITIAL_STATE = {
     username: '',
@@ -29,6 +38,11 @@ const INITIAL_STATE = {
         'https://upload.wikimedia.org/wikipedia/commons/3/31/Michael_Jackson_in_1988.jpg',
     location: '',
     role: '',
+    private: false,
+    rating: 0,
+    rateCount: 0,
+    totalRate: 0,
+    status: '',
 };
 
 class SignUpFormBase extends Component {
@@ -40,6 +54,14 @@ class SignUpFormBase extends Component {
             alertMessage: '',
             severity: '',
         };
+    }
+
+    componentDidMount() {
+        this.props.firebase.policy().on('value', snapshot => {
+            let dene = snapshot.val();
+            pasLen = dene.length;
+            strength = dene.strength;
+        });
     }
 
     onSubmit = event => {
@@ -57,43 +79,68 @@ class SignUpFormBase extends Component {
             isDoctor,
         } = this.state;
 
-        this.props.firebase
-            .doCreateUserWithEmailAndPassword(email, passwordOne)
-            .then(authUser => {
-                return this.props.firebase.user(authUser.user.uid).set({
-                    username,
-                    name,
-                    surname,
-                    email,
-                    phone,
-                    role: isDoctor ? ROLES.DOCTOR : ROLES.PATIENT,
-                    birthday,
-                    description,
-                    profilePictureSource,
-                    location,
+        this.props.firebase.policy().on('value', snapshot => {
+            let dene = snapshot.val();
+            pasLen = dene.length;
+            strength = dene.strength;
+        });
+
+        passObj.pasLen = pasLen;
+        passObj.passwd = this.state.passwordOne;
+        passObj.strength = strength;
+        let retObj = passCheck(passObj);
+
+        if (retObj.err == false) {
+            this.props.firebase
+                .doCreateUserWithEmailAndPassword(email, passwordOne)
+                .then(authUser => {
+                    return this.props.firebase.user(authUser.user.uid).set({
+                        username,
+                        name,
+                        surname,
+                        email,
+                        phone,
+                        role: isDoctor ? ROLES.DOCTOR : ROLES.PATIENT,
+                        birthday,
+                        description,
+                        profilePictureSource,
+                        location,
+                        private: false,
+                        rating: 0,
+                        rateCount: 0,
+                        totalRate: 0,
+                        status: '',
+                    });
+                })
+                .then(() => {
+                    // TODO implement with styling
+                    // return this.props.firebase.doSendEmailVerification();
+                })
+                .then(() => {
+                    this.setState({ ...INITIAL_STATE });
+                    this.setState({
+                        alertMessage: 'Başarıyla Kaydedildi',
+                        severity: 'success',
+                        isAlertOpen: true,
+                    });
+                    this.props.history.push(ROUTES.LANDING);
+                })
+                .catch(error => {
+                    this.setState({
+                        alertMessage: error.message,
+                        severity: 'error',
+                        isAlertOpen: true,
+                    });
                 });
-            })
-            .then(() => {
-                // TODO implement with styling
-                // return this.props.firebase.doSendEmailVerification();
-            })
-            .then(() => {
-                this.setState({ ...INITIAL_STATE });
-                this.setState({
-                    alertMessage: 'Başarıyla Kaydedildi',
-                    severity: 'success',
-                    isAlertOpen: true,
-                });
-                this.props.history.push(ROUTES.LANDING);
-            })
-            .catch(error => {
-                this.setState({
-                    alertMessage: error.message,
-                    severity: 'error',
-                    isAlertOpen: true,
-                });
+            event.preventDefault();
+        } else {
+            this.setState({
+                alertMessage: retObj.mess,
+                severity: 'error',
+                isAlertOpen: true,
             });
-        event.preventDefault();
+            event.preventDefault();
+        }
     };
 
     onChange = event => {
