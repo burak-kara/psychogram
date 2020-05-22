@@ -89,7 +89,7 @@ class Firebase {
 
     doSignOut = () => this.auth.signOut();
 
-    deleteAuthentication = () => {
+    deleteAccount = () => {
         let o;
         this.auth.currentUser.delete().then(r => o);
     };
