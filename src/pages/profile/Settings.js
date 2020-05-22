@@ -113,6 +113,18 @@ const Settings = props => {
                         value={settings.birthday}
                     />
                 </div>
+                <div className="form-row">
+                    <div className="form-group col-md-6">
+                        <label htmlFor="name">Password</label>
+                        <input
+                            className="form-control"
+                            type="text"
+                            name="name"
+                            id="name"
+                            value={settings.password}
+                        />
+                    </div>
+                </div>
             </div>
         </form>
     );
