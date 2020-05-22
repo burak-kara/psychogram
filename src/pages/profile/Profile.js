@@ -5,6 +5,7 @@ import Settings from './Settings';
 import Alert from '../../components/Alert';
 import { compose } from 'recompose';
 import { withAuthorization, withEmailVerification } from '../../_session';
+import * as ROUTES from "../../_constants/routeConstants";
 
 const Profile = props => {
     const { authUser, firebase, history } = props;
@@ -24,6 +25,14 @@ const Profile = props => {
         const value =
             name === 'private' ? event.target.checked : event.target.value;
         setSettings({ ...settings, [name]: value });
+    };
+
+    const handleProfileDelete = () => {
+        firebase.users().remove(authUser.id);
+        firebase.deleteAuthentication();
+        history.push({
+            pathname: ROUTES.SIGN_IN,
+        });
     };
 
     const handleSettingsSave = () => {
@@ -100,6 +109,7 @@ const Profile = props => {
                 settings={settings}
                 handleClose={handleSettingShow}
                 handleSave={handleSettingsSave}
+                handleDelete={handleProfileDelete}
                 onChange={handleSettingsChange}
             />
             <Alert
