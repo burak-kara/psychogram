@@ -114,7 +114,7 @@ const Settings = props => {
                     />
                 </div>
                 <div>
-                    <button className="btn btn-critical" onClick={handleDelete}>
+                    <button className="btn btn-danger" onClick={handleDelete}>
                         Hesabi Sil
                     </button>
                 </div>
