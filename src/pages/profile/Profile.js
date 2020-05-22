@@ -5,7 +5,7 @@ import Settings from './Settings';
 import Alert from '../../components/Alert';
 import { compose } from 'recompose';
 import { withAuthorization, withEmailVerification } from '../../_session';
-import * as ROUTES from "../../_constants/routeConstants";
+import * as ROUTES from '../../_constants/routeConstants';
 
 const Profile = props => {
     const { authUser, firebase, history } = props;
