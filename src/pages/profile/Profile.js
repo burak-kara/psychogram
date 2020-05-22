@@ -29,7 +29,7 @@ const Profile = props => {
 
     const handleProfileDelete = () => {
         firebase.users().remove(authUser.id);
-        firebase.deleteAuthentication();
+        firebase.deleteAccount();
         history.push({
             pathname: ROUTES.SIGN_IN,
         });
