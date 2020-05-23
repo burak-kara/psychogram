@@ -235,23 +235,18 @@ const NavigationNoAuth = ({ firebase }) => {
                         anchorEl={anchorEl}
                         keepMounted
                         open={Boolean(anchorEl)}
+                        getContentAnchorEl={null}
                         onClose={handleClose}
                         anchorOrigin={{
                             vertical: 'bottom',
-                            horizontal: 'center',
+                            horizontal: 'right',
                         }}
                         transformOrigin={{
                             vertical: 'top',
-                            horizontal: 'center',
+                            horizontal: 'right',
                         }}
                     >
-                        <MenuItem>
-                            <ListItemIcon>
-                                <FaUserAlt fontSize="small" />
-                            </ListItemIcon>
-                        </MenuItem>
-
-                        <MenuItem>
+                        <MenuItem onClick={() => setAnchorEl(null)}>
                             <ListItemIcon>
                                 <FaSignOutAlt fontSize="small" />
                             </ListItemIcon>

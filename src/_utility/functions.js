@@ -52,3 +52,5 @@ export const getStar = rating => {
         return Star.zero_star;
     }
 };
+
+export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
