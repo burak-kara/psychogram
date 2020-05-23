@@ -7,6 +7,13 @@
     .profile-info {
         background-color: $background-color-1;
         padding: 10px 30px !important;
+
+        .profile-pic-container {
+            min-height: 400px;
+            display: flex;
+            justify-content: center;
+            padding: 0 !important;
+        }
     }
 
     .emoji-32 {

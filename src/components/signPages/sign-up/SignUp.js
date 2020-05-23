@@ -29,6 +29,7 @@ const INITIAL_STATE = {
         'https://firebasestorage.googleapis.com/v0/b/psycholog-8ba2d.appspot.com/o/profile_pics%2Fprofile_pic.jpg?alt=media&token=52289729-0bf6-4888-a619-585ca537dd31',
     location: '',
     role: '',
+    status: 'Grinning Face',
 };
 
 class SignUpFormBase extends Component {
