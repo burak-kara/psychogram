@@ -25,11 +25,8 @@ const Profile = props => {
     const [user, setUser] = useState(null);
     const [upImg, setUpImg] = useState(null);
     const imgRef = useRef(null);
-    const [crop, setCrop] = useState({ unit: '%', width: 30, aspect: 1 / 1 });
-    const [previewUrl, setPreviewUrl] = useState();
-
-    const [photoUrl, setPhotoUrl] = useState(null);
-    const [file, setFile] = useState(null);
+    const [crop, setCrop] = useState({ unit: 'px', width: 400, aspect: 1 / 1 });
+    const [previewUrl, setPreviewUrl] = useState(null);
 
     const handleSettingShow = () => {
         setSettingsOpen(!settingsOpen);
@@ -89,11 +86,32 @@ const Profile = props => {
 
     const handleUploadOpen = () => {
         setUploadOpen(!uploadOpen);
+        setUpImg(null);
     };
 
-    // TODO implement
     const handleUploadPhoto = () => {
-        alert('todo upload');
+        firebase
+            .profilePic()
+            .child(authUser.uid)
+            .child('/profile.jpg')
+            .put(previewUrl)
+            .then(snapshot => {
+                snapshot.ref.getDownloadURL().then(url => {
+                    firebase
+                        .user(authUser.uid)
+                        .set({ ...user, profilePictureSource: url });
+
+                    setMessage('Yeni profil fotoğrafı kaydedildi.');
+                    setSeverity('success');
+                });
+            })
+            .catch(error => {
+                setMessage('Profil fotoğrafı değişirken birhata oluştu!');
+                setSeverity('error');
+            });
+        setAlertsOpen(true);
+        setUploadOpen(!uploadOpen);
+        setUpImg(null);
     };
 
     const onSelectFile = e => {
@@ -140,37 +158,13 @@ const Profile = props => {
                     reject(new Error('Canvas is empty'));
                     return;
                 }
-                blob.name = fileName;
-                window.URL.revokeObjectURL(previewUrl);
-                setPreviewUrl(window.URL.createObjectURL(blob));
-            }, 'image/jpeg');
+                setPreviewUrl(blob);
+            });
         });
     };
 
     const handleStatusChange = status => {
         firebase.user(`${authUser.uid}/status`).set(status);
-    };
-
-    const handleFile = event => {
-        const file = event.target.files[0];
-        setFile(file);
-        const fileReader = new FileReader();
-        fileReader.onloadend = () => {
-            setFile(file);
-            setPhotoUrl(fileReader.result);
-        };
-        if (file) {
-            fileReader.readAsDataURL(file);
-        }
-    };
-
-    const handlePhotoSubmit = event => {
-        // TODO
-        event.preventDefault();
-        // const formData = new FormData()
-        // formData.append('user[id]', this.props.currentUser.id)
-        // formData.append('user[profile_pic]', this.state.photoFile)
-        // addPhotoToUser(this.props.currentUser, formData)
     };
 
     useEffect(() => {

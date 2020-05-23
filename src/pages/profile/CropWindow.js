@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DialogWindow from '../../components/DialogWindow';
 import ReactCrop from 'react-image-crop';
 
@@ -14,20 +14,26 @@ const CropWindow = props => {
         setCrop,
         makeClientCrop,
     } = props;
+    const [disabled, setDisabled] = useState(true);
 
     const renderContent = () => (
         <>
-            <div className="col-12 d-flex justify-content-center">
+            <div className="col-12 d-flex justify-content-center mb-3">
                 <input
                     type="file"
                     accept="image/*"
-                    onChange={event => onSelectFile(event)}
+                    onChange={event => {
+                        onSelectFile(event);
+                        setDisabled(false);
+                    }}
                 />
             </div>
             <div className="col-12 d-flex justify-content-center">
                 <ReactCrop
                     src={upImg}
                     locked={true}
+                    ruleOfThirds={true}
+                    circularCrop={true}
                     onImageLoaded={onLoad}
                     crop={crop}
                     onChange={c => setCrop(c)}
@@ -42,7 +48,11 @@ const CropWindow = props => {
             <button className="btn btn-secondary" onClick={handleClose}>
                 Vazgeç
             </button>
-            <button className="btn btn-primary" onClick={handleSave}>
+            <button
+                className="btn btn-primary"
+                onClick={handleSave}
+                disabled={disabled}
+            >
                 Kaydet
             </button>
         </>
@@ -50,7 +60,7 @@ const CropWindow = props => {
 
     return (
         <DialogWindow
-            title="Profili Düzenle"
+            title="Yeni Fotoğraf Yükle"
             content={renderContent()}
             actions={renderActions()}
             open={open}

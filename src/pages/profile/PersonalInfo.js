@@ -8,14 +8,15 @@ import * as ROLES from '../../_constants/roles';
 
 const useStyles = makeStyles(theme => ({
     large: {
-        minWidth: '200px',
-        minHeight: '200px',
-        maxWidth: '400px',
-        maxHeight: '400px',
-        width: 'auto',
-        height: 'auto',
+        maxWidth: '100%',
+        maxHeight: '100%',
+        height: '100%',
+        width: '100%',
+        display: 'block',
     },
     badge: {
+        height: '100%',
+        width: '100%',
         cursor: 'pointer',
     },
 }));
@@ -66,7 +67,7 @@ const PersonalInfo = props => {
     return (
         <div className="col-lg-3 col-md-3 col-sm-12 col-12 pl-5 pr-5 pt-2 pb-4 profile-info">
             <div className="row d-flex justify-content-center">
-                <div className="col-lg-12 col-md-12 col-sm-6 col-6 profile-pic-container">
+                <div className="col-lg-12 col-md-12 col-sm-12 col-12 profile-pic-container">
                     {patient ? (
                         <Avatar
                             src={user.profilePictureSource}
