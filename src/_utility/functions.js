@@ -53,6 +53,8 @@ export const getStar = rating => {
     }
 };
 
+export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 const hasNumber = value => {
     return new RegExp(/[0-9]/).test(value);
 };

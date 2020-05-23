@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { ChatFeed, Message } from 'react-chat-ui';
 import MessageTextField from './TextField';
-import Avatar from '@material-ui/core/Avatar';
-import { IconContext } from 'react-icons';
-import { IoMdArrowRoundBack } from 'react-icons/all';
 import { snapshotToArray } from '../../_utility/functions';
-import * as ROLES from '../../_constants/roles';
 import moment from 'moment';
+import ChatHeader from './ChatHeader';
 
 const ChatSection = props => {
-    const { authUser, firebase, currentMeetingKey, user } = props;
+    const { authUser, firebase, currentMeetingKey, user, handleEnd } = props;
     const [newMessage, setNewMessage] = useState('');
     const [messages, setMessages] = useState(new Map());
     const [isDisabled, setDisabled] = useState(true);
+    const [anchorEl, setAnchorEl] = useState(null);
 
     useEffect(() => {
         setNewMessage('');
@@ -99,39 +97,27 @@ const ChatSection = props => {
         }
     };
 
+    const handleClick = event => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
     return (
         <>
             <div className="row">
                 <div className="col chat-feed-container">
-                    <div className="chat-header">
-                        <div className="back-container" onClick={props.onClick}>
-                            <IconContext.Provider value={{ size: '30' }}>
-                                <IoMdArrowRoundBack />
-                            </IconContext.Provider>
-                        </div>
-                        <div className="info-container">
-                            {user ? (
-                                <>
-                                    <Avatar src={user.profilePictureSource}>
-                                        {`${user.name[0]}${user.surname[0]}`}
-                                    </Avatar>
-                                    <div className="col name">
-                                        <span>{`${user.name} ${user.surname}`}</span>
-                                    </div>
-                                </>
-                            ) : null}
-                        </div>
-                        <div className="btn-container">
-                            {authUser.role === ROLES.PATIENT ? (
-                                <button
-                                    className="btn btn-danger"
-                                    onClick={props.handleEnd}
-                                >
-                                    End Meeting
-                                </button>
-                            ) : null}
-                        </div>
-                    </div>
+                    <ChatHeader
+                        user={user}
+                        authUser={authUser}
+                        anchorEl={anchorEl}
+                        handleClick={handleClick}
+                        handleClose={handleClose}
+                        setAnchorEl={setAnchorEl}
+                        handleEnd={handleEnd}
+                    />
                     <ChatFeed
                         messages={[...messages.values()]}
                         bubblesCentered={false}
@@ -139,12 +125,15 @@ const ChatSection = props => {
                             text: {
                                 fontSize: 16,
                                 color: '#f8fcf9',
+                                float: 'right',
                             },
                             userBubble: {
                                 borderRadius: 20,
-                                padding: 5,
+                                paddingRight: 10,
                                 marginTop: 5,
                                 backgroundColor: '#3b6978',
+                                minWidth: 50,
+                                overflow: 'hidden',
                             },
                         }}
                     />

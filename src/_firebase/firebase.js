@@ -89,6 +89,8 @@ class Firebase {
 
     doSignOut = () => this.auth.signOut();
 
+    doDelete = () => this.auth.currentUser.delete();
+
     doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
 
     doPasswordUpdate = password =>
@@ -104,6 +106,8 @@ class Firebase {
 
     getPsychoPic = () =>
         this.storage.ref().child('app_pics').child('psycho.jpg');
+
+    profilePic = () => this.storage.ref().child('profile_pics');
 
     user = uid => this.db.ref(`users/${uid}`);
 

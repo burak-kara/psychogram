@@ -72,7 +72,6 @@ const NavigationAuth = ({ authUser, firebase }) => {
                             Home
                         </a>
                     </li>
-
                     {authUser.role === ROLES.PATIENT ||
                     authUser.role === ROLES.DOCTOR ? (
                         <li className="nav-item">
@@ -117,14 +116,15 @@ const NavigationAuth = ({ authUser, firebase }) => {
                         anchorEl={anchorEl}
                         keepMounted
                         open={Boolean(anchorEl)}
+                        getContentAnchorEl={null}
                         onClose={handleClose}
                         anchorOrigin={{
                             vertical: 'bottom',
-                            horizontal: 'center',
+                            horizontal: 'right',
                         }}
                         transformOrigin={{
                             vertical: 'top',
-                            horizontal: 'center',
+                            horizontal: 'right',
                         }}
                     >
                         <MenuItem>
@@ -133,6 +133,7 @@ const NavigationAuth = ({ authUser, firebase }) => {
                             </ListItemIcon>
                             <li>
                                 <Link
+                                    onClick={() => setAnchorEl(null)}
                                     to={
                                         authUser.role === ROLES.DOCTOR ||
                                         authUser.role === ROLES.PATIENT
@@ -153,11 +154,16 @@ const NavigationAuth = ({ authUser, firebase }) => {
                                     <FaUserAlt fontSize="small" />
                                 </ListItemIcon>
                                 <li>
-                                    <Link to={ROUTES.ADMIN}>Admin</Link>
+                                    <Link
+                                        onClick={() => setAnchorEl(null)}
+                                        to={ROUTES.ADMIN}
+                                    >
+                                        Admin
+                                    </Link>
                                 </li>
                             </MenuItem>
                         ) : null}
-                        <MenuItem>
+                        <MenuItem onClick={() => setAnchorEl(null)}>
                             <ListItemIcon>
                                 <FaSignOutAlt fontSize="small" />
                             </ListItemIcon>
@@ -229,23 +235,18 @@ const NavigationNoAuth = ({ firebase }) => {
                         anchorEl={anchorEl}
                         keepMounted
                         open={Boolean(anchorEl)}
+                        getContentAnchorEl={null}
                         onClose={handleClose}
                         anchorOrigin={{
                             vertical: 'bottom',
-                            horizontal: 'center',
+                            horizontal: 'right',
                         }}
                         transformOrigin={{
                             vertical: 'top',
-                            horizontal: 'center',
+                            horizontal: 'right',
                         }}
                     >
-                        <MenuItem>
-                            <ListItemIcon>
-                                <FaUserAlt fontSize="small" />
-                            </ListItemIcon>
-                        </MenuItem>
-
-                        <MenuItem>
+                        <MenuItem onClick={() => setAnchorEl(null)}>
                             <ListItemIcon>
                                 <FaSignOutAlt fontSize="small" />
                             </ListItemIcon>
