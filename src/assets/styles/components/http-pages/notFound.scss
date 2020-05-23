@@ -1,0 +1,27 @@
+.not-found-page {
+    padding-top: 32px;
+    padding-bottom: 32px;
+
+    .image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .image {
+            border-radius: 100px;
+            height: auto;
+            width: auto;
+            max-width: 100%;
+        }
+    }
+
+    .info-container {
+        font-size: 50px;
+    }
+
+    .btn-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
