@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import PersonalInfo from './PersonalInfo';
 import ProfileDetails from './ProfileDetails';
 import Settings from './Settings';
@@ -23,7 +23,11 @@ const Profile = props => {
     const [message, setMessage] = useState('');
     const [severity, setSeverity] = useState('');
     const [user, setUser] = useState(null);
-    const [upImg, setUpImg] = useState();
+    const [upImg, setUpImg] = useState(null);
+    const imgRef = useRef(null);
+    const [crop, setCrop] = useState({ unit: '%', width: 30, aspect: 1 / 1 });
+    const [previewUrl, setPreviewUrl] = useState();
+
     const [photoUrl, setPhotoUrl] = useState(null);
     const [file, setFile] = useState(null);
 
@@ -98,6 +102,49 @@ const Profile = props => {
             reader.addEventListener('load', () => setUpImg(reader.result));
             reader.readAsDataURL(e.target.files[0]);
         }
+    };
+
+    const onLoad = useCallback(img => {
+        imgRef.current = img;
+    }, []);
+
+    const makeClientCrop = async crop => {
+        if (imgRef.current && crop.width && crop.height) {
+            await createCropPreview(imgRef.current, crop, 'newFile.jpeg');
+        }
+    };
+
+    const createCropPreview = async (image, crop, fileName) => {
+        const canvas = document.createElement('canvas');
+        const scaleX = image.naturalWidth / image.width;
+        const scaleY = image.naturalHeight / image.height;
+        canvas.width = crop.width;
+        canvas.height = crop.height;
+        const ctx = canvas.getContext('2d');
+
+        ctx.drawImage(
+            image,
+            crop.x * scaleX,
+            crop.y * scaleY,
+            crop.width * scaleX,
+            crop.height * scaleY,
+            0,
+            0,
+            crop.width,
+            crop.height
+        );
+
+        return new Promise((resolve, reject) => {
+            canvas.toBlob(blob => {
+                if (!blob) {
+                    reject(new Error('Canvas is empty'));
+                    return;
+                }
+                blob.name = fileName;
+                window.URL.revokeObjectURL(previewUrl);
+                setPreviewUrl(window.URL.createObjectURL(blob));
+            }, 'image/jpeg');
+        });
     };
 
     const handleStatusChange = status => {
@@ -192,6 +239,11 @@ const Profile = props => {
                 handleClose={handleUploadOpen}
                 handleSave={handleUploadPhoto}
                 onSelectFile={onSelectFile}
+                upImg={upImg}
+                onLoad={onLoad}
+                crop={crop}
+                setCrop={setCrop}
+                makeClientCrop={makeClientCrop}
             />
             <Alert
                 open={alertOpen}

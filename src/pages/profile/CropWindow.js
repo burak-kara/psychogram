@@ -1,25 +1,39 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React from 'react';
 import DialogWindow from '../../components/DialogWindow';
 import ReactCrop from 'react-image-crop';
 
 const CropWindow = props => {
-    const { open, handleClose, handleSave, onSelectFile } = props;
+    const {
+        open,
+        handleClose,
+        handleSave,
+        onSelectFile,
+        upImg,
+        onLoad,
+        crop,
+        setCrop,
+        makeClientCrop,
+    } = props;
 
     const renderContent = () => (
         <>
-            <input
-                type="file"
-                accept="image/*"
-                onChange={event => onSelectFile(event)}
-            />
-            {/*<ReactCrop*/}
-            {/*    src={upImg}*/}
-            {/*    locked={true}*/}
-            {/*    onImageLoaded={onLoad}*/}
-            {/*    crop={crop}*/}
-            {/*    onChange={c => setCrop(c)}*/}
-            {/*    onComplete={makeClientCrop}*/}
-            {/*/>*/}
+            <div className="col-12 d-flex justify-content-center">
+                <input
+                    type="file"
+                    accept="image/*"
+                    onChange={event => onSelectFile(event)}
+                />
+            </div>
+            <div className="col-12 d-flex justify-content-center">
+                <ReactCrop
+                    src={upImg}
+                    locked={true}
+                    onImageLoaded={onLoad}
+                    crop={crop}
+                    onChange={c => setCrop(c)}
+                    onComplete={makeClientCrop}
+                />
+            </div>
         </>
     );
 
@@ -41,7 +55,7 @@ const CropWindow = props => {
             actions={renderActions()}
             open={open}
             handleClose={handleClose}
-            width="sm"
+            width="md"
         />
     );
 };
