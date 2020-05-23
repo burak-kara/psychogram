@@ -17,7 +17,7 @@ const AdminPage = props => {
     const [maxVal, setMaxVal] = useState('');
     const [hasNumber, setHasNumber] = useState('');
     const [hasMixChar, setHasMixChar] = useState('');
-    const [hasSpecial, setHasSpecail] = useState('');
+    const [hasSpecial, setHasSpecial] = useState('');
 
     const onChange = event => {
         const name = event.target.name;
@@ -33,7 +33,7 @@ const AdminPage = props => {
         } else if (name === 'hasMixChar') {
             setHasMixChar(event.target.checked);
         } else if (name === 'hasSpecial') {
-            setHasSpecail(event.target.checked);
+            setHasSpecial(event.target.checked);
         }
     };
 
@@ -52,12 +52,12 @@ const AdminPage = props => {
             .policy()
             .once('value')
             .then(snapshot => {
-                const poliObj = snapshot.val();
-                setMinVal(poliObj.min);
-                setMaxVal(poliObj.max);
-                setHasNumber(poliObj.hasNumber);
-                setHasMixChar(poliObj.hasMixChar);
-                setHasSpecail(poliObj.hasSpecial);
+                const policy = snapshot.val();
+                setMinVal(policy.min);
+                setMaxVal(policy.max);
+                setHasNumber(policy.hasNumber);
+                setHasMixChar(policy.hasMixChar);
+                setHasSpecial(policy.hasSpecial);
             });
     }, []);
 
