@@ -16,6 +16,7 @@ const ChatHeader = props => {
         anchorEl,
         handleClick,
         handleClose,
+        handleEnd,
         setAnchorEl,
     } = props;
 
@@ -78,7 +79,7 @@ const ChatHeader = props => {
                         <MenuItem onClick={() => setAnchorEl(null)}>
                             <button
                                 className="btn btn-danger btn-block"
-                                onClick={props.handleEnd}
+                                onClick={handleEnd}
                             >
                                 <IconContext.Provider
                                     value={{
@@ -88,7 +89,7 @@ const ChatHeader = props => {
                                 >
                                     <MdCallEnd fontSize="small" />
                                 </IconContext.Provider>
-                                <span>End Meeting</span>
+                                End Meeting
                             </button>
                         </MenuItem>
                     ) : null}

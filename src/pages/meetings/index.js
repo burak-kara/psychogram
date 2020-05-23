@@ -8,6 +8,8 @@ import * as ROLES from '../../_constants/roles';
 import ChatSection from './ChatSection';
 import moment from 'moment';
 import * as ROUTES from '../../_constants/routeConstants';
+import EndConfirmWindow from './EndConfirmWindow';
+import Settings from '../profile/Settings';
 
 const Meetings = props => {
     const { authUser, firebase, history } = props;
@@ -18,6 +20,7 @@ const Meetings = props => {
     const [user, setUser] = useState(null);
     const [userKey, setUserKey] = useState('');
     const [reservations, setReservations] = useState(null);
+    const [isEndConfOpen, setIsEndConfOpen] = useState(false);
 
     useEffect(() => {
         // TODO loading indicator
@@ -75,44 +78,58 @@ const Meetings = props => {
 
     const handleEnd = () => {
         // TODO confirm dialog and also warning for doctor action
-        if (authUser.role === ROLES.PATIENT)
-            history.push({
-                pathname: ROUTES.RATING,
-                search: '',
-                state: { doctorId: userKey },
-            });
-        else history.push(ROUTES.LANDING);
+        if (authUser.role === ROLES.PATIENT) {
+            setIsEndConfOpen(true);
+        } else history.push(ROUTES.LANDING);
     };
+
+    const handleEndConfOpen = () => {
+        setIsEndConfOpen(!isEndConfOpen);
+    };
+
+    const pushRatingPage = () =>
+        history.push({
+            pathname: ROUTES.RATING,
+            search: '',
+            state: { doctorId: userKey },
+        });
 
     // TODO implement ui for meeting not chosen case
     return (
-        <div className="meeting-container">
-            <div className="container-fluid main-container">
-                <div className="row h-100">
-                    <div className="col border-right meetings-list-container">
-                        <Search onChange={handleSearchType} />
-                        <MeetingList
-                            onClick={handleMeetingClick}
-                            chatPairs={chatPairs}
-                            meetings={meetings}
-                            authUser={authUser}
-                        />
-                    </div>
-                    <div className="col chat-section-container">
-                        {currentMeetingKey ? (
-                            <ChatSection
-                                {...props}
-                                currentMeetingKey={currentMeetingKey}
-                                reservations={reservations}
-                                user={user}
-                                handleEnd={handleEnd}
-                                onClick={handleBack}
+        <>
+            <div className="meeting-container">
+                <div className="container-fluid main-container">
+                    <div className="row h-100">
+                        <div className="col border-right meetings-list-container">
+                            <Search onChange={handleSearchType} />
+                            <MeetingList
+                                onClick={handleMeetingClick}
+                                chatPairs={chatPairs}
+                                meetings={meetings}
+                                authUser={authUser}
                             />
-                        ) : null}
+                        </div>
+                        <div className="col chat-section-container">
+                            {currentMeetingKey ? (
+                                <ChatSection
+                                    {...props}
+                                    currentMeetingKey={currentMeetingKey}
+                                    reservations={reservations}
+                                    user={user}
+                                    handleEnd={handleEnd}
+                                    onClick={handleBack}
+                                />
+                            ) : null}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <EndConfirmWindow
+                open={isEndConfOpen}
+                handleClose={handleEndConfOpen}
+                handleSave={pushRatingPage}
+            />
+        </>
     );
 };
 
