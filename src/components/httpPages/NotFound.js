@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import notFound from '../../assets/static-images/404.png';
 import { useHistory } from 'react-router-dom';
 import * as ROUTES from '../../_constants/routeConstants';
 
 const NotFound = () => {
     const history = useHistory();
+
+    useEffect(() => {
+        history.push({
+            pathname: ROUTES.NOT_FOUND,
+        });
+    }, []);
 
     return (
         <div className="container-fluid not-found-page">
