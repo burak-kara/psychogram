@@ -51,7 +51,7 @@
                     color: $color-green-3;
 
                     &:hover {
-                        background-color: $color-light-green-1;
+                        background-color: $color-green-2-opacity;
                         box-shadow: 0 0 3px 0 $color-green-3;
                         z-index: 2 !important;
                     }
@@ -141,7 +141,20 @@
                 height: calc(100vh - 141px);
                 padding: 1px 1px 5px 0 !important;
                 box-shadow: inset 0 0 3px 0 $color-green-3;
-                background-color: $color-light-green-1;
+                z-index: 1;
+                background-color: $chat-bg-color;
+
+                &:before {
+                    background-image: url('https://web.whatsapp.com/img/bg-chat-tile_9e8a2898faedb7db9bf5638405cf81ae.png');
+                    opacity: 0.2;
+                    content: '';
+                    top: 0;
+                    left: 0;
+                    bottom: 0;
+                    right: 0;
+                    position: absolute;
+                    z-index: -1;
+                }
 
                 .chat-header {
                     height: 50px;
@@ -170,12 +183,21 @@
                         justify-content: flex-start;
 
                         .name {
-                            font-size: 20px;
+                            font-size: 16px;
                             color: white;
                         }
                     }
 
                     .btn-container {
+                        cursor: pointer;
+                        width: 50%;
+                        display: flex !important;
+                        align-items: center;
+                        justify-content: flex-end;
+                    }
+
+                    .dots-container {
+                        cursor: pointer;
                         width: 50%;
                         display: flex !important;
                         align-items: center;
@@ -185,27 +207,28 @@
 
                 ::-webkit-scrollbar {
                     padding: 0 !important;
-                    width: 0.7em;
-                    height: 0.7em;
+                    width: 0.4em;
+                    height: 0.4em;
                     border-radius: 10px;
-                    background-color: $color-green-0;
+                    background-color: $transparent-black-bg;
                 }
 
                 ::-webkit-scrollbar-track {
-                    -webkit-box-shadow: inset 0 0 6px $color-green-3;
-                    background: $color-green-0;
+                    -webkit-box-shadow: inset 0 0 6px $black;
+                    background-color: $transparent-black-bg;
                     border-radius: 10px;
                     padding: 0 !important;
                 }
 
                 ::-webkit-scrollbar-thumb {
-                    background-color: $color-green-3;
+                    //background-color: $color-green-3;
+                    background-color: $thumb-bg;
                     border-radius: 10px;
                     padding: 0 !important;
                 }
 
                 ::-webkit-scrollbar-thumb:hover {
-                    background: $color-green-2;
+                    background: $black;
                 }
 
                 .chat-history {
@@ -220,6 +243,16 @@
     .padding-0 {
         padding: 0 !important;
     }
+}
+
+.end {
+    vertical-align: middle;
+    font-size: 14px;
+}
+
+.export {
+    vertical-align: middle;
+    font-size: 14px;
 }
 
 @media only screen and (min-width: 300px) {
