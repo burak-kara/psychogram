@@ -3,6 +3,7 @@ import { compose } from 'recompose';
 import { withAuthorization, withEmailVerification } from '../../_session';
 import * as ROLES from '../../_constants/roles';
 import { Form } from 'semantic-ui-react';
+import '../../assets/styles/pages/admin.scss';
 
 var policy = {
     min: 6,
