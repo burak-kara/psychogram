@@ -4,11 +4,13 @@ import ProfileDetails from './ProfileDetails';
 import Settings from './Settings';
 import Alert from '../../components/Alert';
 import { compose } from 'recompose';
-import { withAuthorization, withEmailVerification } from '../../_session';
+import { withAuthorization } from '../../_session';
 import * as ROUTES from '../../_constants/routeConstants';
+import { useHistory } from 'react-router-dom';
 
 const Profile = props => {
-    const { authUser, firebase, history } = props;
+    const { authUser, firebase } = props;
+    const history = useHistory();
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [alertOpen, setAlertsOpen] = useState(false);
     const [message, setMessage] = useState('');
@@ -28,11 +30,22 @@ const Profile = props => {
     };
 
     const handleProfileDelete = () => {
-        firebase.users().remove(authUser.id);
-        firebase.deleteAccount();
-        history.push({
-            pathname: ROUTES.SIGN_IN,
-        });
+        firebase.user(authUser.uid).set({});
+        firebase
+            .doDelete(authUser.id)
+            .then(r => {
+                setMessage('Hesap başarıyla silindi kaydedildi.');
+                setSeverity('success');
+                setAlertsOpen(true);
+                history.push({
+                    pathname: ROUTES.SIGN_UP,
+                });
+            })
+            .catch(error => {
+                setMessage('Hesap silinirken bir hata oluştu!');
+                setSeverity('error');
+                setAlertsOpen(true);
+            });
     };
 
     const handleSettingsSave = () => {
@@ -124,7 +137,4 @@ const Profile = props => {
 
 const condition = authUser => authUser;
 
-export default compose(
-    withEmailVerification,
-    withAuthorization(condition)
-)(Profile);
+export default compose(withAuthorization(condition))(Profile);
