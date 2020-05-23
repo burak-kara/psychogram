@@ -107,6 +107,8 @@ class Firebase {
     getPsychoPic = () =>
         this.storage.ref().child('app_pics').child('psycho.jpg');
 
+    profilePic = () => this.storage.ref().child('profile_pics');
+
     user = uid => this.db.ref(`users/${uid}`);
 
     users = () => this.db.ref('users');
