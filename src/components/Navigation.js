@@ -38,151 +38,6 @@ const Navigation = props => {
     );
 };
 
-const NavigationAuth = ({ authUser, firebase }) => {
-    const [anchorEl, setAnchorEl] = useState(null);
-    const [logo, setLogo] = useState('');
-
-    const handleClick = event => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    useEffect(() => {
-        firebase
-            .getLogo()
-            .getDownloadURL()
-            .then(url => {
-                setLogo(url);
-            });
-    }, [firebase]);
-
-    return (
-        <nav className="navbar navbar-expand-lg navigator">
-            <a className="navbar-brand" href="/">
-                <img src={logo} width="50" height="50" alt="" />
-            </a>
-            {/* TODO  button doesnt work import bootstrap js also add redux as dependency*/}
-            <button
-                className="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarNav"
-                aria-controls="navbarNav"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-            >
-                <span className="navbar-toggler-icon" />
-            </button>
-            <div className="collapse navbar-collapse" id="navbarNav">
-                <ul className="navbar-nav mr-auto">
-                    <li className="nav-item active">
-                        <a className="nav-link " href={ROUTES.LANDING}>
-                            Home
-                        </a>
-                    </li>
-                    {authUser.role === ROLES.PATIENT ||
-                    authUser.role === ROLES.DOCTOR ? (
-                        <li className="nav-item">
-                            <a className="nav-link" href={ROUTES.FORUM}>
-                                Forum
-                            </a>
-                        </li>
-                    ) : null}
-                    {authUser.role === ROLES.PATIENT ||
-                    authUser.role === ROLES.DOCTOR ? (
-                        <li className="nav-item">
-                            <a className="nav-link" href={ROUTES.MEETINGS}>
-                                Meetings
-                            </a>
-                        </li>
-                    ) : null}
-                    {authUser.role === ROLES.PATIENT ? (
-                        <li className="nav-item">
-                            <a className="nav-link" href={ROUTES.DOCTOR_LIST}>
-                                Doctors
-                            </a>
-                        </li>
-                    ) : null}
-                    {authUser.role === ROLES.DOCTOR ||
-                    authUser.role === ROLES.PATIENT ? (
-                        <li className="nav-item">
-                            <a className="nav-link" href={ROUTES.RESERVATIONS}>
-                                Reservations
-                            </a>
-                        </li>
-                    ) : null}
-                </ul>
-                <ul className="navbar-nav dots">
-                    <IconContext.Provider
-                        value={{ color: 'white', size: '2em' }}
-                    >
-                        <div>
-                            <IoIosMore onClick={handleClick} />
-                        </div>
-                    </IconContext.Provider>
-                    <Menu
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={Boolean(anchorEl)}
-                        getContentAnchorEl={null}
-                        onClose={handleClose}
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'right',
-                        }}
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}
-                    >
-                        <MenuItem>
-                            <ListItemIcon>
-                                <FaUserAlt fontSize="small" />
-                            </ListItemIcon>
-                            <li>
-                                <Link
-                                    onClick={() => setAnchorEl(null)}
-                                    to={
-                                        authUser.role === ROLES.DOCTOR ||
-                                        authUser.role === ROLES.PATIENT
-                                            ? ROUTES.PROFILE
-                                            : null
-                                    }
-                                >
-                                    Profile
-                                </Link>
-                            </li>
-                        </MenuItem>
-
-                        {authUser &&
-                        authUser.role &&
-                        authUser.role === ROLES.ADMIN ? (
-                            <MenuItem>
-                                <ListItemIcon>
-                                    <FaUserAlt fontSize="small" />
-                                </ListItemIcon>
-                                <li>
-                                    <Link
-                                        onClick={() => setAnchorEl(null)}
-                                        to={ROUTES.ADMIN}
-                                    >
-                                        Admin
-                                    </Link>
-                                </li>
-                            </MenuItem>
-                        ) : null}
-
-                        <SignOut firebase={firebase} onClick={setAnchorEl} />
-                    </Menu>
-                </ul>
-            </div>
-        </nav>
-    );
-};
-
 const NavigationDoctor = ({ firebase }) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [logo, setLogo] = useState('');
@@ -501,10 +356,7 @@ const MenuContent = props => (
         ) : (
             <>
                 <Profile onClick={props.onClick} />
-                <SignOut
-                    firebase={props.firebase}
-                    onClick={props.setAnchorEl}
-                />
+                <SignOut firebase={props.firebase} onClick={props.onClick} />
             </>
         )}
     </Menu>
@@ -544,7 +396,7 @@ const SignUp = props => (
 );
 
 const SignOut = props => (
-    <MenuItem onClick={() => props.onClick(null)}>
+    <MenuItem onClick={props.onClick}>
         <ListItemIcon>
             <FiLogOut />
         </ListItemIcon>

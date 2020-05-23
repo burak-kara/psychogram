@@ -34,11 +34,16 @@ const App = () => (
         <Route path={ROUTES.FAQ} component={Faq} />
         <Route path={ROUTES.MEETINGS} component={Meetings} />
         <Route path={ROUTES.DOCTOR_LIST} component={DoctorList} />
-        <Route path={ROUTES.ADMIN} component={AdminPage} />
         <Route path={ROUTES.RESERVATIONS} component={Reservations} />
-        <Route path="/create" component={TestMeetingCreate} />
         <Route path={ROUTES.RATING} component={Rating} />
         <Route path={ROUTES.ARTICLES} component={ArticleList} />
+        {/* TODO delete*/}
+        <Route path="/create" component={TestMeetingCreate} />
+
+        <Route path={ROUTES.ADMIN} component={AdminPage} />
+        <Route path={ROUTES.ADMIN_PASSWORD} component={AdminPage} />
+        <Route path={ROUTES.ADMIN_PATIENTS} component={AdminPage} />
+        <Route path={ROUTES.ADMIN_DOCTORS} component={AdminPage} />
         <Footer />
     </Router>
 );
