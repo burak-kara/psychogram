@@ -1,13 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import Emoji from 'a11y-react-emoji';
 import { faceEmojis, profileInfoEmojis } from '../../_utility/emojis';
-import { Tooltip, Zoom } from '@material-ui/core';
+import { Tooltip, Zoom, Avatar, makeStyles, Badge } from '@material-ui/core';
 import moment from 'moment';
 import * as ROLES from '../../_constants/roles';
 
+const useStyles = makeStyles(theme => ({
+    large: {
+        minWidth: '200px',
+        minHeight: '200px',
+        maxWidth: '400px',
+        maxHeight: '400px',
+        width: 'auto',
+        height: 'auto',
+    },
+    badge: {
+        cursor: 'pointer',
+    },
+}));
+
 const PersonalInfo = props => {
-    const { user, openSettings, handleStatus, patient } = props;
+    const { user, openSettings, handleStatus, patient, handleUpload } = props;
+    const classes = useStyles();
 
     const renderOverlay = () => (
         <OverlayTrigger
@@ -51,12 +66,34 @@ const PersonalInfo = props => {
     return (
         <div className="col-lg-3 col-md-3 col-sm-12 col-12 pl-5 pr-5 pt-2 pb-4 profile-info">
             <div className="row d-flex justify-content-center">
-                <div className="col-lg-12 col-md-12 col-sm-6 col-6 h-auto text-center">
-                    <img
-                        src={user.profilePictureSource}
-                        className="img-fluid rounded-circle"
-                        alt=""
-                    />
+                <div className="col-lg-12 col-md-12 col-sm-6 col-6 profile-pic-container">
+                    {patient ? (
+                        <Avatar
+                            src={user.profilePictureSource}
+                            className={classes.large}
+                        >
+                            {`${user.name[0]}${user.surname[0]}`}
+                        </Avatar>
+                    ) : (
+                        <Badge
+                            badgeContent={'Yeni Fotoğraf'}
+                            color="error"
+                            onClick={handleUpload}
+                            className={classes.badge}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'right',
+                            }}
+                            overlap="circle"
+                        >
+                            <Avatar
+                                src={user.profilePictureSource}
+                                className={classes.large}
+                            >
+                                {`${user.name[0]}${user.surname[0]}`}
+                            </Avatar>
+                        </Badge>
+                    )}
                 </div>
             </div>
             <div className="row mt-2">

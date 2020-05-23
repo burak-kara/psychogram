@@ -5,6 +5,7 @@ import * as serviceWorker from './serviceWorker';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
+import 'react-image-crop/dist/ReactCrop.css';
 import './assets/styles/main.scss';
 import Firebase, { FirebaseContext } from './_firebase';
 
