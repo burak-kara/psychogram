@@ -16,6 +16,7 @@ const Meetings = props => {
     const [search, setSearch] = useState('');
     const [currentMeetingKey, setCurrentMeetingKey] = useState(null);
     const [user, setUser] = useState(null);
+    const [userKey, setUserKey] = useState('');
     const [reservations, setReservations] = useState(null);
 
     useEffect(() => {
@@ -60,6 +61,7 @@ const Meetings = props => {
         setCurrentMeetingKey(key);
         setReservations(getKeys(reservations));
         setUser(user);
+        setUserKey(key.split('_')[1]);
     };
 
     const handleBack = () => {
@@ -77,7 +79,7 @@ const Meetings = props => {
             history.push({
                 pathname: ROUTES.RATING,
                 search: '',
-                state: { doctorId: user.key },
+                state: { doctorId: userKey },
             });
         else history.push(ROUTES.LANDING);
     };
