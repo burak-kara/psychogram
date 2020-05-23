@@ -7,12 +7,18 @@ import { compose } from 'recompose';
 import Alert from '../../Alert';
 import TextField from '@material-ui/core/TextField';
 import * as moment from 'moment';
+import { passCheck } from '../../../_utility/functions';
 
 const SignUp = () => (
     <div>
         <SignUpForm />
     </div>
 );
+
+var passObj = {
+    policy: '',
+    passwd: '',
+};
 
 const INITIAL_STATE = {
     username: '',
@@ -40,7 +46,20 @@ class SignUpFormBase extends Component {
             isAlertOpen: false,
             alertMessage: '',
             severity: '',
+            policy: {
+                min: '',
+                max: '',
+                hasNumber: '',
+                hasMixChar: '',
+                hasSpecial: '',
+            },
         };
+    }
+
+    componentDidMount() {
+        this.props.firebase.policy().on('value', snapshot => {
+            this.setState({ policy: snapshot.val() });
+        });
     }
 
     onSubmit = event => {
@@ -58,43 +77,56 @@ class SignUpFormBase extends Component {
             isDoctor,
         } = this.state;
 
-        this.props.firebase
-            .doCreateUserWithEmailAndPassword(email, passwordOne)
-            .then(authUser => {
-                return this.props.firebase.user(authUser.user.uid).set({
-                    username,
-                    name,
-                    surname,
-                    email,
-                    phone,
-                    role: isDoctor ? ROLES.DOCTOR : ROLES.PATIENT,
-                    birthday,
-                    description,
-                    profilePictureSource,
-                    location,
+        passObj.policy = this.state.policy;
+        passObj.passwd = this.state.passwordOne;
+        const checkResult = passCheck(passObj);
+
+        if (checkResult.err === false) {
+            this.props.firebase
+                .doCreateUserWithEmailAndPassword(email, passwordOne)
+                .then(authUser => {
+                    return this.props.firebase.user(authUser.user.uid).set({
+                        username,
+                        name,
+                        surname,
+                        email,
+                        phone,
+                        role: isDoctor ? ROLES.DOCTOR : ROLES.PATIENT,
+                        birthday,
+                        description,
+                        profilePictureSource,
+                        location,
+                    });
+                })
+                .then(() => {
+                    // TODO implement with styling
+                    // return this.props.firebase.doSendEmailVerification();
+                })
+                .then(() => {
+                    this.setState({ ...INITIAL_STATE });
+                    this.setState({
+                        alertMessage: 'Başarıyla Kaydedildi',
+                        severity: 'success',
+                        isAlertOpen: true,
+                    });
+                    this.props.history.push(ROUTES.LANDING);
+                })
+                .catch(error => {
+                    this.setState({
+                        alertMessage: error.message,
+                        severity: 'error',
+                        isAlertOpen: true,
+                    });
                 });
-            })
-            .then(() => {
-                // TODO implement with styling
-                // return this.props.firebase.doSendEmailVerification();
-            })
-            .then(() => {
-                this.setState({ ...INITIAL_STATE });
-                this.setState({
-                    alertMessage: 'Başarıyla Kaydedildi',
-                    severity: 'success',
-                    isAlertOpen: true,
-                });
-                this.props.history.push(ROUTES.LANDING);
-            })
-            .catch(error => {
-                this.setState({
-                    alertMessage: error.message,
-                    severity: 'error',
-                    isAlertOpen: true,
-                });
+            event.preventDefault();
+        } else {
+            this.setState({
+                alertMessage: checkResult.mess,
+                severity: 'error',
+                isAlertOpen: true,
             });
-        event.preventDefault();
+            event.preventDefault();
+        }
     };
 
     onChange = event => {
