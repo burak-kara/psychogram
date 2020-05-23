@@ -5,8 +5,9 @@ import Settings from './Settings';
 import Alert from '../../components/Alert';
 import { compose } from 'recompose';
 import { withAuthorization } from '../../_session';
-import * as ROUTES from '../../_constants/routeConstants';
 import { useHistory } from 'react-router-dom';
+import DeleteConfirmWindow from './DeleteConfirmWindow';
+import * as ROUTES from '../../_constants/routeConstants';
 
 const Profile = props => {
     const { authUser, firebase } = props;
@@ -17,6 +18,7 @@ const Profile = props => {
     const [severity, setSeverity] = useState('');
     const [user, setUser] = useState(null);
     const [settings, setSettings] = useState(null);
+    const [isDelConfOpen, setIsDelConfOpen] = useState(false);
 
     const handleSettingShow = () => {
         setSettingsOpen(!settingsOpen);
@@ -29,7 +31,7 @@ const Profile = props => {
         setSettings({ ...settings, [name]: value });
     };
 
-    const handleProfileDelete = () => {
+    const deleteAccount = () => {
         firebase.user(authUser.uid).set({});
         firebase
             .doDelete(authUser.id)
@@ -48,6 +50,10 @@ const Profile = props => {
             });
     };
 
+    const handleProfileDelete = () => {
+        setIsDelConfOpen(true);
+    };
+
     const handleSettingsSave = () => {
         setSettingsOpen(false);
         firebase.user(authUser.uid).set(settings, error => {
@@ -64,6 +70,10 @@ const Profile = props => {
 
     const handleAlertClose = () => {
         setAlertsOpen(false);
+    };
+
+    const handleDelConfOpen = () => {
+        setIsDelConfOpen(!isDelConfOpen);
     };
 
     const handleStatusChange = status => {
@@ -124,6 +134,11 @@ const Profile = props => {
                 handleSave={handleSettingsSave}
                 handleDelete={handleProfileDelete}
                 onChange={handleSettingsChange}
+            />
+            <DeleteConfirmWindow
+                open={isDelConfOpen}
+                handleClose={handleDelConfOpen}
+                handleSave={deleteAccount}
             />
             <Alert
                 open={alertOpen}
