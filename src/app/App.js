@@ -20,6 +20,7 @@ import * as ROUTES from '../_constants/routeConstants';
 import { withAuthentication } from '../_session';
 import Rating from '../pages/doctor/Rating';
 import ArticleList from '../pages/article/ArticleList';
+import NotFound from '../components/httpPages/NotFound';
 
 const App = () => (
     <Router>
@@ -44,6 +45,8 @@ const App = () => (
         <Route path={ROUTES.ADMIN_PASSWORD} component={AdminPage} />
         <Route path={ROUTES.ADMIN_PATIENTS} component={AdminPage} />
         <Route path={ROUTES.ADMIN_DOCTORS} component={AdminPage} />
+
+        <Route path="*" component={NotFound} />
         <Footer />
     </Router>
 );
