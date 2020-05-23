@@ -89,10 +89,7 @@ class Firebase {
 
     doSignOut = () => this.auth.signOut();
 
-    deleteAccount = () => {
-        let o;
-        this.auth.currentUser.delete().then(r => o);
-    };
+    doDelete = () => this.auth.currentUser.delete();
 
     doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
 
