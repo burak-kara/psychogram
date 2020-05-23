@@ -7,7 +7,7 @@ import { compose } from 'recompose';
 import Alert from '../../Alert';
 import TextField from '@material-ui/core/TextField';
 import * as moment from 'moment';
-import { passCheck } from '../../../pages/admin/PasswordChecker';
+import { passCheck } from '../../../_utility/functions';
 
 const SignUp = () => (
     <div>
