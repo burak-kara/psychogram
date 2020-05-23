@@ -15,17 +15,8 @@ const SignUp = () => (
     </div>
 );
 
-var pasLen;
-var strength;
-var policy = {
-    min: 6,
-    max: 8,
-    hasNumber: false,
-    hasMixChar: false,
-    hasSpecial: false,
-};
 var passObj = {
-    policy,
+    policy: '',
     passwd: '',
 };
 
@@ -44,11 +35,6 @@ const INITIAL_STATE = {
         'https://upload.wikimedia.org/wikipedia/commons/3/31/Michael_Jackson_in_1988.jpg',
     location: '',
     role: '',
-    private: false,
-    rating: 0,
-    rateCount: 0,
-    totalRate: 0,
-    status: '',
 };
 
 class SignUpFormBase extends Component {
@@ -59,13 +45,20 @@ class SignUpFormBase extends Component {
             isAlertOpen: false,
             alertMessage: '',
             severity: '',
+            policy: {
+                min: '',
+                max: '',
+                hasNumber: '',
+                hasMixChar: '',
+                hasSpecial: '',
+            },
         };
     }
 
     componentDidMount() {
         this.props.firebase.policy().on('value', snapshot => {
             let tempObj = snapshot.val();
-            policy = tempObj;
+            this.setState({ policy: tempObj });
         });
     }
 
@@ -84,7 +77,7 @@ class SignUpFormBase extends Component {
             isDoctor,
         } = this.state;
 
-        passObj.policy = policy;
+        passObj.policy = this.state.policy;
         passObj.passwd = this.state.passwordOne;
         const checkResult = passCheck(passObj);
 
@@ -103,11 +96,6 @@ class SignUpFormBase extends Component {
                         description,
                         profilePictureSource,
                         location,
-                        private: false,
-                        rating: 0,
-                        rateCount: 0,
-                        totalRate: 0,
-                        status: '',
                     });
                 })
                 .then(() => {

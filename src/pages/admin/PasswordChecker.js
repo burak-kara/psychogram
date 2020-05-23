@@ -61,7 +61,7 @@ export const passCheck = passObj => {
         retObj.mess =
             'Password must contain at least one special charcaters like [!#@$%^&*)(+=._-]';
     } else {
-        retObj.err = true;
+        retObj.err = false;
         retObj.mess = 'Password is Strong';
     }
 
