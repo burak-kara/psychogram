@@ -57,8 +57,7 @@ class SignUpFormBase extends Component {
 
     componentDidMount() {
         this.props.firebase.policy().on('value', snapshot => {
-            let tempObj = snapshot.val();
-            this.setState({ policy: tempObj });
+            this.setState({ policy: snapshot.val() });
         });
     }
 
