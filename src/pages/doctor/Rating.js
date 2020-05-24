@@ -172,9 +172,7 @@ const RatingPage = props => {
     ) : null;
 };
 
-const condition = authUser =>
-    authUser &&
-    (authUser.role === ROLES.PATIENT || authUser.role === ROLES.ADMIN);
+const condition = authUser => authUser && authUser.role === ROLES.PATIENT;
 
 export default compose(
     withEmailVerification,
