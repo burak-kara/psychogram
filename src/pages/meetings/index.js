@@ -9,7 +9,6 @@ import ChatSection from './ChatSection';
 import moment from 'moment';
 import * as ROUTES from '../../_constants/routeConstants';
 import EndConfirmWindow from './EndConfirmWindow';
-import Settings from '../profile/Settings';
 
 const Meetings = props => {
     const { authUser, firebase, history } = props;
@@ -133,7 +132,9 @@ const Meetings = props => {
     );
 };
 
-const condition = authUser => authUser;
+const condition = authUser =>
+    authUser &&
+    (authUser.role === ROLES.PATIENT || authUser.role === ROLES.DOCTOR);
 
 export default compose(
     withEmailVerification,
