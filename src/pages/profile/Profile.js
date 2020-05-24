@@ -10,6 +10,7 @@ import DeleteConfirmWindow from './DeleteConfirmWindow';
 import * as ROUTES from '../../_constants/routeConstants';
 import CropWindow from './CropWindow';
 import { LoadingPage } from '../../components/Loadings';
+import * as ROLES from '../../_constants/roles';
 
 const Profile = props => {
     const { authUser, firebase } = props;
@@ -252,6 +253,10 @@ const Profile = props => {
     );
 };
 
-const condition = authUser => authUser;
+const condition = authUser =>
+    authUser &&
+    (authUser.role === ROLES.PATIENT ||
+        authUser.role === ROLES.DOCTOR ||
+        authUser.role === ROLES.ADMIN);
 
 export default compose(withAuthorization(condition))(Profile);

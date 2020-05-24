@@ -343,7 +343,9 @@ const Reservations = props => {
     );
 };
 
-const condition = authUser => authUser;
+const condition = authUser =>
+    authUser &&
+    (authUser.role === ROLES.PATIENT || authUser.role === ROLES.DOCTOR);
 
 export default compose(
     withEmailVerification,

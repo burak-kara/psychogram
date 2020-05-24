@@ -41,6 +41,7 @@ const Navigation = props => {
 };
 
 const NavigationDoctor = ({ firebase }) => {
+    const history = useHistory();
     const [anchorEl, setAnchorEl] = useState(null);
     const [logo, setLogo] = useState('');
     const [loading, setLoading] = useState(true);
@@ -53,6 +54,8 @@ const NavigationDoctor = ({ firebase }) => {
         setAnchorEl(null);
     };
 
+    const push = pathname => history.push({ pathname });
+
     useEffect(() => {
         getLogo(firebase).then(url => {
             setLogo(url);
@@ -62,7 +65,7 @@ const NavigationDoctor = ({ firebase }) => {
 
     return (
         <nav id="navigation" className="navbar navbar-expand-lg navigator">
-            <a className="navbar-brand" href="/">
+            <a className="navbar-brand" onClick={() => push(ROUTES.LANDING)}>
                 {loading ? (
                     <Loadings />
                 ) : (
@@ -83,25 +86,26 @@ const NavigationDoctor = ({ firebase }) => {
             </button>
             <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav mr-auto">
-                    <li className="nav-item active">
-                        <a className="nav-link " href={ROUTES.LANDING}>
-                            Home
-                        </a>
+                    <li
+                        className="nav-item active"
+                        onClick={() => push(ROUTES.LANDING)}
+                    >
+                        <a className="nav-link">Home</a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href={ROUTES.FORUM}>
-                            Forum
-                        </a>
+                    <li className="nav-item" onClick={() => push(ROUTES.FORUM)}>
+                        <a className="nav-link">Forum</a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href={ROUTES.MEETINGS}>
-                            Meetings
-                        </a>
+                    <li
+                        className="nav-item"
+                        onClick={() => push(ROUTES.MEETINGS)}
+                    >
+                        <a className="nav-link">Meetings</a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href={ROUTES.RESERVATIONS}>
-                            Calendar
-                        </a>
+                    <li
+                        className="nav-item"
+                        onClick={() => push(ROUTES.RESERVATIONS)}
+                    >
+                        <a className="nav-link">Calendar</a>
                     </li>
                 </ul>
                 <ul className="navbar-nav dots">
@@ -109,7 +113,7 @@ const NavigationDoctor = ({ firebase }) => {
                     <MenuContent
                         firebase={firebase}
                         anchorEl={anchorEl}
-                        onClick={handleClose}
+                        handleClose={handleClose}
                         setAnchorEl={setAnchorEl}
                     />
                 </ul>
@@ -119,6 +123,7 @@ const NavigationDoctor = ({ firebase }) => {
 };
 
 const NavigationPatient = ({ firebase }) => {
+    const history = useHistory();
     const [anchorEl, setAnchorEl] = useState(null);
     const [logo, setLogo] = useState('');
     const [loading, setLoading] = useState(true);
@@ -131,6 +136,8 @@ const NavigationPatient = ({ firebase }) => {
         setAnchorEl(null);
     };
 
+    const push = pathname => history.push({ pathname });
+
     useEffect(() => {
         getLogo(firebase).then(url => {
             setLogo(url);
@@ -140,7 +147,7 @@ const NavigationPatient = ({ firebase }) => {
 
     return (
         <nav id="navigation" className="navbar navbar-expand-lg navigator">
-            <a className="navbar-brand" href="/">
+            <a className="navbar-brand" onClick={() => push(ROUTES.LANDING)}>
                 {loading ? (
                     <Loadings />
                 ) : (
@@ -161,30 +168,32 @@ const NavigationPatient = ({ firebase }) => {
             </button>
             <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav mr-auto">
-                    <li className="nav-item active">
-                        <a className="nav-link " href={ROUTES.LANDING}>
-                            Home
-                        </a>
+                    <li
+                        className="nav-item active"
+                        onClick={() => push(ROUTES.LANDING)}
+                    >
+                        <a className="nav-link">Home</a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href={ROUTES.FORUM}>
-                            Forum
-                        </a>
+                    <li className="nav-item" onClick={() => push(ROUTES.FORUM)}>
+                        <a className="nav-link">Forum</a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href={ROUTES.MEETINGS}>
-                            Meetings
-                        </a>
+                    <li
+                        className="nav-item"
+                        onClick={() => push(ROUTES.MEETINGS)}
+                    >
+                        <a className="nav-link">Meetings</a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href={ROUTES.DOCTOR_LIST}>
-                            Doctors
-                        </a>
+                    <li
+                        className="nav-item"
+                        onClick={() => push(ROUTES.DOCTOR_LIST)}
+                    >
+                        <a className="nav-link">Doctors</a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href={ROUTES.RESERVATIONS}>
-                            Reservations
-                        </a>
+                    <li
+                        className="nav-item"
+                        onClick={() => push(ROUTES.RESERVATIONS)}
+                    >
+                        <a className="nav-link">Reservations</a>
                     </li>
                 </ul>
                 <ul className="navbar-nav dots">
@@ -192,7 +201,7 @@ const NavigationPatient = ({ firebase }) => {
                     <MenuContent
                         firebase={firebase}
                         anchorEl={anchorEl}
-                        onClick={handleClose}
+                        handleClose={handleClose}
                         setAnchorEl={setAnchorEl}
                     />
                 </ul>
@@ -202,6 +211,7 @@ const NavigationPatient = ({ firebase }) => {
 };
 
 const NavigationAdmin = ({ firebase }) => {
+    const history = useHistory();
     const [anchorEl, setAnchorEl] = useState(null);
     const [logo, setLogo] = useState('');
     const [loading, setLoading] = useState(true);
@@ -213,6 +223,8 @@ const NavigationAdmin = ({ firebase }) => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const push = pathname => history.push({ pathname });
 
     useEffect(() => {
         getLogo(firebase).then(url => {
@@ -223,7 +235,7 @@ const NavigationAdmin = ({ firebase }) => {
 
     return (
         <nav className="navbar navbar-expand-lg navigator">
-            <a className="navbar-brand" href="/">
+            <a className="navbar-brand" onClick={() => push(ROUTES.LANDING)}>
                 {loading ? (
                     <Loadings />
                 ) : (
@@ -244,25 +256,29 @@ const NavigationAdmin = ({ firebase }) => {
             </button>
             <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav mr-auto">
-                    <li className="nav-item active">
-                        <a className="nav-link " href={ROUTES.ADMIN}>
-                            Admin Panel
-                        </a>
+                    <li
+                        className="nav-item active"
+                        onClick={() => push(ROUTES.ADMIN)}
+                    >
+                        <a className="nav-link">Admin Panel</a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href={ROUTES.ADMIN_PASSWORD}>
-                            Password Policy
-                        </a>
+                    <li
+                        className="nav-item"
+                        onClick={() => push(ROUTES.ADMIN_PASSWORD)}
+                    >
+                        <a className="nav-link">Password Policy</a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href={ROUTES.ADMIN_PATIENTS}>
-                            All Patients
-                        </a>
+                    <li
+                        className="nav-item"
+                        onClick={() => push(ROUTES.ADMIN_PATIENTS)}
+                    >
+                        <a className="nav-link">All Patients</a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href={ROUTES.ADMIN_DOCTORS}>
-                            All Doctors
-                        </a>
+                    <li
+                        className="nav-item"
+                        onClick={() => push(ROUTES.ADMIN_DOCTORS)}
+                    >
+                        <a className="nav-link">All Doctors</a>
                     </li>
                 </ul>
                 <ul className="navbar-nav dots">
@@ -270,7 +286,7 @@ const NavigationAdmin = ({ firebase }) => {
                     <MenuContent
                         firebase={firebase}
                         anchorEl={anchorEl}
-                        onClick={handleClose}
+                        handleClose={handleClose}
                         setAnchorEl={setAnchorEl}
                     />
                 </ul>
@@ -280,6 +296,7 @@ const NavigationAdmin = ({ firebase }) => {
 };
 
 const NavigationNoAuth = ({ firebase }) => {
+    const history = useHistory();
     const [anchorEl, setAnchorEl] = useState(null);
     const [logo, setLogo] = useState('');
     const [loading, setLoading] = useState(true);
@@ -299,6 +316,8 @@ const NavigationNoAuth = ({ firebase }) => {
         </>
     );
 
+    const push = pathname => history.push({ pathname });
+
     useEffect(() => {
         getLogo(firebase).then(url => {
             setLogo(url);
@@ -308,7 +327,7 @@ const NavigationNoAuth = ({ firebase }) => {
 
     return (
         <nav className="navbar navbar-expand-lg navigator">
-            <a className="navbar-brand" href="/">
+            <a className="navbar-brand" onClick={() => push(ROUTES.LANDING)}>
                 {loading ? (
                     <Loadings />
                 ) : (
@@ -329,10 +348,11 @@ const NavigationNoAuth = ({ firebase }) => {
             </button>
             <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav mr-auto">
-                    <li className="nav-item active">
-                        <a className="nav-link " href={ROUTES.LANDING}>
-                            Home
-                        </a>
+                    <li
+                        className="nav-item active"
+                        onClick={() => push(ROUTES.LANDING)}
+                    >
+                        <a className="nav-link">Home</a>
                     </li>
                 </ul>
                 <ul className="navbar-nav dots">
@@ -381,8 +401,11 @@ const MenuContent = props => (
             props.content()
         ) : (
             <>
-                <Profile onClick={props.onClick} />
-                <SignOut firebase={props.firebase} onClick={props.onClick} />
+                <Profile onClick={props.handleClose} />
+                <SignOut
+                    firebase={props.firebase}
+                    onClick={props.handleClose}
+                />
             </>
         )}
     </Menu>
