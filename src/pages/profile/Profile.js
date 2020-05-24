@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import DeleteConfirmWindow from './DeleteConfirmWindow';
 import * as ROUTES from '../../_constants/routeConstants';
 import CropWindow from './CropWindow';
+import { LoadingPage } from '../../components/Loadings';
 
 const Profile = props => {
     const { authUser, firebase } = props;
@@ -246,7 +247,9 @@ const Profile = props => {
                 severity={severity}
             />
         </div>
-    ) : null;
+    ) : (
+        <LoadingPage />
+    );
 };
 
 const condition = authUser => authUser;

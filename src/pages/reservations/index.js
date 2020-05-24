@@ -24,6 +24,7 @@ import {
     TodayButton,
     ConfirmationDialog,
 } from '@devexpress/dx-react-scheduler-material-ui';
+import { LoadingPage } from '../../components/Loadings';
 
 const styles = {
     toolbarRoot: {
@@ -196,6 +197,7 @@ const Reservations = props => {
     const formattedData = data ? data.map(item => ({ ...item })) : [];
 
     useEffect(() => {
+        setLoading(true);
         isDoctorCalendar() ? getDoctorCalendar() : getUserCalendar();
     }, [authUser, firebase, currentDate]);
 
@@ -297,7 +299,9 @@ const Reservations = props => {
             });
     };
 
-    return (
+    return loading ? (
+        <LoadingPage />
+    ) : (
         <Paper className="reservation-calendar">
             <Scheduler data={formattedData} height={780}>
                 <ViewState
