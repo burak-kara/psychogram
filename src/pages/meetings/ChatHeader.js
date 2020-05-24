@@ -18,11 +18,12 @@ const ChatHeader = props => {
         handleClose,
         handleEnd,
         setAnchorEl,
+        onClick,
     } = props;
 
     return (
         <div className="chat-header">
-            <div className="back-container" onClick={props.onClick}>
+            <div className="back-container" onClick={onClick}>
                 <IconContext.Provider value={{ size: '24' }}>
                     <IoMdArrowRoundBack />
                 </IconContext.Provider>

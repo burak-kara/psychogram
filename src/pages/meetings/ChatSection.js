@@ -6,7 +6,14 @@ import moment from 'moment';
 import ChatHeader from './ChatHeader';
 
 const ChatSection = props => {
-    const { authUser, firebase, currentMeetingKey, user, handleEnd } = props;
+    const {
+        authUser,
+        firebase,
+        currentMeetingKey,
+        user,
+        handleEnd,
+        onClick,
+    } = props;
     const [newMessage, setNewMessage] = useState('');
     const [messages, setMessages] = useState(new Map());
     const [isDisabled, setDisabled] = useState(true);
@@ -117,6 +124,7 @@ const ChatSection = props => {
                         handleClose={handleClose}
                         setAnchorEl={setAnchorEl}
                         handleEnd={handleEnd}
+                        onClick={onClick}
                     />
                     <ChatFeed
                         messages={[...messages.values()]}
