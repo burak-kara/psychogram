@@ -170,20 +170,45 @@ const Profile = props => {
     };
 
     useEffect(() => {
-        // TODO  implement user not found etc
-        isAnotherView() ? getAnotherView() : getUser();
+        if (isOtherLink()) {
+            if ((isDoctorLink() || isPatientLink()) && isIdExist()) {
+                getAnotherView();
+            } else {
+                history.push({
+                    pathname: ROUTES.NOT_FOUND,
+                    state: {
+                        info: 'Böyle Bir Kullanıcı Yok',
+                        returnPath:
+                            authUser.role === ROLES.DOCTOR
+                                ? ROUTES.MEETINGS
+                                : ROUTES.DOCTOR_LIST,
+                        returnText:
+                            authUser.role === ROLES.DOCTOR
+                                ? 'Meetings'
+                                : 'Doctors',
+                    },
+                });
+            }
+        } else {
+            getUser();
+        }
     }, [authUser, firebase]);
 
-    const isAnotherView = () =>
-        history &&
-        history.location &&
-        history.location.state &&
-        history.location.state.doctorId;
+    const isOtherLink = () =>
+        !!history &&
+        !!history.location &&
+        !!history.location.search &&
+        history.location.search !== '';
+
+    const isDoctorLink = () => history.location.search === '?doctor-profile';
+
+    const isPatientLink = () => history.location.search === '?patient-profile';
+
+    const isIdExist = () => history.location.state && history.location.state.id;
 
     const getAnotherView = () =>
         firebase.user(history.location.state.id).on('value', snapshot => {
             setUser(snapshot.val());
-            setSettings(snapshot.val());
         });
 
     const getUser = () => {
