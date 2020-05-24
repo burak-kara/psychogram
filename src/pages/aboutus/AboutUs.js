@@ -32,4 +32,5 @@ const AboutUs = props => {
         </div>
     );
 };
+
 export default withFirebase(AboutUs);
