@@ -9,6 +9,7 @@ import ChatSection from './ChatSection';
 import moment from 'moment';
 import * as ROUTES from '../../_constants/routeConstants';
 import EndConfirmWindow from './EndConfirmWindow';
+import { LoadingPage } from '../../components/Loadings';
 
 const Meetings = props => {
     const { authUser, firebase, history } = props;
@@ -20,9 +21,10 @@ const Meetings = props => {
     const [userKey, setUserKey] = useState('');
     const [reservations, setReservations] = useState(null);
     const [isEndConfOpen, setIsEndConfOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // TODO loading indicator
+        setLoading(true);
         const sort = authUser.role === ROLES.PATIENT ? 'userId' : 'doctorId';
         firebase
             .meetings()
@@ -42,8 +44,10 @@ const Meetings = props => {
                         .then(snapshot => snapshot.val())
                         .then(data => {
                             setChatPairs(new Map(chatPairs.set(uid, data)));
+                            setLoading(false);
                         });
                 });
+                setLoading(false);
             });
     }, [authUser, firebase]);
 
@@ -93,8 +97,9 @@ const Meetings = props => {
             state: { doctorId: userKey },
         });
 
-    // TODO implement ui for meeting not chosen case
-    return (
+    return loading ? (
+        <LoadingPage />
+    ) : (
         <>
             <div className="meeting-container">
                 <div className="container-fluid main-container">
@@ -109,6 +114,7 @@ const Meetings = props => {
                             />
                         </div>
                         <div className="col chat-section-container">
+                            {/* TODO implement ui for meeting not chosen case*/}
                             {currentMeetingKey ? (
                                 <ChatSection
                                     {...props}

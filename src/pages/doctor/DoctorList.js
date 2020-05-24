@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { withAuthorization, withEmailVerification } from '../../_session';
-import '../../assets/styles/pages/doctor.scss';
 import { compose } from 'recompose';
-import { Form, Checkbox } from 'semantic-ui-react';
 import { getStar, snapshotToArray } from '../../_utility/functions';
 import * as ROUTES from '../../_constants/routeConstants';
 import * as ROLES from '../../_constants/roles';
-import Avatar from '@material-ui/core/Avatar';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Avatar } from '@material-ui/core';
+import { Form, Checkbox } from 'semantic-ui-react';
+import { LoadingPage } from '../../components/Loadings';
 
 const DoctorList = props => {
     const { history, firebase } = props;
@@ -43,7 +42,6 @@ const DoctorList = props => {
     };
 
     useEffect(() => {
-        // TODO implement loading indicator here
         setLoading(true);
         firebase
             .users()
@@ -107,7 +105,9 @@ const DoctorList = props => {
         return doctors.map(doctor => <DoctorFrame doctor={doctor} />);
     };
 
-    return (
+    return loading ? (
+        <LoadingPage />
+    ) : (
         <div className="doctor-list">
             <Form className="doctor-filter">
                 <Form.Field>
@@ -142,9 +142,7 @@ const DoctorList = props => {
     );
 };
 
-const condition = authUser =>
-    authUser &&
-    (authUser.role === ROLES.PATIENT || authUser.role === ROLES.ADMIN);
+const condition = authUser => authUser && authUser.role === ROLES.PATIENT;
 
 export default compose(
     withEmailVerification,
