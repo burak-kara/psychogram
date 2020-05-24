@@ -11,40 +11,18 @@
         bottom: 0;
         height: $footer-height;
         z-index: $footer-z-index;
-    }
-
-    .align-left {
-        float: left;
-    }
-
-    .footer-links {
+        color: $white !important;
         list-style-type: none;
-    }
 
-    .footer-links li {
-        display: inline;
-    }
+        .link-col {
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-    .footer-links li a {
-        color: $white !important;
-        font-size: 1.2em;
-        margin: 11px 20px 0;
-    }
-
-    .common-link {
-        color: $white !important;
-    }
-
-    h {
-        color: $color-green-0;
-    }
-
-    .footer-links li {
-        display: inline;
-    }
-
-    .footers-link a {
-        font-size: 1.2em;
-        margin: 11px 20px 0;
+            li a {
+                font-size: 24px;
+                color: $color-green-0 !important;
+            }
+        }
     }
 }
