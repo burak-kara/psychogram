@@ -1,6 +1,9 @@
+@import '../../../_utility/sizes';
+@import '../../../_utility/colors';
+
 .navigator {
-    background-color: #204051;
-    height: 64px !important;
+    background-color: $color-green-3;
+    height: $navigation-height !important;
 
     .nav-link {
         color: white !important;
@@ -21,18 +24,18 @@
     }
 
     ul.header {
-        background-color: #204051;
+        background-color: $color-green-3;
     }
 
     ul.header li a {
-        color: #fff;
+        color: $white;
         font-weight: bold;
         padding: 20px;
         display: inline-block;
     }
 
     .content {
-        background-color: #fff;
+        background-color: $white;
     }
 
     .content h2 {
@@ -43,4 +46,9 @@
     .content li {
         margin-bottom: 10px;
     }
+}
+
+#navigation {
+    width: 100% !important;
+    padding: 0 10px !important;
 }
