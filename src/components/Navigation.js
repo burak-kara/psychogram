@@ -14,6 +14,7 @@ import {
 import { IconContext } from 'react-icons';
 import { withFirebase } from '../_firebase';
 import { useHistory } from 'react-router-dom';
+import Loadings from './Loadings';
 
 const Navigation = props => {
     const getRoleBased = authUser => {
@@ -42,6 +43,7 @@ const Navigation = props => {
 const NavigationDoctor = ({ firebase }) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [logo, setLogo] = useState('');
+    const [loading, setLoading] = useState(true);
 
     const handleClick = event => {
         setAnchorEl(event.currentTarget);
@@ -54,13 +56,18 @@ const NavigationDoctor = ({ firebase }) => {
     useEffect(() => {
         getLogo(firebase).then(url => {
             setLogo(url);
+            setLoading(false);
         });
     }, [firebase]);
 
     return (
-        <nav className="navbar navbar-expand-lg navigator">
+        <nav id="navigation" className="navbar navbar-expand-lg navigator">
             <a className="navbar-brand" href="/">
-                <img src={logo} width="50" height="50" alt="" />
+                {loading ? (
+                    <Loadings />
+                ) : (
+                    <img src={logo} width="50" height="50" alt="" />
+                )}
             </a>
             {/* TODO  button doesnt work import bootstrap js also add redux as dependency*/}
             <button
@@ -114,6 +121,7 @@ const NavigationDoctor = ({ firebase }) => {
 const NavigationPatient = ({ firebase }) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [logo, setLogo] = useState('');
+    const [loading, setLoading] = useState(true);
 
     const handleClick = event => {
         setAnchorEl(event.currentTarget);
@@ -126,13 +134,18 @@ const NavigationPatient = ({ firebase }) => {
     useEffect(() => {
         getLogo(firebase).then(url => {
             setLogo(url);
+            setLoading(false);
         });
     }, [firebase]);
 
     return (
-        <nav className="navbar navbar-expand-lg navigator">
+        <nav id="navigation" className="navbar navbar-expand-lg navigator">
             <a className="navbar-brand" href="/">
-                <img src={logo} width="50" height="50" alt="" />
+                {loading ? (
+                    <Loadings />
+                ) : (
+                    <img src={logo} width="50" height="50" alt="" />
+                )}
             </a>
             {/* TODO  button doesnt work import bootstrap js also add redux as dependency*/}
             <button
@@ -191,6 +204,7 @@ const NavigationPatient = ({ firebase }) => {
 const NavigationAdmin = ({ firebase }) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [logo, setLogo] = useState('');
+    const [loading, setLoading] = useState(true);
 
     const handleClick = event => {
         setAnchorEl(event.currentTarget);
@@ -203,13 +217,18 @@ const NavigationAdmin = ({ firebase }) => {
     useEffect(() => {
         getLogo(firebase).then(url => {
             setLogo(url);
+            setLoading(false);
         });
     }, [firebase]);
 
     return (
         <nav className="navbar navbar-expand-lg navigator">
             <a className="navbar-brand" href="/">
-                <img src={logo} width="50" height="50" alt="" />
+                {loading ? (
+                    <Loadings />
+                ) : (
+                    <img src={logo} width="50" height="50" alt="" />
+                )}
             </a>
             {/* TODO  button doesnt work import bootstrap js also add redux as dependency*/}
             <button
@@ -263,6 +282,7 @@ const NavigationAdmin = ({ firebase }) => {
 const NavigationNoAuth = ({ firebase }) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [logo, setLogo] = useState('');
+    const [loading, setLoading] = useState(true);
 
     const handleClick = event => {
         setAnchorEl(event.currentTarget);
@@ -282,13 +302,18 @@ const NavigationNoAuth = ({ firebase }) => {
     useEffect(() => {
         getLogo(firebase).then(url => {
             setLogo(url);
+            setLoading(false);
         });
     }, [firebase]);
 
     return (
         <nav className="navbar navbar-expand-lg navigator">
             <a className="navbar-brand" href="/">
-                <img src={logo} width="50" height="50" alt="" />
+                {loading ? (
+                    <Loadings />
+                ) : (
+                    <img src={logo} width="50" height="50" alt="" />
+                )}
             </a>
             {/* TODO  button doesnt work import bootstrap js also add redux as dependency*/}
             <button
