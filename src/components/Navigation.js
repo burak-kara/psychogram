@@ -13,6 +13,7 @@ import {
 } from 'react-icons/all';
 import { IconContext } from 'react-icons';
 import { withFirebase } from '../_firebase';
+import { useHistory } from 'react-router-dom';
 
 const Navigation = props => {
     const getRoleBased = authUser => {
@@ -395,15 +396,29 @@ const SignUp = props => (
     </MenuItem>
 );
 
-const SignOut = props => (
-    <MenuItem onClick={props.onClick}>
-        <ListItemIcon>
-            <FiLogOut />
-        </ListItemIcon>
-        <li>
-            <div onClick={props.firebase.doSignOut}>Sign Out</div>
-        </li>
-    </MenuItem>
-);
+const SignOut = props => {
+    const history = useHistory();
+
+    return (
+        <MenuItem onClick={props.onClick}>
+            <ListItemIcon>
+                <FiLogOut />
+            </ListItemIcon>
+            <li>
+                <div
+                    onClick={() => {
+                        props.firebase.doSignOut().then(() => {
+                            history.push({
+                                pathname: ROUTES.LANDING,
+                            });
+                        });
+                    }}
+                >
+                    Sign Out
+                </div>
+            </li>
+        </MenuItem>
+    );
+};
 
 export default withFirebase(Navigation);

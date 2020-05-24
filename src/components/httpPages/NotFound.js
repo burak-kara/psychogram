@@ -13,7 +13,7 @@ const NotFound = () => {
     }, []);
 
     return (
-        <div className="container-fluid not-found-page">
+        <div className="container-fluid common-page">
             <div className="row">
                 <div className="col-12 image-container">
                     <img className="image" src={notFound} alt="404" />
