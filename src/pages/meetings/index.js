@@ -80,7 +80,6 @@ const Meetings = props => {
     };
 
     const handleEnd = () => {
-        // TODO confirm dialog and also warning for doctor action
         if (authUser.role === ROLES.PATIENT) {
             setIsEndConfOpen(true);
         } else history.push(ROUTES.LANDING);

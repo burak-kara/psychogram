@@ -9,8 +9,19 @@ const NotFound = () => {
     useEffect(() => {
         history.push({
             pathname: ROUTES.NOT_FOUND,
+            state: history.location.state,
         });
     }, []);
+
+    const isInfoExist = () =>
+        history.location &&
+        history.location.state &&
+        history.location.state.info;
+
+    const isReturnPathExist = () =>
+        history.location &&
+        history.location.state &&
+        history.location.state.returnPath;
 
     return (
         <div className="container-fluid common-page">
@@ -21,11 +32,18 @@ const NotFound = () => {
             </div>
             <div className="row">
                 <div className="col-12 info-container">
-                    <p className="text-center">Sayfa Bulunamadı</p>
+                    {isInfoExist() ? (
+                        <p className="text-center">
+                            {history.location.state.info}
+                        </p>
+                    ) : (
+                        <p className="text-center">Sayfa Bulunamadı</p>
+                    )}
                 </div>
-                <div className="col-12 btn-container">
+                <div className="col-3" />
+                <div className="col-6 btn-container">
                     <button
-                        className="btn btn-dark"
+                        className="btn btn-secondary"
                         onClick={() =>
                             history.push({
                                 pathname: ROUTES.LANDING,
@@ -34,6 +52,18 @@ const NotFound = () => {
                     >
                         Home
                     </button>
+                    {isReturnPathExist() ? (
+                        <button
+                            className="btn btn-secondary"
+                            onClick={() =>
+                                history.push({
+                                    pathname: history.location.state.returnPath,
+                                })
+                            }
+                        >
+                            {history.location.state.returnText}
+                        </button>
+                    ) : null}
                 </div>
             </div>
         </div>
