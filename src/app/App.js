@@ -21,6 +21,7 @@ import TestMeetingCreate from '../pages/testCreateMeeting';
 import Rating from '../pages/doctor/Rating';
 import ArticleList from '../pages/article/ArticleList';
 import NotFound from '../components/httpPages/NotFound';
+import Unauthorized from '../components/httpPages/Unauthorized';
 
 const App = () => (
     <Router>
@@ -47,8 +48,9 @@ const App = () => (
             <Route exact path={ROUTES.ADMIN_PATIENTS} component={AdminPage} />
             <Route exact path={ROUTES.ADMIN_DOCTORS} component={AdminPage} />
 
-            <Route path="*" component={NotFound} />
+            <Route path={ROUTES.UNAUTHORIZED} component={Unauthorized} />
             <Route path={ROUTES.NOT_FOUND} component={NotFound} />
+            <Route path="*" component={NotFound} />
         </Switch>
         <Footer />
     </Router>
