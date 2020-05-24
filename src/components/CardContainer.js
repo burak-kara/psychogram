@@ -1,4 +1,5 @@
 import React from 'react';
+import Loadings from './Loadings';
 
 const cardTypes = {
     MEETING: 'meetings',
@@ -32,7 +33,7 @@ const CardContainer = props => {
                 );
             })
         ) : (
-            <div>Nothing to show</div>
+            <Loadings />
         );
 
     const setObjectFields = item => {
