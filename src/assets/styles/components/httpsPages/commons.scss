@@ -1,0 +1,26 @@
+.common-page {
+    padding-top: 32px;
+    padding-bottom: 32px;
+
+    .image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .image {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+        }
+    }
+
+    .info-container {
+        font-size: 32px;
+    }
+
+    .btn-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

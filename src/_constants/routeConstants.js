@@ -21,3 +21,4 @@ export const ADMIN_PATIENTS = '/all-patient';
 export const ADMIN_DOCTORS = '/all-doctors';
 
 export const NOT_FOUND = '/not-found';
+export const UNAUTHORIZED = '/unauthorized';
