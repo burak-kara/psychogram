@@ -13,6 +13,7 @@ import { LoadingPage } from '../../components/Loadings';
 
 const Meetings = props => {
     const { authUser, firebase, history } = props;
+
     const [meetings, setMeetings] = useState([]);
     const [chatPairs, setChatPairs] = useState(new Map());
     const [search, setSearch] = useState('');
@@ -49,7 +50,7 @@ const Meetings = props => {
                 });
                 setLoading(false);
             });
-    }, [authUser, firebase]);
+    }, [loading]);
 
     const sortByDate = data => (data ? data.sort(compare) : data);
 
