@@ -411,16 +411,30 @@ const MenuContent = props => (
     </Menu>
 );
 
-const Profile = props => (
-    <MenuItem onClick={props.onClick}>
-        <ListItemIcon>
-            <FaUserAlt />
-        </ListItemIcon>
-        <li>
-            <Link to={ROUTES.PROFILE}>Profile</Link>
-        </li>
-    </MenuItem>
-);
+const Profile = props => {
+    const history = useHistory();
+
+    return (
+        <MenuItem onClick={props.onClick}>
+            <ListItemIcon>
+                <FaUserAlt />
+            </ListItemIcon>
+            <li>
+                <div
+                    onClick={() =>
+                        history.push({
+                            pathname: ROUTES.PROFILE,
+                            search: '',
+                            state: {},
+                        })
+                    }
+                >
+                    Profile
+                </div>
+            </li>
+        </MenuItem>
+    );
+};
 
 const SignIn = props => (
     <MenuItem onClick={props.onClick}>

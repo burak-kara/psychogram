@@ -1,0 +1,70 @@
+@import '../../../_utility/colors';
+@import '../../../_utility/sizes';
+
+.about-us-page {
+    padding: 20px;
+    background-color: $color-light-green-1;
+
+    .pic {
+        border-radius: 50% !important;
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+    }
+
+    .about-us {
+        text-align: center;
+        margin: 0 100px;
+    }
+}
+
+.homepage {
+    padding: 20px;
+    background-color: $color-light-green-1;
+
+    .pic {
+        border-radius: 50% !important;
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+    }
+
+    .content {
+        text-align: center;
+        margin: 0 100px;
+    }
+}
+
+.contact {
+    padding: 20px;
+    background-color: $color-light-green-1;
+    height: $normal-height;
+
+    .pic {
+        border-radius: 50% !important;
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+    }
+
+    .header {
+        font-size: 32px;
+        text-align: center;
+        margin: 0 100px;
+    }
+
+    .content {
+        font-size: 24px;
+        text-align: center;
+        margin: 0 100px;
+    }
+}
