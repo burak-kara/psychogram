@@ -6,14 +6,17 @@ const MeetingCard = props => {
     const { user, message } = props;
 
     const renderDateCol = () => {
-        const formatted = message ? dateAsString(message.date) : ' ';
+        const formatted =
+            message && message.date !== '' ? dateAsString(message.date) : ' ';
         return (
             <div className="col date-info">
                 {!formatted.includes('ago') ? (
                     <div className="row">
                         <div className="col hours">
                             <span>
-                                {message ? formatDateAsHours(message.date) : ''}
+                                {message && message.date !== ''
+                                    ? formatDateAsHours(message.date)
+                                    : ''}
                             </span>
                         </div>
                     </div>
