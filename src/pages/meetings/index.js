@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import { withAuthorization, withEmailVerification } from '../../_session';
-import { getKeys, snapshotToArray } from '../../_utility/functions';
+import { getValues, snapshotToArray } from '../../_utility/functions';
 import Search from './Search';
 import MeetingList from './MeetingList';
 import * as ROLES from '../../_constants/roles';
@@ -20,9 +20,10 @@ const Meetings = props => {
     const [currentMeetingKey, setCurrentMeetingKey] = useState(null);
     const [user, setUser] = useState(null);
     const [userKey, setUserKey] = useState('');
-    const [reservations, setReservations] = useState(null);
+    const [meetingReservationIds, setMeetingReservationIds] = useState(null);
     const [isEndConfOpen, setIsEndConfOpen] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [currentReservation, setCurrentReservation] = useState(null);
 
     useEffect(() => {
         setLoading(true);
@@ -66,14 +67,14 @@ const Meetings = props => {
 
     const handleMeetingClick = (key, user, reservations) => {
         setCurrentMeetingKey(key);
-        setReservations(getKeys(reservations));
+        setMeetingReservationIds(getValues(reservations));
         setUser(user);
         setUserKey(key.split('_')[1]);
     };
 
     const handleBack = () => {
         setCurrentMeetingKey(null);
-        setReservations(null);
+        setMeetingReservationIds(null);
     };
 
     const handleSearchType = e => {
@@ -90,12 +91,14 @@ const Meetings = props => {
         setIsEndConfOpen(!isEndConfOpen);
     };
 
-    const pushRatingPage = () =>
+    const pushRatingPage = () => {
+        firebase.reservation(currentReservation.key).update({ isEnded: true });
         history.push({
             pathname: ROUTES.RATING,
             search: '',
             state: { doctorId: userKey },
         });
+    };
 
     return loading ? (
         <LoadingPage />
@@ -119,7 +122,13 @@ const Meetings = props => {
                                 <ChatSection
                                     {...props}
                                     currentMeetingKey={currentMeetingKey}
-                                    reservations={reservations}
+                                    meetingReservationIds={
+                                        meetingReservationIds
+                                    }
+                                    setCurrentReservation={
+                                        setCurrentReservation
+                                    }
+                                    currentReservation={currentReservation}
                                     user={user}
                                     handleEnd={handleEnd}
                                     onClick={handleBack}
