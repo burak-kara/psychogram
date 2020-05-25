@@ -25,6 +25,7 @@ import {
     ConfirmationDialog,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { LoadingPage } from '../../components/Loadings';
+import { useLocation } from 'react-router-dom';
 
 const styles = {
     toolbarRoot: {
@@ -189,6 +190,8 @@ const ToolbarWithLoading = withStyles(styles, { name: 'Toolbar' })(
 
 const Reservations = props => {
     const { authUser, firebase, history } = props;
+    const location = useLocation();
+
     const [loading, setLoading] = useState(true);
     const [currentDate, setCurrentDate] = useState(moment());
     const [currentViewName, setCurrentViewName] = useState('Week');
@@ -199,7 +202,7 @@ const Reservations = props => {
     useEffect(() => {
         setLoading(true);
         isDoctorCalendar() ? getDoctorCalendar() : getUserCalendar();
-    }, [authUser, firebase, currentDate]);
+    }, [authUser, firebase, currentDate, location]);
 
     const isDoctorCalendar = () =>
         history &&

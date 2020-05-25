@@ -3,24 +3,25 @@ import { withFirebase } from '../../_firebase';
 import { LoadingPage } from '../../components/Loadings';
 
 const AboutUs = props => {
+    const { firebase } = props;
     const [aboutUs, setAboutUs] = useState('');
     const [psycho, setPsycho] = useState('');
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         setLoading(true);
-        props.firebase.getAboutUsInfo().on('value', snapshot => {
+        firebase.getAboutUsInfo().on('value', snapshot => {
             setAboutUs(snapshot.val());
             setLoading(false);
         });
-        props.firebase
+        firebase
             .getPsychoPic()
             .getDownloadURL()
             .then(url => {
                 setPsycho(url);
                 setLoading(false);
             });
-    }, [props.firebase]);
+    }, [firebase]);
 
     return loading ? (
         <LoadingPage />
