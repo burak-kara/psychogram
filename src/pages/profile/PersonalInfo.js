@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PersonalInfo = props => {
-    const { user, openSettings, handleStatus, patient, handleUpload } = props;
+    const { user, openSettings, handleStatus, isOther, handleUpload } = props;
     const classes = useStyles();
 
     const renderOverlay = () => (
@@ -68,7 +68,7 @@ const PersonalInfo = props => {
         <div className="col-lg-3 col-md-3 col-sm-12 col-12 pl-5 pr-5 pt-2 pb-4 profile-info">
             <div className="row d-flex justify-content-center">
                 <div className="col-lg-12 col-md-12 col-sm-12 col-12 profile-pic-container">
-                    {patient ? (
+                    {isOther ? (
                         <Avatar
                             src={user.profilePictureSource}
                             className={classes.large}
@@ -112,14 +112,21 @@ const PersonalInfo = props => {
                     placement="bottom-end"
                 >
                     <div className="col-lg-3 col-3 text-right pr-0">
-                        {renderOverlay()}
+                        {isOther ? (
+                            <Emoji
+                                symbol={faceEmojis.get(user.status)}
+                                className="emoji-32"
+                            />
+                        ) : (
+                            renderOverlay()
+                        )}
                     </div>
                 </Tooltip>
             </div>
             <div className="row mt-2 h-auto">
                 <span>{`${user.description}`}</span>
             </div>
-            {!patient ? (
+            {isOther ? null : (
                 <div className="row mt-3">
                     <button
                         className="btn btn-secondary btn-block"
@@ -129,7 +136,7 @@ const PersonalInfo = props => {
                         Profili Düzenle
                     </button>
                 </div>
-            ) : null}
+            )}
             <div className="row mt-2">
                 <div className="col-12">
                     <div className="row text-capitalize">
@@ -168,7 +175,7 @@ const PersonalInfo = props => {
                     {user.role && user.role === ROLES.DOCTOR ? (
                         <div className="row">
                             <div className="col-12 no-padding">
-                                <span className="align-middle ml-2">{` ${props.user.experties}`}</span>
+                                <span className="align-middle ml-2">{` ${user.experties}`}</span>
                             </div>
                         </div>
                     ) : null}
@@ -177,7 +184,7 @@ const PersonalInfo = props => {
                             <div className="col-12 no-padding">
                                 <span className="align-middle ml-2">
                                     {' '}
-                                    Rating:{` ${props.user.rating}`}/5
+                                    Rating:{` ${user.rating}`}/5
                                 </span>
                             </div>
                         </div>
