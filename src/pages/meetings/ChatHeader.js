@@ -20,6 +20,7 @@ const ChatHeader = props => {
         setAnchorEl,
         onClick,
         currentReservation,
+        handleExportChat,
     } = props;
 
     return (
@@ -64,7 +65,7 @@ const ChatHeader = props => {
                     <MenuItem onClick={() => setAnchorEl(null)}>
                         <button
                             className="btn btn-secondary btn-block d-flex justify-content-around align-items-center"
-                            onClick={() => alert('use export handler instead')}
+                            onClick={handleExportChat}
                         >
                             <IconContext.Provider
                                 value={{

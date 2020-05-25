@@ -5,6 +5,7 @@ import { snapshotToArray } from '../../_utility/functions';
 import moment from 'moment';
 import ChatHeader from './ChatHeader';
 import Alert from '../../components/Alert';
+import ChatExportWindow from './ChatExportWindow';
 
 const ChatSection = props => {
     const {
@@ -26,6 +27,7 @@ const ChatSection = props => {
     const [alertOpen, setAlertsOpen] = useState(false);
     const [message, setMessage] = useState('');
     const [severity, setSeverity] = useState('');
+    const [saveChatConfOpen, setSaveChatConfOpen] = useState(false);
 
     useEffect(() => {
         setNewMessage('');
@@ -52,6 +54,37 @@ const ChatSection = props => {
             });
             setMessages(map);
         });
+    };
+
+    const getMeetingData = () => {
+        let val = '';
+
+        firebase.messages(currentMeetingKey).on('value', snapshot => {
+            let map = new Map();
+            snapshot.forEach(snap => {
+                const message = snap.val();
+                val +=
+                    '[' +
+                    (message.senderId === authUser.uid
+                        ? authUser.name + ' ' + authUser.surname
+                        : user.name + '' + user.surname) +
+                    '] ' +
+                    message.date +
+                    ' ' +
+                    message.message +
+                    '\r\n';
+            });
+        });
+
+        return val;
+    };
+
+    const sendChatAsEmail = () => {
+        return getMeetingData();
+    };
+
+    const handleExportChat = () => {
+        setSaveChatConfOpen(!saveChatConfOpen);
     };
 
     const filterReservations = () => {
@@ -156,6 +189,7 @@ const ChatSection = props => {
                         handleEnd={handleEnd}
                         onClick={onClick}
                         currentReservation={currentReservation}
+                        handleExportChat={handleExportChat}
                     />
                     <ChatFeed
                         messages={[...messages.values()]}
@@ -195,6 +229,12 @@ const ChatSection = props => {
                 message={message}
                 severity={severity}
                 duration={7000}
+            />
+            <ChatExportWindow
+                open={saveChatConfOpen}
+                handleClose={handleExportChat}
+                getData={getMeetingData}
+                handleEmail={sendChatAsEmail}
             />
         </>
     );
