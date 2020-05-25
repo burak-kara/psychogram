@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import Emoji from 'a11y-react-emoji';
 import { faceEmojis, profileInfoEmojis } from '../../_utility/emojis';
@@ -27,9 +27,10 @@ const PersonalInfo = props => {
 
     const renderOverlay = () => (
         <OverlayTrigger
+            rootClose={true}
             placement="right"
             trigger="click"
-            delay={{ show: 250, hide: 400 }}
+            delay={{ show: 250, hide: 100 }}
             overlay={
                 <Popover id="popover-basic">
                     <Popover.Title as="h3">Durumunu Değiştir</Popover.Title>
