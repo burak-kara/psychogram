@@ -19,6 +19,7 @@ const ChatHeader = props => {
         handleEnd,
         setAnchorEl,
         onClick,
+        currentReservation,
         handleExportChat,
     } = props;
 
@@ -76,7 +77,9 @@ const ChatHeader = props => {
                             <div>Export Chat</div>
                         </button>
                     </MenuItem>
-                    {authUser.role === ROLES.PATIENT ? (
+                    {authUser.role === ROLES.PATIENT &&
+                    currentReservation &&
+                    !currentReservation.isEnded ? (
                         <MenuItem onClick={() => setAnchorEl(null)}>
                             <button
                                 className="btn btn-danger btn-block d-flex justify-content-around align-items-center"

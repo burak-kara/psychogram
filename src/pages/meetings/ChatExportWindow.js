@@ -11,16 +11,16 @@ const ChatExportWindow = props => {
 
     const renderActions = () => (
         <>
-            <button className="btn btn-secondary" onClick={handleClose}>
+            <button className="btn btn-danger" onClick={handleClose}>
                 Close
             </button>
-            <button className="btn btn-primary" onClick={handleEmail}>
+            <button className="btn btn-info" onClick={handleEmail}>
                 Email
             </button>
             <CSVLink
                 data={getData()}
                 filename="out.txt"
-                className="btn btn-secondary"
+                className="btn btn-success"
                 separator="\n"
             >
                 Dosyaya Kaydet

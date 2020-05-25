@@ -4,6 +4,8 @@ import Star, { Rate } from '../assets/starLogo/star';
 // Returns data keys from snapshot.val()
 export const getKeys = data => Object.keys(data);
 
+export const getValues = data => Object.values(data);
+
 // Returns date as string
 // e.g. Today, Yesterday
 export const dateAsString = date => {
