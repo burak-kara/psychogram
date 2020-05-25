@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import Emoji from 'a11y-react-emoji';
 import { faceEmojis, profileInfoEmojis } from '../../_utility/emojis';
