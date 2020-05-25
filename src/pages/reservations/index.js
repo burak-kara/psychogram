@@ -289,10 +289,18 @@ const Reservations = props => {
                         .push(reservationId);
                 } else {
                     // TODO add success, error handling for promise
-                    props.firebase.meetings().child(meetingId).set({
-                        userId,
-                        doctorId,
-                    });
+                    props.firebase
+                        .meetings()
+                        .child(meetingId)
+                        .set({
+                            userId,
+                            doctorId,
+                            lastMessage: {
+                                date: '',
+                                message: '',
+                                senderId: '',
+                            },
+                        });
                     props.firebase
                         .meetings()
                         .child(meetingId)
