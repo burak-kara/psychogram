@@ -5,7 +5,7 @@ import Settings from './Settings';
 import Alert from '../../components/Alert';
 import { compose } from 'recompose';
 import { withAuthorization } from '../../_session';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import DeleteConfirmWindow from './DeleteConfirmWindow';
 import * as ROUTES from '../../_constants/routeConstants';
 import CropWindow from './CropWindow';
@@ -15,6 +15,7 @@ import * as ROLES from '../../_constants/roles';
 const Profile = props => {
     const { authUser, firebase } = props;
     const history = useHistory();
+    const location = useLocation();
 
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [alertOpen, setAlertsOpen] = useState(false);
@@ -29,6 +30,7 @@ const Profile = props => {
     const imgRef = useRef(null);
     const [crop, setCrop] = useState({ unit: 'px', width: 400, aspect: 1 / 1 });
     const [previewUrl, setPreviewUrl] = useState(null);
+    const [isOther, setIsOther] = useState(false);
 
     const handleSettingShow = () => {
         setSettingsOpen(!settingsOpen);
@@ -172,6 +174,7 @@ const Profile = props => {
     useEffect(() => {
         if (isOtherLink()) {
             if ((isDoctorLink() || isPatientLink()) && isIdExist()) {
+                setIsOther(true);
                 getAnotherView();
             } else {
                 history.push({
@@ -190,9 +193,10 @@ const Profile = props => {
                 });
             }
         } else {
+            setIsOther(false);
             getUser();
         }
-    }, [authUser, firebase]);
+    }, [authUser, firebase, location]);
 
     const isOtherLink = () =>
         !!history &&
@@ -224,21 +228,13 @@ const Profile = props => {
         <div>
             <div className="container-fluid h-auto patient-profile">
                 <div className="row h-auto">
-                    {history.location.state ? (
-                        <PersonalInfo
-                            patient={history.location.state}
-                            user={user}
-                            openSettings={handleSettingShow}
-                            handleStatus={handleStatusChange}
-                        />
-                    ) : (
-                        <PersonalInfo
-                            user={user}
-                            openSettings={handleSettingShow}
-                            handleStatus={handleStatusChange}
-                            handleUpload={handleUploadOpen}
-                        />
-                    )}
+                    <PersonalInfo
+                        isOther={isOther}
+                        user={user}
+                        openSettings={handleSettingShow}
+                        handleStatus={handleStatusChange}
+                        handleUpload={handleUploadOpen}
+                    />
                     <ProfileDetails user={user} history={history} />
                 </div>
             </div>
