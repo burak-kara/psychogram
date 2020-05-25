@@ -4,7 +4,7 @@ import MessageTextField from './TextField';
 import { snapshotToArray } from '../../_utility/functions';
 import moment from 'moment';
 import ChatHeader from './ChatHeader';
-import ChatExportWindow from "./ChatExportWindow";
+import ChatExportWindow from './ChatExportWindow';
 
 const ChatSection = props => {
     const {
@@ -158,7 +158,7 @@ const ChatSection = props => {
                         setAnchorEl={setAnchorEl}
                         handleEnd={handleEnd}
                         onClick={onClick}
-                        handleExportChat ={handleExportChat}
+                        handleExportChat={handleExportChat}
                     />
                     <ChatFeed
                         messages={[...messages.values()]}
