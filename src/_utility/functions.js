@@ -57,15 +57,20 @@ export const getStar = rating => {
 
 export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-const hasNumber = value => new RegExp(/[0-9]/).test(value);
+const hasNumber = value => {
+    return new RegExp(/[0-9]/).test(value);
+};
 
-const hasMixed = value =>
-    new RegExp(/[a-z]/).test(value) && new RegExp(/[A-Z]/).test(value);
+const hasMixed = value => {
+    return new RegExp(/[a-z]/).test(value) && new RegExp(/[A-Z]/).test(value);
+};
 
-const hasSpecial = value => new RegExp(/[!#@$%^&*)(+=._-]/).test(value);
+const hasSpecial = value => {
+    return new RegExp(/[!#@$%^&*)(+=._-]/).test(value);
+};
 
 export const passCheck = passObj => {
-    const response = {
+    var retObj = {
         err: false,
         mess: '',
     };
@@ -85,29 +90,80 @@ export const passCheck = passObj => {
     if (hasMixed(password)) isMixChar = true;
     if (hasSpecial(password)) isSpecial = true;
 
-    const isLength = isMinLen && isMaxLen;
-    const isStrength =
-        passObj.policy.hasNumber &&
-        passObj.policy.hasMixChar &&
-        passObj.policy.hasSpecial;
+    let isLength = isMinLen && isMaxLen;
+    let isStrength = false;
 
-    if (!isLength) {
-        response.err = true;
-        response.mess = `Password length must be between ${passObj.policy.min} and ${passObj.policy.max}`;
-    } else if (!isStrength) {
-        response.mess = 'Password is OK';
-    } else if (passObj.policy.hasNumber && !isNumber) {
-        response.err = true;
-        response.mess = 'Password must contain at least one number';
-    } else if (passObj.policy.hasMixChar && !isMixChar) {
-        response.err = true;
-        response.mess = 'Password must contain upper and lowercase characters';
-    } else if (passObj.policy.hasSpecial && !isSpecial) {
-        response.err = true;
-        response.mess =
-            'Password must contain at least one special characters like [!#@$%^&*)(+=._-]';
-    } else {
-        response.mess = 'Password is Strong';
+    if (
+        passObj.policy.hasNumber === true &&
+        passObj.policy.hasMixChar === true &&
+        passObj.policy.hasSpecial === true
+    ) {
+        isStrength = isNumber && isMixChar && isSpecial;
+    } else if (
+        passObj.policy.hasNumber === true &&
+        passObj.policy.hasMixChar === true &&
+        passObj.policy.hasSpecial === false
+    ) {
+        isStrength = isNumber && isMixChar;
+    } else if (
+        passObj.policy.hasNumber === true &&
+        passObj.policy.hasMixChar === false &&
+        passObj.policy.hasSpecial === true
+    ) {
+        isStrength = isNumber && isSpecial;
+    } else if (
+        passObj.policy.hasNumber === true &&
+        passObj.policy.hasMixChar === false &&
+        passObj.policy.hasSpecial === false
+    ) {
+        isStrength = isNumber;
+    } else if (
+        passObj.policy.hasNumber === false &&
+        passObj.policy.hasMixChar === true &&
+        passObj.policy.hasSpecial === true
+    ) {
+        isStrength = isMixChar && isSpecial;
+    } else if (
+        passObj.policy.hasNumber === false &&
+        passObj.policy.hasMixChar === true &&
+        passObj.policy.hasSpecial === false
+    ) {
+        isStrength = isMixChar;
+    } else if (
+        passObj.policy.hasNumber === false &&
+        passObj.policy.hasMixChar === false &&
+        passObj.policy.hasSpecial === true
+    ) {
+        isStrength = isSpecial;
+    } else if (
+        passObj.policy.hasNumber === false &&
+        passObj.policy.hasMixChar === false &&
+        passObj.policy.hasSpecial === false
+    ) {
+        isStrength = true;
     }
-    return response;
+
+    if (isLength === false) {
+        retObj.err = true;
+        retObj.mess =
+            'Password length must be between ' +
+            passObj.policy.min +
+            ' and ' +
+            passObj.policy.max;
+    } else if (isStrength === false) {
+        retObj.err = true;
+        if (passObj.policy.hasNumber === true && isNumber === false)
+            retObj.mess = 'Password must contain at least one number';
+        else if (passObj.policy.hasMixChar === true && isMixChar === false)
+            retObj.mess =
+                'Password must contain upper and lowercase characters';
+        else if (passObj.policy.hasSpecial === true && isSpecial === false)
+            retObj.mess =
+                'Password must contain at least one special charcaters like [!#@$%^&*)(+=._-]';
+    } else {
+        retObj.err = false;
+        retObj.mess = 'Password is OK';
+    }
+
+    return retObj;
 };
