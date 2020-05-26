@@ -22,6 +22,8 @@ import Rating from '../pages/doctor/Rating';
 import ArticleList from '../pages/article/ArticleList';
 import NotFound from '../components/httpPages/NotFound';
 import Unauthorized from '../components/httpPages/Unauthorized';
+import AllDoctors from '../pages/admin/AllDoctors';
+import AllPatients from '../pages/admin/AllPatients';
 
 const App = () => (
     <Router>
@@ -40,13 +42,14 @@ const App = () => (
             <Route path={ROUTES.RESERVATIONS} component={Reservations} />
             <Route path={ROUTES.RATING} component={Rating} />
             <Route path={ROUTES.ARTICLES} component={ArticleList} />
+
             {/* TODO delete*/}
             <Route path="/create" component={TestMeetingCreate} />
 
             <Route exact path={ROUTES.ADMIN} component={AdminPage} />
             <Route exact path={ROUTES.ADMIN_PASSWORD} component={AdminPage} />
-            <Route exact path={ROUTES.ADMIN_PATIENTS} component={AdminPage} />
-            <Route exact path={ROUTES.ADMIN_DOCTORS} component={AdminPage} />
+            <Route exact path={ROUTES.ADMIN_PATIENTS} component={AllPatients} />
+            <Route exact path={ROUTES.ADMIN_DOCTORS} component={AllDoctors} />
 
             <Route path={ROUTES.UNAUTHORIZED} component={Unauthorized} />
             <Route path={ROUTES.NOT_FOUND} component={NotFound} />
