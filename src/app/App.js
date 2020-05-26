@@ -22,6 +22,7 @@ import Rating from '../pages/doctor/Rating';
 import ArticleList from '../pages/article/ArticleList';
 import NotFound from '../components/httpPages/NotFound';
 import Unauthorized from '../components/httpPages/Unauthorized';
+import Notification from '../components/notification';
 
 const App = () => (
     <Router>
@@ -74,6 +75,7 @@ const App = () => (
                 </Switch>
             </div>
             <Footer />
+            <Notification />
         </div>
     </Router>
 );

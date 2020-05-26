@@ -36,6 +36,9 @@ const INITIAL_STATE = {
     location: '',
     role: '',
     status: 'Grinning Face',
+    rating: 0,
+    totalRate: 0,
+    rateCount: 0,
 };
 
 class SignUpFormBase extends Component {

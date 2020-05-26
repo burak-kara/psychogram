@@ -6,6 +6,8 @@ import { withStyles } from '@material-ui/core/styles';
 import { Paper, LinearProgress } from '@material-ui/core';
 import { formatDateAsHours, snapshotToArray } from '../../_utility/functions';
 import { withAuthorization, withEmailVerification } from '../../_session';
+import ReactNotifications from 'react-browser-notifications';
+import Notification from '../../components/notification';
 import {
     EditingState,
     IntegratedEditing,
@@ -196,7 +198,7 @@ const Reservations = props => {
     const [currentDate, setCurrentDate] = useState(moment());
     const [currentViewName, setCurrentViewName] = useState('Week');
     const [data, setData] = useState([]);
-
+    const [navi, setNavi] = useState('');
     const formattedData = data ? data.map(item => ({ ...item })) : [];
 
     useEffect(() => {
@@ -271,8 +273,14 @@ const Reservations = props => {
                 startDate: moment(added.startDate).format(),
                 endDate: moment(added.endDate).format(),
                 isNow: false,
+                flag: true,
             });
             createMeeting(userId, doctorId, pushRef.key);
+        }
+    };
+    const notifyMe = () => {
+        if (navi != '') {
+            if (navi.supported()) navi.show();
         }
     };
 
@@ -309,49 +317,62 @@ const Reservations = props => {
                         .push(reservationId);
                 }
             });
+        notifyMe();
     };
 
     return loading ? (
         <LoadingPage />
     ) : (
-        <Paper className="reservation-calendar">
-            <Scheduler data={formattedData} height={780}>
-                <ViewState
-                    currentDate={currentDate}
-                    currentViewName={currentViewName}
-                    onCurrentViewNameChange={handleCurrentViewNameChange}
-                    onCurrentDateChange={handleCurrentDateChange}
+        <div>
+            <div>
+                <ReactNotifications
+                    onRef={ref => setNavi(ref)} // Required
+                    title="MEETING CREATED"
+                    body=" "
+                    icon="icon.png"
+                    tag="abcdef"
+                    timeout="3000"
                 />
-                <DayView startDayHour={9} endDayHour={18} />
-                <WeekView
-                    startDayHour={9}
-                    endDayHour={18}
-                    excludedDays={[0, 6]}
-                    dayScaleCellComponent={DayScaleCell}
-                    timeScaleLabelComponent={TimeScaleCells}
-                />
-                <Appointments
-                    appointmentComponent={Appointment}
-                    appointmentContentComponent={AppointmentContent}
-                />
-                <Toolbar
-                    {...(loading
-                        ? { rootComponent: ToolbarWithLoading }
-                        : null)}
-                />
-                {isDoctorCalendar() ? (
-                    <EditingState onCommitChanges={handleChanges} />
-                ) : null}
-                {isDoctorCalendar() ? <IntegratedEditing /> : null}
-                {isDoctorCalendar() ? <ConfirmationDialog /> : null}
+            </div>
+            <Paper className="reservation-calendar">
+                <Scheduler data={formattedData} height={780}>
+                    <ViewState
+                        currentDate={currentDate}
+                        currentViewName={currentViewName}
+                        onCurrentViewNameChange={handleCurrentViewNameChange}
+                        onCurrentDateChange={handleCurrentDateChange}
+                    />
+                    <DayView startDayHour={9} endDayHour={18} />
+                    <WeekView
+                        startDayHour={9}
+                        endDayHour={18}
+                        excludedDays={[0, 6]}
+                        dayScaleCellComponent={DayScaleCell}
+                        timeScaleLabelComponent={TimeScaleCells}
+                    />
+                    <Appointments
+                        appointmentComponent={Appointment}
+                        appointmentContentComponent={AppointmentContent}
+                    />
+                    <Toolbar
+                        {...(loading
+                            ? { rootComponent: ToolbarWithLoading }
+                            : null)}
+                    />
+                    {isDoctorCalendar() ? (
+                        <EditingState onCommitChanges={handleChanges} />
+                    ) : null}
+                    {isDoctorCalendar() ? <IntegratedEditing /> : null}
+                    {isDoctorCalendar() ? <ConfirmationDialog /> : null}
 
-                <DateNavigator />
-                <TodayButton />
-                <ViewSwitcher />
-                <AppointmentTooltip showOpenButton showCloseButton />
-                <AppointmentForm />
-            </Scheduler>
-        </Paper>
+                    <DateNavigator />
+                    <TodayButton />
+                    <ViewSwitcher />
+                    <AppointmentTooltip showOpenButton showCloseButton />
+                    <AppointmentForm />
+                </Scheduler>
+            </Paper>
+        </div>
     );
 };
 
