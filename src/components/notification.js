@@ -55,10 +55,7 @@ class Notification extends React.Component {
         window.open('http://localhost:3000/meeting');
 
         // Lastly, Close the notification
-        if (this.state.idx != '')
-            this.props.firebase
-                .reservation(this.state.idx)
-                .update({ flag: false });
+        this.props.firebase.reservation(this.state.idx).update({ flag: false });
         this.n.close(event.target.tag);
     };
 
@@ -70,11 +67,13 @@ class Notification extends React.Component {
             .equalTo(this.props.authUser.uid)
             .on('value', snapshot => {
                 const obj = snapshot.val();
-                const list = Object.keys(obj).map(key => ({
-                    ...obj[key],
-                    key,
-                }));
-                this.setState({ revList: list });
+                if (obj != null) {
+                    const list = Object.keys(obj).map(key => ({
+                        ...obj[key],
+                        key,
+                    }));
+                    this.setState({ revList: list });
+                }
             });
     }
 

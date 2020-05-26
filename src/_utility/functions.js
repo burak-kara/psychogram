@@ -57,17 +57,12 @@ export const getStar = rating => {
 
 export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-const hasNumber = value => {
-    return new RegExp(/[0-9]/).test(value);
-};
+const hasNumber = value => new RegExp(/[0-9]/).test(value);
 
-const hasMixed = value => {
-    return new RegExp(/[a-z]/).test(value) && new RegExp(/[A-Z]/).test(value);
-};
+const hasMixed = value =>
+    new RegExp(/[a-z]/).test(value) && new RegExp(/[A-Z]/).test(value);
 
-const hasSpecial = value => {
-    return new RegExp(/[!#@$%^&*)(+=._-]/).test(value);
-};
+const hasSpecial = value => new RegExp(/[!#@$%^&*)(+=._-]/).test(value);
 
 export const passCheck = passObj => {
     var retObj = {
@@ -94,70 +89,70 @@ export const passCheck = passObj => {
     let isStrength = false;
 
     if (
-        passObj.policy.hasNumber === true &&
-        passObj.policy.hasMixChar === true &&
-        passObj.policy.hasSpecial === true
+        passObj.policy.hasNumber &&
+        passObj.policy.hasMixChar &&
+        passObj.policy.hasSpecial
     ) {
         isStrength = isNumber && isMixChar && isSpecial;
     } else if (
-        passObj.policy.hasNumber === true &&
-        passObj.policy.hasMixChar === true &&
-        passObj.policy.hasSpecial === false
+        passObj.policy.hasNumber &&
+        passObj.policy.hasMixChar &&
+        !passObj.policy.hasSpecial
     ) {
         isStrength = isNumber && isMixChar;
     } else if (
-        passObj.policy.hasNumber === true &&
-        passObj.policy.hasMixChar === false &&
-        passObj.policy.hasSpecial === true
+        passObj.policy.hasNumber &&
+        !passObj.policy.hasMixChar &&
+        passObj.policy.hasSpecial
     ) {
         isStrength = isNumber && isSpecial;
     } else if (
-        passObj.policy.hasNumber === true &&
-        passObj.policy.hasMixChar === false &&
-        passObj.policy.hasSpecial === false
+        passObj.policy.hasNumber &&
+        !passObj.policy.hasMixChar &&
+        !passObj.policy.hasSpecial
     ) {
         isStrength = isNumber;
     } else if (
-        passObj.policy.hasNumber === false &&
-        passObj.policy.hasMixChar === true &&
-        passObj.policy.hasSpecial === true
+        !passObj.policy.hasNumber &&
+        passObj.policy.hasMixChar &&
+        passObj.policy.hasSpecial
     ) {
         isStrength = isMixChar && isSpecial;
     } else if (
-        passObj.policy.hasNumber === false &&
-        passObj.policy.hasMixChar === true &&
-        passObj.policy.hasSpecial === false
+        !passObj.policy.hasNumber &&
+        passObj.policy.hasMixChar &&
+        !passObj.policy.hasSpecial
     ) {
         isStrength = isMixChar;
     } else if (
-        passObj.policy.hasNumber === false &&
-        passObj.policy.hasMixChar === false &&
-        passObj.policy.hasSpecial === true
+        !passObj.policy.hasNumber &&
+        !passObj.policy.hasMixChar &&
+        passObj.policy.hasSpecial
     ) {
         isStrength = isSpecial;
     } else if (
-        passObj.policy.hasNumber === false &&
-        passObj.policy.hasMixChar === false &&
-        passObj.policy.hasSpecial === false
+        !passObj.policy.hasNumber &&
+        !passObj.policy.hasMixChar &&
+        !passObj.policy.hasSpecial
     ) {
         isStrength = true;
     }
 
-    if (isLength === false) {
+    if (!isLength) {
         retObj.err = true;
         retObj.mess =
             'Password length must be between ' +
             passObj.policy.min +
             ' and ' +
             passObj.policy.max;
-    } else if (isStrength === false) {
+    } else if (!isStrength) {
         retObj.err = true;
-        if (passObj.policy.hasNumber === true && isNumber === false)
+        if (passObj.policy.hasNumber && !isNumber)
             retObj.mess = 'Password must contain at least one number';
-        else if (passObj.policy.hasMixChar === true && isMixChar === false)
+        else if (passObj.policy.hasMixChar && !isMixChar)
             retObj.mess =
                 'Password must contain upper and lowercase characters';
-        else if (passObj.policy.hasSpecial === true && isSpecial === false)
+        else if (passObj.policy.hasSpecial && !isSpecial)
             retObj.mess =
                 'Password must contain at least one special charcaters like [!#@$%^&*)(+=._-]';
     } else {
