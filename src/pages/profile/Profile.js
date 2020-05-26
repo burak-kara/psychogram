@@ -98,12 +98,13 @@ const Profile = props => {
         setDelConfOpen(!ChangePassOpen);
     };
     const ChangePassword = () => {
-        firebase.doPasswordReset(authUser.email).then(r => {
+        firebase.doPasswordReset(authUser.email);
+        firebase.doSignOut().then(() => {
             setMessage('Mail Gönderildi');
             setSeverity('success');
             setAlertsOpen(true);
             history.push({
-                pathname: ROUTES.SIGN_IN,
+                pathname: ROUTES.LANDING,
             });
         });
     };
