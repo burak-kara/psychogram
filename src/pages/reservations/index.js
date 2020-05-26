@@ -3,28 +3,28 @@ import moment from 'moment';
 import { compose } from 'recompose';
 import * as ROLES from '../../_constants/roles';
 import { withStyles } from '@material-ui/core/styles';
-import { Paper, LinearProgress } from '@material-ui/core';
+import { LinearProgress, Paper } from '@material-ui/core';
 import { formatDateAsHours, snapshotToArray } from '../../_utility/functions';
 import { withAuthorization, withEmailVerification } from '../../_session';
 import ReactNotifications from 'react-browser-notifications';
-import Notification from '../../components/notification';
+
 import {
     EditingState,
     IntegratedEditing,
     ViewState,
 } from '@devexpress/dx-react-scheduler';
 import {
-    Scheduler,
-    WeekView,
-    DayView,
-    Appointments,
-    Toolbar,
-    DateNavigator,
-    ViewSwitcher,
     AppointmentForm,
+    Appointments,
     AppointmentTooltip,
-    TodayButton,
     ConfirmationDialog,
+    DateNavigator,
+    DayView,
+    Scheduler,
+    TodayButton,
+    Toolbar,
+    ViewSwitcher,
+    WeekView,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { LoadingPage } from '../../components/Loadings';
 import { useLocation } from 'react-router-dom';
