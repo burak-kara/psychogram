@@ -36,6 +36,7 @@ const INITIAL_STATE = {
     location: '',
     role: '',
     status: 'Grinning Face',
+    field: '',
 };
 
 class SignUpFormBase extends Component {
