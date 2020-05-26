@@ -176,7 +176,7 @@ const PersonalInfo = props => {
                     {user.role && user.role === ROLES.DOCTOR ? (
                         <div className="row">
                             <div className="col-12 no-padding">
-                                <span className="align-middle ml-2">{` ${user.experties}`}</span>
+                                <span className="align-middle ml-2">{` ${user.field}`}</span>
                             </div>
                         </div>
                     ) : null}

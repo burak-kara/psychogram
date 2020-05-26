@@ -36,6 +36,7 @@ const INITIAL_STATE = {
     location: '',
     role: '',
     status: 'Grinning Face',
+    field: '',
     rating: 0,
     totalRate: 0,
     rateCount: 0,
