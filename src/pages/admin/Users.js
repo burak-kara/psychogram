@@ -9,6 +9,7 @@ import { LoadingPage } from '../../components/Loadings';
 import { useLocation } from 'react-router-dom';
 import DeleteConfirmWindow from './DeleteConfirmWindow';
 import Alert from '../../components/Alert';
+import RoleUpdateConfWindow from './RoleUpdateConf';
 
 const useStyles = makeStyles(theme => ({
     large: {
@@ -25,24 +26,46 @@ const Users = props => {
     const [loading, setLoading] = useState(false);
     const [patients, setPatients] = useState([]);
     const [delConfOpen, setDelConfOpen] = useState(false);
+    const [updateConfOpen, setUpdateConfOpen] = useState(false);
     const [alertOpen, setAlertsOpen] = useState(false);
     const [message, setMessage] = useState('');
     const [severity, setSeverity] = useState('');
     const [tempId, setTempId] = useState('');
 
-    const handleRole = patientId => {
-        firebase.user(`${patientId}/role`).set('ADMIN');
+    const roleUpdate = () => {
+        firebase
+            .user(`${tempId}/role`)
+            .set('ADMIN')
+            .then(() => {
+                setMessage('Kullancı rolü başarıyla güncellendi.');
+                setSeverity('success');
+            })
+            .catch(() => {
+                setMessage('Kullancı rolü güncellenirken bir hata oluştu!');
+                setSeverity('error');
+            });
+        setAlertsOpen(true);
+        handleRoleConfOpen();
+    };
+
+    const handleRoleConfOpen = () => {
+        setUpdateConfOpen(!updateConfOpen);
+    };
+
+    const handleRoleUpdate = id => {
+        setTempId(id);
+        setUpdateConfOpen(true);
     };
 
     const deleteAccount = () => {
         firebase
             .user(tempId)
             .set({})
-            .then(r => {
+            .then(() => {
                 setMessage('Hesap başarıyla silindi.');
                 setSeverity('success');
             })
-            .catch(error => {
+            .catch(() => {
                 setMessage('Hesap silinirken bir hata oluştu!');
                 setSeverity('error');
             });
@@ -112,7 +135,7 @@ const Users = props => {
                 <button
                     type="button"
                     className="btn btn-primary"
-                    onClick={() => handleRole(patient.key)}
+                    onClick={() => handleRoleUpdate(patient.key)}
                 >
                     Assign As Admin
                 </button>
@@ -134,6 +157,11 @@ const Users = props => {
                 open={delConfOpen}
                 handleClose={handleDelConfOpen}
                 handleSave={deleteAccount}
+            />
+            <RoleUpdateConfWindow
+                open={updateConfOpen}
+                handleClose={handleRoleConfOpen}
+                handleSave={roleUpdate}
             />
             <Alert
                 open={alertOpen}
