@@ -8,8 +8,8 @@ const Settings = props => {
         handleClose,
         handleSave,
         onChange,
-        handleDelete,
         handlePassword,
+        handleDelete,
     } = props;
 
     const renderContent = () => (
@@ -123,15 +123,15 @@ const Settings = props => {
                         />
                     </div>
                 </div>
-                <div className="col-sm-2">
-                    <button
-                        className="btn btn-danger btn-block"
-                        onClick={handlePassword}
-                    >
-                        Change Password
-                    </button>
-                </div>
             </form>
+            <div className="col-md-12 delete-account">
+                <button
+                    className="btn btn-danger btn-block"
+                    onClick={handlePassword}
+                >
+                    Change Password
+                </button>
+            </div>
             <div className="col-md-12 delete-account">
                 <button
                     className="btn btn-danger btn-block"
