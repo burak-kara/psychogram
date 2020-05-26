@@ -7,10 +7,12 @@ import { compose } from 'recompose';
 import { withAuthorization } from '../../_session';
 import { useHistory, useLocation } from 'react-router-dom';
 import DeleteConfirmWindow from './DeleteConfirmWindow';
+import ChangePasswordWindow from './ChangePasswordWindow';
 import * as ROUTES from '../../_constants/routeConstants';
 import CropWindow from './CropWindow';
 import { LoadingPage } from '../../components/Loadings';
 import * as ROLES from '../../_constants/roles';
+import Firebase from '../../_firebase/firebase';
 
 const Profile = props => {
     const { authUser, firebase } = props;
@@ -20,6 +22,7 @@ const Profile = props => {
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [alertOpen, setAlertsOpen] = useState(false);
     const [delConfOpen, setDelConfOpen] = useState(false);
+    const [ChangePassOpen, setChangePassOpen] = useState(false);
     const [uploadOpen, setUploadOpen] = useState(false);
 
     const [settings, setSettings] = useState(null);
@@ -86,6 +89,24 @@ const Profile = props => {
 
     const handleProfileDelete = () => {
         setDelConfOpen(true);
+    };
+    const handleChangePassword = () => {
+        setChangePassOpen(true);
+    };
+
+    const handlePassConfOpen = () => {
+        setDelConfOpen(!ChangePassOpen);
+    };
+    const ChangePassword = () => {
+        firebase.doPasswordReset = email =>
+            this.auth.sendPasswordResetEmail(email).then(r => {
+                setMessage('Hesap başarıyla silindi kaydedildi.');
+                setSeverity('success');
+                setAlertsOpen(true);
+                history.push({
+                    pathname: ROUTES.PROFILE,
+                });
+            });
     };
 
     const handleUploadOpen = () => {
@@ -243,6 +264,7 @@ const Profile = props => {
                 settings={settings}
                 handleClose={handleSettingShow}
                 handleSave={handleSettingsSave}
+                handlePassword={ChangePassword}
                 handleDelete={handleProfileDelete}
                 onChange={handleSettingsChange}
             />
@@ -250,6 +272,11 @@ const Profile = props => {
                 open={delConfOpen}
                 handleClose={handleDelConfOpen}
                 handleSave={deleteAccount}
+            />
+            <ChangePasswordWindow
+                open={ChangePassOpen}
+                handleClose={handlePassConfOpen}
+                handleSave={ChangePassword}
             />
             <CropWindow
                 open={uploadOpen}

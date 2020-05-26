@@ -9,6 +9,7 @@ const Settings = props => {
         handleSave,
         onChange,
         handleDelete,
+        handlePassword,
     } = props;
 
     const renderContent = () => (
@@ -122,17 +123,13 @@ const Settings = props => {
                         />
                     </div>
                 </div>
-                <div className="form-row">
-                    <div className="form-group col-md-6">
-                        <label htmlFor="name">Password</label>
-                        <input
-                            className="form-control"
-                            type="text"
-                            name="name"
-                            id="name"
-                            value={settings.password}
-                        />
-                    </div>
+                <div className="col-sm-2">
+                    <button
+                        className="btn btn-danger btn-block"
+                        onClick={handlePassword}
+                    >
+                        Change Password
+                    </button>
                 </div>
             </form>
             <div className="col-md-12 delete-account">
@@ -140,7 +137,7 @@ const Settings = props => {
                     className="btn btn-danger btn-block"
                     onClick={handleDelete}
                 >
-                    Hesabi Sil
+                    Delete Account
                 </button>
             </div>
         </>
