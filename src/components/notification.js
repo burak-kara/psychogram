@@ -27,16 +27,18 @@ class Notification extends React.Component {
             let diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
             let diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
 
-            if (diffMins <= 10 && diffMins >= 1) {
-                let day = diffDays;
-                let hour = diffHrs;
-                let minut = diffMins;
+            if (
+                diffDays === 0 &&
+                diffHrs === 0 &&
+                diffMins <= 10 &&
+                diffMins >= 1
+            ) {
                 let str =
-                    day +
+                    diffDays +
                     ' days, ' +
-                    hour +
+                    diffHrs +
                     ' hours, ' +
-                    minut +
+                    diffMins +
                     ' minutes until next meeting';
                 this.setState({ mess: str });
                 this.setState({ idx: this.state.revList[i].key });
