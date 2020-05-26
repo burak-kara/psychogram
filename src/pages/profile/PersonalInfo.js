@@ -1,19 +1,36 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 import Emoji from 'a11y-react-emoji';
 import { faceEmojis, profileInfoEmojis } from '../../_utility/emojis';
-import { Tooltip, Zoom } from '@material-ui/core';
+import { Tooltip, Zoom, Avatar, makeStyles, Badge } from '@material-ui/core';
 import moment from 'moment';
 import * as ROLES from '../../_constants/roles';
 
+const useStyles = makeStyles(theme => ({
+    large: {
+        maxWidth: '100%',
+        maxHeight: '100%',
+        height: '100%',
+        width: '100%',
+        display: 'block',
+    },
+    badge: {
+        height: '100%',
+        width: '100%',
+        cursor: 'pointer',
+    },
+}));
+
 const PersonalInfo = props => {
-    const { user, openSettings, handleStatus, patient } = props;
+    const { user, openSettings, handleStatus, isOther, handleUpload } = props;
+    const classes = useStyles();
 
     const renderOverlay = () => (
         <OverlayTrigger
+            rootClose={true}
             placement="right"
             trigger="click"
-            delay={{ show: 250, hide: 400 }}
+            delay={{ show: 250, hide: 100 }}
             overlay={
                 <Popover id="popover-basic">
                     <Popover.Title as="h3">Durumunu Değiştir</Popover.Title>
@@ -51,12 +68,34 @@ const PersonalInfo = props => {
     return (
         <div className="col-lg-3 col-md-3 col-sm-12 col-12 pl-5 pr-5 pt-2 pb-4 profile-info">
             <div className="row d-flex justify-content-center">
-                <div className="col-lg-12 col-md-12 col-sm-6 col-6 h-auto text-center">
-                    <img
-                        src={user.profilePictureSource}
-                        className="img-fluid rounded-circle"
-                        alt=""
-                    />
+                <div className="col-lg-12 col-md-12 col-sm-12 col-12 profile-pic-container">
+                    {isOther ? (
+                        <Avatar
+                            src={user.profilePictureSource}
+                            className={classes.large}
+                        >
+                            {`${user.name[0]}${user.surname[0]}`}
+                        </Avatar>
+                    ) : (
+                        <Badge
+                            badgeContent={'Yeni Fotoğraf'}
+                            color="error"
+                            onClick={handleUpload}
+                            className={classes.badge}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'right',
+                            }}
+                            overlap="circle"
+                        >
+                            <Avatar
+                                src={user.profilePictureSource}
+                                className={classes.large}
+                            >
+                                {`${user.name[0]}${user.surname[0]}`}
+                            </Avatar>
+                        </Badge>
+                    )}
                 </div>
             </div>
             <div className="row mt-2">
@@ -74,14 +113,21 @@ const PersonalInfo = props => {
                     placement="bottom-end"
                 >
                     <div className="col-lg-3 col-3 text-right pr-0">
-                        {renderOverlay()}
+                        {isOther ? (
+                            <Emoji
+                                symbol={faceEmojis.get(user.status)}
+                                className="emoji-32"
+                            />
+                        ) : (
+                            renderOverlay()
+                        )}
                     </div>
                 </Tooltip>
             </div>
             <div className="row mt-2 h-auto">
                 <span>{`${user.description}`}</span>
             </div>
-            {!patient ? (
+            {isOther ? null : (
                 <div className="row mt-3">
                     <button
                         className="btn btn-secondary btn-block"
@@ -91,7 +137,7 @@ const PersonalInfo = props => {
                         Profili Düzenle
                     </button>
                 </div>
-            ) : null}
+            )}
             <div className="row mt-2">
                 <div className="col-12">
                     <div className="row text-capitalize">
@@ -130,7 +176,7 @@ const PersonalInfo = props => {
                     {user.role && user.role === ROLES.DOCTOR ? (
                         <div className="row">
                             <div className="col-12 no-padding">
-                                <span className="align-middle ml-2">{` ${props.user.experties}`}</span>
+                                <span className="align-middle ml-2">{` ${user.experties}`}</span>
                             </div>
                         </div>
                     ) : null}
@@ -139,7 +185,7 @@ const PersonalInfo = props => {
                             <div className="col-12 no-padding">
                                 <span className="align-middle ml-2">
                                     {' '}
-                                    Rating:{` ${props.user.rating}`}/5
+                                    Rating:{` ${user.rating}`}/5
                                 </span>
                             </div>
                         </div>

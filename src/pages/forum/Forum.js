@@ -6,6 +6,7 @@ import { Route } from 'react-router-dom';
 import ForumNavigation from '../../components/forumComponents/ForumNavigation';
 import { compose } from 'recompose';
 import { withAuthorization, withEmailVerification } from '../../_session';
+import * as ROLES from '../../_constants/roles';
 
 class Forum extends Component {
     constructor(props) {
@@ -49,7 +50,9 @@ class Forum extends Component {
     }
 }
 
-const condition = authUser => authUser;
+const condition = authUser =>
+    authUser &&
+    (authUser.role === ROLES.PATIENT || authUser.role === ROLES.DOCTOR);
 
 export default compose(
     withEmailVerification,
