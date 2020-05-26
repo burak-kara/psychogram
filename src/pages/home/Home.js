@@ -1,26 +1,31 @@
 import { withFirebase } from '../../_firebase';
 import React, { useEffect, useState } from 'react';
+import { LoadingPage } from '../../components/Loadings';
 
 const Home = props => {
+    const { firebase } = props;
     const [pic, setPic] = useState('');
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        props.firebase
+        setLoading(true);
+        firebase
             .getPsychoPic()
             .getDownloadURL()
             .then(url => {
                 setPic(url);
+                setLoading(false);
             });
-    }, [props.firebase]);
+    }, [firebase]);
 
-    return (
+    return loading ? (
+        <LoadingPage />
+    ) : (
         <div className="homepage">
-            <img id="picLoc" src={pic} alt="main" />
-            <h2 className="leftLoc">You Are Not Alone</h2>
-            <br />
-            <br />
+            <h2 className="content mb-4">You Are Not Alone</h2>
+            <img className="pic mb-4" src={pic} alt="main" />
             <article>
-                <h2 id="ourService">OUR SERVICES</h2>
+                <h2 className="content mb-4">OUR SERVICES</h2>
                 <br />
                 <h3>ANXIETY AND RELATED DISORDERS</h3>
                 <p>

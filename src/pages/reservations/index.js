@@ -24,6 +24,8 @@ import {
     TodayButton,
     ConfirmationDialog,
 } from '@devexpress/dx-react-scheduler-material-ui';
+import { LoadingPage } from '../../components/Loadings';
+import { useLocation } from 'react-router-dom';
 
 const styles = {
     toolbarRoot: {
@@ -188,6 +190,8 @@ const ToolbarWithLoading = withStyles(styles, { name: 'Toolbar' })(
 
 const Reservations = props => {
     const { authUser, firebase, history } = props;
+    const location = useLocation();
+
     const [loading, setLoading] = useState(true);
     const [currentDate, setCurrentDate] = useState(moment());
     const [currentViewName, setCurrentViewName] = useState('Week');
@@ -196,8 +200,9 @@ const Reservations = props => {
     const formattedData = data ? data.map(item => ({ ...item })) : [];
 
     useEffect(() => {
+        setLoading(true);
         isDoctorCalendar() ? getDoctorCalendar() : getUserCalendar();
-    }, [authUser, firebase, currentDate]);
+    }, [authUser, firebase, currentDate, location]);
 
     const isDoctorCalendar = () =>
         history &&
@@ -265,6 +270,7 @@ const Reservations = props => {
                 doctorId,
                 startDate: moment(added.startDate).format(),
                 endDate: moment(added.endDate).format(),
+                isNow: false,
             });
             createMeeting(userId, doctorId, pushRef.key);
         }
@@ -284,10 +290,18 @@ const Reservations = props => {
                         .push(reservationId);
                 } else {
                     // TODO add success, error handling for promise
-                    props.firebase.meetings().child(meetingId).set({
-                        userId,
-                        doctorId,
-                    });
+                    props.firebase
+                        .meetings()
+                        .child(meetingId)
+                        .set({
+                            userId,
+                            doctorId,
+                            lastMessage: {
+                                date: '',
+                                message: '',
+                                senderId: '',
+                            },
+                        });
                     props.firebase
                         .meetings()
                         .child(meetingId)
@@ -297,7 +311,9 @@ const Reservations = props => {
             });
     };
 
-    return (
+    return loading ? (
+        <LoadingPage />
+    ) : (
         <Paper className="reservation-calendar">
             <Scheduler data={formattedData} height={780}>
                 <ViewState
@@ -339,7 +355,9 @@ const Reservations = props => {
     );
 };
 
-const condition = authUser => authUser;
+const condition = authUser =>
+    authUser &&
+    (authUser.role === ROLES.PATIENT || authUser.role === ROLES.DOCTOR);
 
 export default compose(
     withEmailVerification,

@@ -18,11 +18,14 @@ const ChatHeader = props => {
         handleClose,
         handleEnd,
         setAnchorEl,
+        onClick,
+        currentReservation,
+        handleExportChat,
     } = props;
 
     return (
         <div className="chat-header">
-            <div className="back-container" onClick={props.onClick}>
+            <div className="back-container" onClick={onClick}>
                 <IconContext.Provider value={{ size: '24' }}>
                     <IoMdArrowRoundBack />
                 </IconContext.Provider>
@@ -61,35 +64,35 @@ const ChatHeader = props => {
                 >
                     <MenuItem onClick={() => setAnchorEl(null)}>
                         <button
-                            className="btn btn-secondary btn-block d-flex justify-content-around"
-                            onClick={() => alert('use export handler instead')}
+                            className="btn btn-secondary btn-block d-flex justify-content-around align-items-center"
+                            onClick={handleExportChat}
                         >
                             <IconContext.Provider
                                 value={{
                                     size: '1.5em',
-                                    className: 'export',
                                 }}
                             >
                                 <FaFileExport fontSize="small" />
                             </IconContext.Provider>
-                            Export Chat
+                            <div>Export Chat</div>
                         </button>
                     </MenuItem>
-                    {authUser.role === ROLES.PATIENT ? (
+                    {authUser.role === ROLES.PATIENT &&
+                    currentReservation &&
+                    !currentReservation.isEnded ? (
                         <MenuItem onClick={() => setAnchorEl(null)}>
                             <button
-                                className="btn btn-danger btn-block"
+                                className="btn btn-danger btn-block d-flex justify-content-around align-items-center"
                                 onClick={handleEnd}
                             >
                                 <IconContext.Provider
                                     value={{
                                         size: '1.5em',
-                                        className: 'end',
                                     }}
                                 >
                                     <MdCallEnd fontSize="small" />
                                 </IconContext.Provider>
-                                End Meeting
+                                <div>End Meeting</div>
                             </button>
                         </MenuItem>
                     ) : null}

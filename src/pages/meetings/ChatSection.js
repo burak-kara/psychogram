@@ -4,20 +4,36 @@ import MessageTextField from './TextField';
 import { snapshotToArray } from '../../_utility/functions';
 import moment from 'moment';
 import ChatHeader from './ChatHeader';
+import Alert from '../../components/Alert';
+import ChatExportWindow from './ChatExportWindow';
 
 const ChatSection = props => {
-    const { authUser, firebase, currentMeetingKey, user, handleEnd } = props;
+    const {
+        authUser,
+        firebase,
+        currentMeetingKey,
+        user,
+        handleEnd,
+        onClick,
+        meetingReservationIds,
+        setCurrentReservation,
+        currentReservation,
+    } = props;
     const [newMessage, setNewMessage] = useState('');
     const [messages, setMessages] = useState(new Map());
     const [isDisabled, setDisabled] = useState(true);
     const [anchorEl, setAnchorEl] = useState(null);
+    const [reservations, setReservations] = useState(null);
+    const [alertOpen, setAlertsOpen] = useState(false);
+    const [message, setMessage] = useState('');
+    const [severity, setSeverity] = useState('');
+    const [saveChatConfOpen, setSaveChatConfOpen] = useState(false);
 
     useEffect(() => {
         setNewMessage('');
-        if (currentMeetingKey && props.reservations) {
+        if (currentMeetingKey && meetingReservationIds) {
             getMessages();
             filterReservations();
-            checkDisabled();
         } else {
             //    TODO loading indicator
         }
@@ -40,19 +56,64 @@ const ChatSection = props => {
         });
     };
 
+    const getMeetingData = () => {
+        let val = '';
+
+        firebase.messages(currentMeetingKey).on('value', snapshot => {
+            let map = new Map();
+            snapshot.forEach(snap => {
+                const message = snap.val();
+                val +=
+                    '[' +
+                    (message.senderId === authUser.uid
+                        ? authUser.name + ' ' + authUser.surname
+                        : user.name + '' + user.surname) +
+                    '] ' +
+                    message.date +
+                    ' ' +
+                    message.message +
+                    '\r\n';
+            });
+        });
+
+        return val;
+    };
+
+    const sendChatAsEmail = () => {
+        return getMeetingData();
+    };
+
+    const handleExportChat = () => {
+        setSaveChatConfOpen(!saveChatConfOpen);
+    };
+
     const filterReservations = () => {
         firebase.reservations().on('value', snapshot => {
-            const tempReservs = snapshotToArray(snapshot);
-            tempReservs.filter(value => props.reservations.includes(value.key));
-            checkDisabled(tempReservs);
+            let data = snapshotToArray(snapshot);
+            data = data.filter(value =>
+                meetingReservationIds.includes(value.key)
+            );
+            setReservations(data);
+            checkDisabled(data);
         });
     };
 
+    const handleAlertClose = () => {
+        setAlertsOpen(false);
+    };
+
     const sendMessage = message => {
-        firebase
-            .messages(currentMeetingKey)
-            .child(moment().valueOf().toString())
-            .set(message);
+        if (checkDisabled(reservations)) {
+            setAlertsOpen(true);
+            setMessage('The meeting is ended');
+            setSeverity('warning');
+            handleEnd();
+        } else {
+            firebase
+                .messages(currentMeetingKey)
+                .child(moment().valueOf().toString())
+                .set(message);
+        }
     };
 
     const setLastMessage = message => {
@@ -86,15 +147,24 @@ const ChatSection = props => {
     const checkDisabled = temps => {
         const currentTime = moment().format();
         if (temps) {
-            temps.map(item => {
+            // I know it is ugly but it is the only way to break a loop
+            for (let i = 0; i < temps.length; i++) {
+                const item = temps[i];
                 if (
                     moment(item.startDate).isBefore(currentTime) &&
                     moment(item.endDate).isAfter(currentTime)
                 ) {
-                    setDisabled(false);
+                    setCurrentReservation(item);
+                    setDisabled(item.isEnded);
+                    return false;
+                } else {
+                    setDisabled(true);
                 }
-            });
+            }
+        } else {
+            setDisabled(true);
         }
+        return true;
     };
 
     const handleClick = event => {
@@ -117,6 +187,9 @@ const ChatSection = props => {
                         handleClose={handleClose}
                         setAnchorEl={setAnchorEl}
                         handleEnd={handleEnd}
+                        onClick={onClick}
+                        currentReservation={currentReservation}
+                        handleExportChat={handleExportChat}
                     />
                     <ChatFeed
                         messages={[...messages.values()]}
@@ -150,6 +223,19 @@ const ChatSection = props => {
                     />
                 </div>
             </div>
+            <Alert
+                open={alertOpen}
+                handleClose={handleAlertClose}
+                message={message}
+                severity={severity}
+                duration={7000}
+            />
+            <ChatExportWindow
+                open={saveChatConfOpen}
+                handleClose={handleExportChat}
+                getData={getMeetingData}
+                handleEmail={sendChatAsEmail}
+            />
         </>
     );
 };
