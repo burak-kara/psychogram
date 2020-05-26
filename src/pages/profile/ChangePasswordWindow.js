@@ -5,7 +5,10 @@ const PasswordChangeWindow = props => {
     const { open, handleClose, handleSave } = props;
 
     const renderContent = () => (
-        <div>Şifrenizi değiştirmek istiyor musunuz? </div>
+        <div>
+            Şifrenizi değiştirmek istiyor musunuz? Şifreyi değiştirmek için link
+            mail adresinize gönderilicek.
+        </div>
     );
 
     const renderActions = () => (

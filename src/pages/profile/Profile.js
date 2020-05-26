@@ -98,15 +98,14 @@ const Profile = props => {
         setDelConfOpen(!ChangePassOpen);
     };
     const ChangePassword = () => {
-        firebase.doPasswordReset = email =>
-            this.auth.sendPasswordResetEmail(email).then(r => {
-                setMessage('Hesap başarıyla silindi kaydedildi.');
-                setSeverity('success');
-                setAlertsOpen(true);
-                history.push({
-                    pathname: ROUTES.PROFILE,
-                });
+        firebase.doPasswordReset(authUser.email).then(r => {
+            setMessage('Mail Gönderildi');
+            setSeverity('success');
+            setAlertsOpen(true);
+            history.push({
+                pathname: ROUTES.SIGN_IN,
             });
+        });
     };
 
     const handleUploadOpen = () => {
@@ -264,20 +263,21 @@ const Profile = props => {
                 settings={settings}
                 handleClose={handleSettingShow}
                 handleSave={handleSettingsSave}
-                handlePassword={ChangePassword}
+                handlePassword={handleChangePassword}
                 handleDelete={handleProfileDelete}
                 onChange={handleSettingsChange}
-            />
-            <DeleteConfirmWindow
-                open={delConfOpen}
-                handleClose={handleDelConfOpen}
-                handleSave={deleteAccount}
             />
             <ChangePasswordWindow
                 open={ChangePassOpen}
                 handleClose={handlePassConfOpen}
                 handleSave={ChangePassword}
             />
+            <DeleteConfirmWindow
+                open={delConfOpen}
+                handleClose={handleDelConfOpen}
+                handleSave={deleteAccount}
+            />
+
             <CropWindow
                 open={uploadOpen}
                 handleClose={handleUploadOpen}
