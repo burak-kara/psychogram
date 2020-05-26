@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import '../../assets/styles/pages/doctor.scss';
 import Star from '../../assets/starLogo/star';
 import { Checkbox, Form } from 'semantic-ui-react';
 import * as ROUTES from '../../_constants/routeConstants';
@@ -173,9 +172,7 @@ const RatingPage = props => {
     ) : null;
 };
 
-const condition = authUser =>
-    authUser &&
-    (authUser.role === ROLES.PATIENT || authUser.role === ROLES.ADMIN);
+const condition = authUser => authUser && authUser.role === ROLES.PATIENT;
 
 export default compose(
     withEmailVerification,

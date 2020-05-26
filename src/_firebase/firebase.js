@@ -89,6 +89,8 @@ class Firebase {
 
     doSignOut = () => this.auth.signOut();
 
+    doDelete = () => this.auth.currentUser.delete();
+
     doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
 
     doPasswordUpdate = password =>
@@ -105,6 +107,8 @@ class Firebase {
     getPsychoPic = () =>
         this.storage.ref().child('app_pics').child('psycho.jpg');
 
+    profilePic = () => this.storage.ref().child('profile_pics');
+
     user = uid => this.db.ref(`users/${uid}`);
 
     users = () => this.db.ref('users');
@@ -118,6 +122,10 @@ class Firebase {
     reservation = uid => this.db.ref(`reservations/${uid}`);
 
     reservations = () => this.db.ref(`reservations`);
+
+    articles = () => this.db.ref('articles');
+
+    policy = () => this.db.ref('policy');
 
     // Add new backend methods here
 }

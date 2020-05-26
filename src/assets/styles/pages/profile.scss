@@ -7,6 +7,13 @@
     .profile-info {
         background-color: $background-color-1;
         padding: 10px 30px !important;
+
+        .profile-pic-container {
+            min-height: 400px;
+            display: flex;
+            justify-content: center;
+            padding: 0 !important;
+        }
     }
 
     .emoji-32 {
@@ -66,7 +73,7 @@
         height: 18px;
         width: 18px;
         left: 4px;
-        bottom: 4px;
+        bottom: 3.5px;
         background-color: white;
         -webkit-transition: 0.4s;
         transition: 0.4s;
@@ -94,4 +101,8 @@
     .slider.round:before {
         border-radius: 50%;
     }
+}
+
+.delete-account {
+    padding: 0 !important;
 }
