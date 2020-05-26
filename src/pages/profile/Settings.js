@@ -124,15 +124,15 @@ const Settings = props => {
                     </div>
                 </div>
             </form>
-            <div className="col-md-12 delete-account">
+            <div className="col-md-12 no-padding mb-2">
                 <button
-                    className="btn btn-danger btn-block"
+                    className="btn btn-secondary btn-block"
                     onClick={handlePassword}
                 >
                     Change Password
                 </button>
             </div>
-            <div className="col-md-12 delete-account">
+            <div className="col-md-12 no-padding">
                 <button
                     className="btn btn-danger btn-block"
                     onClick={handleDelete}

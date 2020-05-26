@@ -16,7 +16,7 @@ const PasswordChangeWindow = props => {
             <button className="btn btn-secondary" onClick={handleClose}>
                 Close
             </button>
-            <button className="btn btn-danger" onClick={handleSave}>
+            <button className="btn btn-primary" onClick={handleSave}>
                 Change Password
             </button>
         </>
