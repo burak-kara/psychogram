@@ -270,7 +270,7 @@ const Reservations = props => {
                 doctorId,
                 startDate: moment(added.startDate).format(),
                 endDate: moment(added.endDate).format(),
-                isNow: false,
+                isEnded: false,
             });
             createMeeting(userId, doctorId, pushRef.key);
         }
