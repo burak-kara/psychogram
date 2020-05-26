@@ -220,7 +220,11 @@ const Reservations = props => {
             .on('value', snapshot => {
                 const temp = [];
                 snapshotToArray(snapshot).map(item => {
-                    if (item.doctorId === history.location.state.doctorId) {
+                    if (
+                        history.location &&
+                        history.location.state &&
+                        item.doctorId === history.location.state.doctorId
+                    ) {
                         temp.push(item);
                     }
                 });
