@@ -193,12 +193,12 @@ const ToolbarWithLoading = withStyles(styles, { name: 'Toolbar' })(
 const Reservations = props => {
     const { authUser, firebase, history } = props;
     const location = useLocation();
-
     const [loading, setLoading] = useState(true);
     const [currentDate, setCurrentDate] = useState(moment());
     const [currentViewName, setCurrentViewName] = useState('Week');
     const [data, setData] = useState([]);
     const [navi, setNavi] = useState('');
+
     const formattedData = data ? data.map(item => ({ ...item })) : [];
 
     useEffect(() => {
@@ -278,6 +278,7 @@ const Reservations = props => {
             createMeeting(userId, doctorId, pushRef.key);
         }
     };
+
     const notifyMe = () => {
         if (navi != '') {
             if (navi.supported()) navi.show();
@@ -323,17 +324,7 @@ const Reservations = props => {
     return loading ? (
         <LoadingPage />
     ) : (
-        <div>
-            <div>
-                <ReactNotifications
-                    onRef={ref => setNavi(ref)} // Required
-                    title="MEETING CREATED"
-                    body=" "
-                    icon="icon.png"
-                    tag="abcdef"
-                    timeout="3000"
-                />
-            </div>
+        <>
             <Paper className="reservation-calendar">
                 <Scheduler data={formattedData} height={780}>
                     <ViewState
@@ -372,7 +363,15 @@ const Reservations = props => {
                     <AppointmentForm />
                 </Scheduler>
             </Paper>
-        </div>
+            <ReactNotifications
+                onRef={ref => setNavi(ref)} // Required
+                title="MEETING CREATED"
+                body=" "
+                icon="icon.png"
+                tag="abcdef"
+                timeout="3000"
+            />
+        </>
     );
 };
 
