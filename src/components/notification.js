@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactNotifications from 'react-browser-notifications';
 import { compose } from 'recompose';
-//import { withFirebase } from '../_firebase';
 import { withAuthorization, withEmailVerification } from '../_session';
 
 class Notification extends React.Component {
