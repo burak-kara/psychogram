@@ -126,7 +126,7 @@ const Settings = props => {
             </form>
             <div className="col-md-12 delete-account">
                 <button
-                    className="btn btn-danger btn-block"
+                    className="btn btn-primary btn-block"
                     onClick={handlePassword}
                 >
                     Change Password
