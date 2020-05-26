@@ -1,3 +1,6 @@
+@import '../../../_utility/colors';
+@import '../../../_utility/sizes';
+
 #admin-page {
     #jumboPOL {
         width: 70%;
@@ -24,5 +27,51 @@
     .strength {
         margin-top: 0;
         padding-right: 10px;
+    }
+}
+
+.list-users-page {
+    padding: 20px;
+    background-color: $color-light-green-1;
+    min-height: $normal-height;
+
+    .header {
+        text-align: center;
+        margin: 0 100px;
+    }
+
+    .data-row {
+        border-radius: 10px;
+        align-self: center;
+        width: 80% !important;
+        background-color: $color-green-1;
+        margin-bottom: 20px;
+        margin-left: 10%;
+
+        .picture-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .name {
+            color: $color-light-green-0;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ban {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .admin {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     }
 }

@@ -3,11 +3,10 @@ import moment from 'moment';
 import { compose } from 'recompose';
 import * as ROLES from '../../_constants/roles';
 import { withStyles } from '@material-ui/core/styles';
-import { LinearProgress, Paper } from '@material-ui/core';
+import { Paper, LinearProgress } from '@material-ui/core';
 import { formatDateAsHours, snapshotToArray } from '../../_utility/functions';
 import { withAuthorization, withEmailVerification } from '../../_session';
 import ReactNotifications from 'react-browser-notifications';
-
 import {
     EditingState,
     IntegratedEditing,
@@ -193,6 +192,7 @@ const ToolbarWithLoading = withStyles(styles, { name: 'Toolbar' })(
 const Reservations = props => {
     const { authUser, firebase, history } = props;
     const location = useLocation();
+
     const [loading, setLoading] = useState(true);
     const [currentDate, setCurrentDate] = useState(moment());
     const [currentViewName, setCurrentViewName] = useState('Week');
@@ -222,7 +222,11 @@ const Reservations = props => {
             .on('value', snapshot => {
                 const temp = [];
                 snapshotToArray(snapshot).map(item => {
-                    if (item.doctorId === history.location.state.doctorId) {
+                    if (
+                        history.location &&
+                        history.location.state &&
+                        item.doctorId === history.location.state.doctorId
+                    ) {
                         temp.push(item);
                     }
                 });
@@ -272,7 +276,7 @@ const Reservations = props => {
                 doctorId,
                 startDate: moment(added.startDate).format(),
                 endDate: moment(added.endDate).format(),
-                isNow: false,
+                isEnded: false,
                 flag: true,
             });
             createMeeting(userId, doctorId, pushRef.key);
@@ -280,7 +284,7 @@ const Reservations = props => {
     };
 
     const notifyMe = () => {
-        if (navi != '') {
+        if (navi !== '') {
             if (navi.supported()) navi.show();
         }
     };
@@ -306,9 +310,11 @@ const Reservations = props => {
                             userId,
                             doctorId,
                             lastMessage: {
-                                date: '',
-                                message: '',
-                                senderId: '',
+                                date: moment().format(),
+                                message: `Meeting Created ${formatDateAsHours(
+                                    moment()
+                                )}`,
+                                senderId: `${authUser.uid}`,
                             },
                         });
                     props.firebase
