@@ -67,7 +67,7 @@ const AllDoctors = props => {
                             className="btn btn-primary"
                             onClick={() => deleteAccount(doctor.key)}
                         >
-                            Delete
+                            Ban User
                         </button>
                     </div>
                     <div className="col-sm-6">
