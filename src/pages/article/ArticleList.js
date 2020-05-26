@@ -22,13 +22,21 @@ const ArticleList = props => {
 
     const ArticleFrame = ({ article }) => (
         <>
-            <div style={{ paddingTop: 'auto' }}>
-                <h5>{article.name + '  by ' + article.author}</h5>
+            <div className="article">
+                <div className="container-fluid main-container">
+                    <div className="flex-container">
+                        <h3 className="title">{article.name}</h3>
+                        <div className="body">{article.detail}</div>
+                        <div className="author-info">
+                            <div className="author-metadata">
+                                <div className="username-description">
+                                    <h4>by {article.author}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div>
-                <p style={{ paddingRight: '1px' }}>{article.detail}</p>
-            </div>
-            <hr className="article-page.grey" />
         </>
     );
 
