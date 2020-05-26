@@ -22,6 +22,7 @@ import Rating from '../pages/doctor/Rating';
 import ArticleList from '../pages/article/ArticleList';
 import NotFound from '../components/httpPages/NotFound';
 import Unauthorized from '../components/httpPages/Unauthorized';
+import Users from '../pages/admin/Users';
 
 const App = () => (
     <Router>
@@ -57,12 +58,12 @@ const App = () => (
                     <Route
                         exact
                         path={ROUTES.ADMIN_PATIENTS}
-                        component={AdminPage}
+                        component={Users}
                     />
                     <Route
                         exact
                         path={ROUTES.ADMIN_DOCTORS}
-                        component={AdminPage}
+                        component={Users}
                     />
 
                     <Route
