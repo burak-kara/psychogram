@@ -14,6 +14,7 @@ import {
 import { IconContext } from 'react-icons';
 import { withFirebase } from '../_firebase';
 import { useHistory } from 'react-router-dom';
+import Loadings from './Loadings';
 
 const Navigation = props => {
     const getRoleBased = authUser => {
@@ -40,8 +41,10 @@ const Navigation = props => {
 };
 
 const NavigationDoctor = ({ firebase }) => {
+    const history = useHistory();
     const [anchorEl, setAnchorEl] = useState(null);
     const [logo, setLogo] = useState('');
+    const [loading, setLoading] = useState(true);
 
     const handleClick = event => {
         setAnchorEl(event.currentTarget);
@@ -51,16 +54,23 @@ const NavigationDoctor = ({ firebase }) => {
         setAnchorEl(null);
     };
 
+    const push = pathname => history.push({ pathname });
+
     useEffect(() => {
         getLogo(firebase).then(url => {
             setLogo(url);
+            setLoading(false);
         });
     }, [firebase]);
 
     return (
-        <nav className="navbar navbar-expand-lg navigator">
-            <a className="navbar-brand" href="/">
-                <img src={logo} width="50" height="50" alt="" />
+        <nav id="navigation" className="navbar navbar-expand-lg navigator">
+            <a className="navbar-brand" onClick={() => push(ROUTES.LANDING)}>
+                {loading ? (
+                    <Loadings />
+                ) : (
+                    <img src={logo} width="50" height="50" alt="" />
+                )}
             </a>
             {/* TODO  button doesnt work import bootstrap js also add redux as dependency*/}
             <button
@@ -76,25 +86,26 @@ const NavigationDoctor = ({ firebase }) => {
             </button>
             <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav mr-auto">
-                    <li className="nav-item active">
-                        <a className="nav-link " href={ROUTES.LANDING}>
-                            Home
-                        </a>
+                    <li
+                        className="nav-item active"
+                        onClick={() => push(ROUTES.LANDING)}
+                    >
+                        <a className="nav-link">Home</a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href={ROUTES.FORUM}>
-                            Forum
-                        </a>
+                    <li className="nav-item" onClick={() => push(ROUTES.FORUM)}>
+                        <a className="nav-link">Forum</a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href={ROUTES.MEETINGS}>
-                            Meetings
-                        </a>
+                    <li
+                        className="nav-item"
+                        onClick={() => push(ROUTES.MEETINGS)}
+                    >
+                        <a className="nav-link">Meetings</a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href={ROUTES.RESERVATIONS}>
-                            Calendar
-                        </a>
+                    <li
+                        className="nav-item"
+                        onClick={() => push(ROUTES.RESERVATIONS)}
+                    >
+                        <a className="nav-link">Calendar</a>
                     </li>
                 </ul>
                 <ul className="navbar-nav dots">
@@ -102,7 +113,7 @@ const NavigationDoctor = ({ firebase }) => {
                     <MenuContent
                         firebase={firebase}
                         anchorEl={anchorEl}
-                        onClick={handleClose}
+                        handleClose={handleClose}
                         setAnchorEl={setAnchorEl}
                     />
                 </ul>
@@ -112,8 +123,10 @@ const NavigationDoctor = ({ firebase }) => {
 };
 
 const NavigationPatient = ({ firebase }) => {
+    const history = useHistory();
     const [anchorEl, setAnchorEl] = useState(null);
     const [logo, setLogo] = useState('');
+    const [loading, setLoading] = useState(true);
 
     const handleClick = event => {
         setAnchorEl(event.currentTarget);
@@ -123,16 +136,23 @@ const NavigationPatient = ({ firebase }) => {
         setAnchorEl(null);
     };
 
+    const push = pathname => history.push({ pathname });
+
     useEffect(() => {
         getLogo(firebase).then(url => {
             setLogo(url);
+            setLoading(false);
         });
     }, [firebase]);
 
     return (
-        <nav className="navbar navbar-expand-lg navigator">
-            <a className="navbar-brand" href="/">
-                <img src={logo} width="50" height="50" alt="" />
+        <nav id="navigation" className="navbar navbar-expand-lg navigator">
+            <a className="navbar-brand" onClick={() => push(ROUTES.LANDING)}>
+                {loading ? (
+                    <Loadings />
+                ) : (
+                    <img src={logo} width="50" height="50" alt="" />
+                )}
             </a>
             {/* TODO  button doesnt work import bootstrap js also add redux as dependency*/}
             <button
@@ -148,30 +168,32 @@ const NavigationPatient = ({ firebase }) => {
             </button>
             <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav mr-auto">
-                    <li className="nav-item active">
-                        <a className="nav-link " href={ROUTES.LANDING}>
-                            Home
-                        </a>
+                    <li
+                        className="nav-item active"
+                        onClick={() => push(ROUTES.LANDING)}
+                    >
+                        <a className="nav-link">Home</a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href={ROUTES.FORUM}>
-                            Forum
-                        </a>
+                    <li className="nav-item" onClick={() => push(ROUTES.FORUM)}>
+                        <a className="nav-link">Forum</a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href={ROUTES.MEETINGS}>
-                            Meetings
-                        </a>
+                    <li
+                        className="nav-item"
+                        onClick={() => push(ROUTES.MEETINGS)}
+                    >
+                        <a className="nav-link">Meetings</a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href={ROUTES.DOCTOR_LIST}>
-                            Doctors
-                        </a>
+                    <li
+                        className="nav-item"
+                        onClick={() => push(ROUTES.DOCTOR_LIST)}
+                    >
+                        <a className="nav-link">Doctors</a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href={ROUTES.RESERVATIONS}>
-                            Reservations
-                        </a>
+                    <li
+                        className="nav-item"
+                        onClick={() => push(ROUTES.RESERVATIONS)}
+                    >
+                        <a className="nav-link">Reservations</a>
                     </li>
                 </ul>
                 <ul className="navbar-nav dots">
@@ -179,7 +201,7 @@ const NavigationPatient = ({ firebase }) => {
                     <MenuContent
                         firebase={firebase}
                         anchorEl={anchorEl}
-                        onClick={handleClose}
+                        handleClose={handleClose}
                         setAnchorEl={setAnchorEl}
                     />
                 </ul>
@@ -189,8 +211,10 @@ const NavigationPatient = ({ firebase }) => {
 };
 
 const NavigationAdmin = ({ firebase }) => {
+    const history = useHistory();
     const [anchorEl, setAnchorEl] = useState(null);
     const [logo, setLogo] = useState('');
+    const [loading, setLoading] = useState(true);
 
     const handleClick = event => {
         setAnchorEl(event.currentTarget);
@@ -200,16 +224,23 @@ const NavigationAdmin = ({ firebase }) => {
         setAnchorEl(null);
     };
 
+    const push = pathname => history.push({ pathname });
+
     useEffect(() => {
         getLogo(firebase).then(url => {
             setLogo(url);
+            setLoading(false);
         });
     }, [firebase]);
 
     return (
         <nav className="navbar navbar-expand-lg navigator">
-            <a className="navbar-brand" href="/">
-                <img src={logo} width="50" height="50" alt="" />
+            <a className="navbar-brand" onClick={() => push(ROUTES.LANDING)}>
+                {loading ? (
+                    <Loadings />
+                ) : (
+                    <img src={logo} width="50" height="50" alt="" />
+                )}
             </a>
             {/* TODO  button doesnt work import bootstrap js also add redux as dependency*/}
             <button
@@ -225,25 +256,29 @@ const NavigationAdmin = ({ firebase }) => {
             </button>
             <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav mr-auto">
-                    <li className="nav-item active">
-                        <a className="nav-link " href={ROUTES.ADMIN}>
-                            Admin Panel
-                        </a>
+                    <li
+                        className="nav-item active"
+                        onClick={() => push(ROUTES.ADMIN)}
+                    >
+                        <a className="nav-link">Admin Panel</a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href={ROUTES.ADMIN_PASSWORD}>
-                            Password Policy
-                        </a>
+                    <li
+                        className="nav-item"
+                        onClick={() => push(ROUTES.ADMIN_PASSWORD)}
+                    >
+                        <a className="nav-link">Password Policy</a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href={ROUTES.ADMIN_PATIENTS}>
-                            All Patients
-                        </a>
+                    <li
+                        className="nav-item"
+                        onClick={() => push(ROUTES.ADMIN_PATIENTS)}
+                    >
+                        <a className="nav-link">All Patients</a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href={ROUTES.ADMIN_DOCTORS}>
-                            All Doctors
-                        </a>
+                    <li
+                        className="nav-item"
+                        onClick={() => push(ROUTES.ADMIN_DOCTORS)}
+                    >
+                        <a className="nav-link">All Doctors</a>
                     </li>
                 </ul>
                 <ul className="navbar-nav dots">
@@ -251,7 +286,7 @@ const NavigationAdmin = ({ firebase }) => {
                     <MenuContent
                         firebase={firebase}
                         anchorEl={anchorEl}
-                        onClick={handleClose}
+                        handleClose={handleClose}
                         setAnchorEl={setAnchorEl}
                     />
                 </ul>
@@ -261,8 +296,10 @@ const NavigationAdmin = ({ firebase }) => {
 };
 
 const NavigationNoAuth = ({ firebase }) => {
+    const history = useHistory();
     const [anchorEl, setAnchorEl] = useState(null);
     const [logo, setLogo] = useState('');
+    const [loading, setLoading] = useState(true);
 
     const handleClick = event => {
         setAnchorEl(event.currentTarget);
@@ -279,16 +316,23 @@ const NavigationNoAuth = ({ firebase }) => {
         </>
     );
 
+    const push = pathname => history.push({ pathname });
+
     useEffect(() => {
         getLogo(firebase).then(url => {
             setLogo(url);
+            setLoading(false);
         });
     }, [firebase]);
 
     return (
         <nav className="navbar navbar-expand-lg navigator">
-            <a className="navbar-brand" href="/">
-                <img src={logo} width="50" height="50" alt="" />
+            <a className="navbar-brand" onClick={() => push(ROUTES.LANDING)}>
+                {loading ? (
+                    <Loadings />
+                ) : (
+                    <img src={logo} width="50" height="50" alt="" />
+                )}
             </a>
             {/* TODO  button doesnt work import bootstrap js also add redux as dependency*/}
             <button
@@ -304,10 +348,11 @@ const NavigationNoAuth = ({ firebase }) => {
             </button>
             <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav mr-auto">
-                    <li className="nav-item active">
-                        <a className="nav-link " href={ROUTES.LANDING}>
-                            Home
-                        </a>
+                    <li
+                        className="nav-item active"
+                        onClick={() => push(ROUTES.LANDING)}
+                    >
+                        <a className="nav-link">Home</a>
                     </li>
                 </ul>
                 <ul className="navbar-nav dots">
@@ -356,23 +401,40 @@ const MenuContent = props => (
             props.content()
         ) : (
             <>
-                <Profile onClick={props.onClick} />
-                <SignOut firebase={props.firebase} onClick={props.onClick} />
+                <Profile onClick={props.handleClose} />
+                <SignOut
+                    firebase={props.firebase}
+                    onClick={props.handleClose}
+                />
             </>
         )}
     </Menu>
 );
 
-const Profile = props => (
-    <MenuItem onClick={props.onClick}>
-        <ListItemIcon>
-            <FaUserAlt />
-        </ListItemIcon>
-        <li>
-            <Link to={ROUTES.PROFILE}>Profile</Link>
-        </li>
-    </MenuItem>
-);
+const Profile = props => {
+    const history = useHistory();
+
+    return (
+        <MenuItem onClick={props.onClick}>
+            <ListItemIcon>
+                <FaUserAlt />
+            </ListItemIcon>
+            <li>
+                <div
+                    onClick={() =>
+                        history.push({
+                            pathname: ROUTES.PROFILE,
+                            search: '',
+                            state: {},
+                        })
+                    }
+                >
+                    Profile
+                </div>
+            </li>
+        </MenuItem>
+    );
+};
 
 const SignIn = props => (
     <MenuItem onClick={props.onClick}>

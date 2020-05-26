@@ -5,14 +5,17 @@ import Settings from './Settings';
 import Alert from '../../components/Alert';
 import { compose } from 'recompose';
 import { withAuthorization } from '../../_session';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import DeleteConfirmWindow from './DeleteConfirmWindow';
 import * as ROUTES from '../../_constants/routeConstants';
 import CropWindow from './CropWindow';
+import { LoadingPage } from '../../components/Loadings';
+import * as ROLES from '../../_constants/roles';
 
 const Profile = props => {
     const { authUser, firebase } = props;
     const history = useHistory();
+    const location = useLocation();
 
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [alertOpen, setAlertsOpen] = useState(false);
@@ -27,6 +30,7 @@ const Profile = props => {
     const imgRef = useRef(null);
     const [crop, setCrop] = useState({ unit: 'px', width: 400, aspect: 1 / 1 });
     const [previewUrl, setPreviewUrl] = useState(null);
+    const [isOther, setIsOther] = useState(false);
 
     const handleSettingShow = () => {
         setSettingsOpen(!settingsOpen);
@@ -168,20 +172,47 @@ const Profile = props => {
     };
 
     useEffect(() => {
-        // TODO  implement user not found etc
-        isAnotherView() ? getAnotherView() : getUser();
-    }, [authUser, firebase]);
+        if (isOtherLink()) {
+            if ((isDoctorLink() || isPatientLink()) && isIdExist()) {
+                setIsOther(true);
+                getAnotherView();
+            } else {
+                history.push({
+                    pathname: ROUTES.NOT_FOUND,
+                    state: {
+                        info: 'Böyle Bir Kullanıcı Yok',
+                        returnPath:
+                            authUser.role === ROLES.DOCTOR
+                                ? ROUTES.MEETINGS
+                                : ROUTES.DOCTOR_LIST,
+                        returnText:
+                            authUser.role === ROLES.DOCTOR
+                                ? 'Meetings'
+                                : 'Doctors',
+                    },
+                });
+            }
+        } else {
+            setIsOther(false);
+            getUser();
+        }
+    }, [authUser, firebase, location]);
 
-    const isAnotherView = () =>
-        history &&
-        history.location &&
-        history.location.state &&
-        history.location.state.doctorId;
+    const isOtherLink = () =>
+        !!history &&
+        !!history.location &&
+        !!history.location.search &&
+        history.location.search !== '';
+
+    const isDoctorLink = () => history.location.search === '?doctor-profile';
+
+    const isPatientLink = () => history.location.search === '?patient-profile';
+
+    const isIdExist = () => history.location.state && history.location.state.id;
 
     const getAnotherView = () =>
         firebase.user(history.location.state.id).on('value', snapshot => {
             setUser(snapshot.val());
-            setSettings(snapshot.val());
         });
 
     const getUser = () => {
@@ -197,21 +228,13 @@ const Profile = props => {
         <div>
             <div className="container-fluid h-auto patient-profile">
                 <div className="row h-auto">
-                    {history.location.state ? (
-                        <PersonalInfo
-                            patient={history.location.state}
-                            user={user}
-                            openSettings={handleSettingShow}
-                            handleStatus={handleStatusChange}
-                        />
-                    ) : (
-                        <PersonalInfo
-                            user={user}
-                            openSettings={handleSettingShow}
-                            handleStatus={handleStatusChange}
-                            handleUpload={handleUploadOpen}
-                        />
-                    )}
+                    <PersonalInfo
+                        isOther={isOther}
+                        user={user}
+                        openSettings={handleSettingShow}
+                        handleStatus={handleStatusChange}
+                        handleUpload={handleUploadOpen}
+                    />
                     <ProfileDetails user={user} history={history} />
                 </div>
             </div>
@@ -246,9 +269,15 @@ const Profile = props => {
                 severity={severity}
             />
         </div>
-    ) : null;
+    ) : (
+        <LoadingPage />
+    );
 };
 
-const condition = authUser => authUser;
+const condition = authUser =>
+    authUser &&
+    (authUser.role === ROLES.PATIENT ||
+        authUser.role === ROLES.DOCTOR ||
+        authUser.role === ROLES.ADMIN);
 
 export default compose(withAuthorization(condition))(Profile);
