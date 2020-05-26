@@ -4,6 +4,7 @@ import { compose } from 'recompose';
 import { snapshotToArray } from '../../_utility/functions';
 import { LoadingPage } from '../../components/Loadings';
 import * as ROLES from '../../_constants/roles';
+import '../../assets/styles/main.scss';
 
 const ArticleList = props => {
     const [loading, setLoading] = useState(false);
@@ -22,13 +23,21 @@ const ArticleList = props => {
 
     const ArticleFrame = ({ article }) => (
         <>
-            <div style={{ paddingTop: 'auto' }}>
-                <h5>{article.name + '  by ' + article.author}</h5>
+            <div className="article">
+                <div className="container-fluid main-container">
+                    <div className="flex-container">
+                        <h3 className="title">{article.name}</h3>
+                        <div className="body">{article.detail}</div>
+                        <div className="author-info">
+                            <div clas="author-metadata">
+                                <div className="username-description">
+                                    <h4>by {article.author}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div>
-                <p style={{ paddingRight: '1px' }}>{article.detail}</p>
-            </div>
-            <hr className="article-page.grey" />
         </>
     );
 
