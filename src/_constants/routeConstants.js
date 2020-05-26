@@ -17,7 +17,7 @@ export const ARTICLES = '/articles';
 
 export const ADMIN = '/admin';
 export const ADMIN_PASSWORD = '/password-policy';
-export const ADMIN_PATIENTS = '/all-patient';
+export const ADMIN_PATIENTS = '/all-patients';
 export const ADMIN_DOCTORS = '/all-doctors';
 
 export const NOT_FOUND = '/not-found';

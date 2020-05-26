@@ -11,6 +11,7 @@
         "a11y-react-emoji": "^1.1.2",
         "bootstrap": "^4.4.1",
         "firebase": "^7.14.2",
+        "firebase-admin": "^8.12.1",
         "jquery": "^3.5.1",
         "moment": "^2.24.0",
         "node-sass": "^4.14.1",
@@ -19,7 +20,6 @@
         "react-bootstrap": "^1.0.0-beta.17",
         "react-browser-notifications": "^1.0.14",
         "react-chat-ui": "^0.3.2",
-        "react-csv": "latest",
         "react-dom": "^16.13.1",
         "react-icons": "^3.9.0",
         "react-image-crop": "^8.6.2",
@@ -27,7 +27,8 @@
         "react-scripts": "^3.4.1",
         "recompose": "^0.30.0",
         "resolve-url-loader": "^3.1.1",
-        "semantic-ui-react": "^0.88.2"
+        "semantic-ui-react": "^0.88.2",
+        "react-csv": "latest"
     },
     "scripts": {
         "start": "react-scripts start",
