@@ -301,9 +301,11 @@ const Reservations = props => {
                             userId,
                             doctorId,
                             lastMessage: {
-                                date: '',
-                                message: '',
-                                senderId: '',
+                                date: moment().format(),
+                                message: `Meeting Created ${formatDateAsHours(
+                                    moment()
+                                )}`,
+                                senderId: `${authUser.uid}`,
                             },
                         });
                     props.firebase
