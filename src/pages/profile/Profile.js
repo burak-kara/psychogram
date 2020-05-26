@@ -7,6 +7,7 @@ import { compose } from 'recompose';
 import { withAuthorization } from '../../_session';
 import { useHistory, useLocation } from 'react-router-dom';
 import DeleteConfirmWindow from './DeleteConfirmWindow';
+import ChangePasswordWindow from './ChangePasswordWindow';
 import * as ROUTES from '../../_constants/routeConstants';
 import CropWindow from './CropWindow';
 import { LoadingPage } from '../../components/Loadings';
@@ -20,6 +21,7 @@ const Profile = props => {
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [alertOpen, setAlertsOpen] = useState(false);
     const [delConfOpen, setDelConfOpen] = useState(false);
+    const [passwordConf, setChangePassOpen] = useState(false);
     const [uploadOpen, setUploadOpen] = useState(false);
 
     const [settings, setSettings] = useState(null);
@@ -86,6 +88,26 @@ const Profile = props => {
 
     const handleProfileDelete = () => {
         setDelConfOpen(true);
+    };
+
+    const handleChangePassword = () => {
+        setChangePassOpen(true);
+    };
+
+    const handlePassConfOpen = () => {
+        setChangePassOpen(!passwordConf);
+    };
+
+    const changePassword = () => {
+        firebase.doPasswordReset(authUser.email);
+        firebase.doSignOut().then(() => {
+            setMessage('Mail Gönderildi');
+            setSeverity('success');
+            setAlertsOpen(true);
+            history.push({
+                pathname: ROUTES.LANDING,
+            });
+        });
     };
 
     const handleUploadOpen = () => {
@@ -243,8 +265,14 @@ const Profile = props => {
                 settings={settings}
                 handleClose={handleSettingShow}
                 handleSave={handleSettingsSave}
+                handlePassword={handleChangePassword}
                 handleDelete={handleProfileDelete}
                 onChange={handleSettingsChange}
+            />
+            <ChangePasswordWindow
+                open={passwordConf}
+                handleClose={handlePassConfOpen}
+                handleSave={changePassword}
             />
             <DeleteConfirmWindow
                 open={delConfOpen}
