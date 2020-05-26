@@ -12,7 +12,6 @@ import * as ROUTES from '../../_constants/routeConstants';
 import CropWindow from './CropWindow';
 import { LoadingPage } from '../../components/Loadings';
 import * as ROLES from '../../_constants/roles';
-import Firebase from '../../_firebase/firebase';
 
 const Profile = props => {
     const { authUser, firebase } = props;
@@ -22,7 +21,7 @@ const Profile = props => {
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [alertOpen, setAlertsOpen] = useState(false);
     const [delConfOpen, setDelConfOpen] = useState(false);
-    const [ChangePassOpen, setChangePassOpen] = useState(false);
+    const [passwordConf, setChangePassOpen] = useState(false);
     const [uploadOpen, setUploadOpen] = useState(false);
 
     const [settings, setSettings] = useState(null);
@@ -90,14 +89,16 @@ const Profile = props => {
     const handleProfileDelete = () => {
         setDelConfOpen(true);
     };
+
     const handleChangePassword = () => {
         setChangePassOpen(true);
     };
 
     const handlePassConfOpen = () => {
-        setDelConfOpen(!ChangePassOpen);
+        setChangePassOpen(!passwordConf);
     };
-    const ChangePassword = () => {
+
+    const changePassword = () => {
         firebase.doPasswordReset(authUser.email);
         firebase.doSignOut().then(() => {
             setMessage('Mail Gönderildi');
@@ -269,16 +270,15 @@ const Profile = props => {
                 onChange={handleSettingsChange}
             />
             <ChangePasswordWindow
-                open={ChangePassOpen}
+                open={passwordConf}
                 handleClose={handlePassConfOpen}
-                handleSave={ChangePassword}
+                handleSave={changePassword}
             />
             <DeleteConfirmWindow
                 open={delConfOpen}
                 handleClose={handleDelConfOpen}
                 handleSave={deleteAccount}
             />
-
             <CropWindow
                 open={uploadOpen}
                 handleClose={handleUploadOpen}
