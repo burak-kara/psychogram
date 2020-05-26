@@ -64,9 +64,9 @@ const Profile = props => {
     const deleteAccount = () => {
         firebase.user(authUser.uid).set({});
         firebase
-            .doDelete(authUser.id)
+            .doDelete(authUser.uid)
             .then(r => {
-                setMessage('Hesap başarıyla silindi kaydedildi.');
+                setMessage('Hesap başarıyla silindi.');
                 setSeverity('success');
                 setAlertsOpen(true);
                 history.push({
