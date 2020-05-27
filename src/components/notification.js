@@ -2,6 +2,8 @@ import React from 'react';
 import ReactNotifications from 'react-browser-notifications';
 import { compose } from 'recompose';
 import { withAuthorization, withEmailVerification } from '../_session';
+import { snapshotToArray } from '../_utility/functions';
+import logo from '../assets/static-images/logo.png';
 
 class Notification extends React.Component {
     constructor(props) {
@@ -13,19 +15,21 @@ class Notification extends React.Component {
         };
     }
 
-    showNotifications = props => {
+    showNotifications = () => {
         // If the Notifications API is supported by the browser
         // then show the notification
-        let len = this.state.revList.length;
+        const len = this.state.revList.length;
         for (let i = 0; i < len; i++) {
-            if (this.state.revList[i].flag == false) continue;
+            if (!this.state.revList[i].flag) continue;
 
-            let now = new Date();
-            let meetDate = new Date(this.state.revList[i].startDate);
-            let diffMs = meetDate - now; // milliseconds between now & Christmas
-            let diffDays = Math.floor(diffMs / 86400000); // days
-            let diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
-            let diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
+            const now = new Date();
+            const meetDate = new Date(this.state.revList[i].startDate);
+            const diffMs = meetDate - now; // milliseconds between now & Christmas
+            const diffDays = Math.floor(diffMs / 86400000); // days
+            const diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+            const diffMins = Math.round(
+                ((diffMs % 86400000) % 3600000) / 60000
+            ); // minutes
 
             if (
                 diffDays === 0 &&
@@ -61,45 +65,31 @@ class Notification extends React.Component {
         this.n.close(event.target.tag);
     };
 
+    tick = () => {
+        this.showNotifications();
+    };
+
     componentDidMount() {
-        setInterval(() => this.tick(), 60000);
+        setInterval(() => this.tick(), 120000);
         this.props.firebase
             .reservations()
             .orderByChild('userId')
             .equalTo(this.props.authUser.uid)
             .on('value', snapshot => {
-                const obj = snapshot.val();
-                if (obj != null) {
-                    const list = Object.keys(obj).map(key => ({
-                        ...obj[key],
-                        key,
-                    }));
-                    this.setState({ revList: list });
-                }
+                this.setState({ revList: snapshotToArray(snapshot) });
             });
     }
 
-    componentWillUnmount() {
-        //       clearInterval(this.timerID);
-    }
-
-    tick = () => {
-        this.showNotifications();
-    };
-
     render() {
         return (
-            <div>
-                <ReactNotifications
-                    onRef={ref => (this.n = ref)} // Required
-                    title="MEETING TIME NOTIFICATION!" // Required
-                    body={this.state.mess}
-                    icon="icon.png"
-                    tag="abcdef"
-                    timeout="3000"
-                    onClick={event => this.handleClick(event)}
-                />
-            </div>
+            <ReactNotifications
+                onRef={ref => (this.n = ref)} // Required
+                title="MEETING TIME NOTIFICATION!" // Required
+                body={this.state.mess}
+                icon={logo}
+                timeout={4000}
+                onClick={event => this.handleClick(event)}
+            />
         );
     }
 }
