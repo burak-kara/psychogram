@@ -29,6 +29,9 @@ const ChatSection = props => {
     const [message, setMessage] = useState('');
     const [severity, setSeverity] = useState('');
     const [saveChatConfOpen, setSaveChatConfOpen] = useState(false);
+    const [emailServiceId, setEmailServiceId]= useState('');
+    const [emailUserId, setEmailUserId]= useState('');
+    const [emailTemplateId, setEmailTemplateId]= useState('');
 
     useEffect(() => {
         setNewMessage('');
@@ -81,20 +84,17 @@ const ChatSection = props => {
     };
 
     const sendChatAsEmail = () => {
-        let serviceId = '';
-        let userId = '';
-        let templateId = 'cs576';
 
         firebase.getEmailServiceId().on('value', snapshot => {
-            serviceId = snapshot.val();
+            setEmailServiceId( snapshot.val());
         });
 
         firebase.getEmailUserId().on('value', snapshot => {
-            userId = snapshot.val();
+            setEmailUserId(snapshot.val());
         });
 
         firebase.getEmailTemplateId().on('value', snapshot => {
-            templateId = snapshot.val();
+            setEmailTemplateId( snapshot.val());
         });
 
         var template_params = {
@@ -104,7 +104,7 @@ const ChatSection = props => {
             message: getMeetingData,
         };
 
-        emailjs.send(serviceId, templateId, template_params, userId).then(
+        emailjs.send(emailServiceId, emailTemplateId, template_params, emailUserId).then(
             function (response) {
                 handleExportChat();
             },
