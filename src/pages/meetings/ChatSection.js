@@ -6,6 +6,7 @@ import moment from 'moment';
 import ChatHeader from './ChatHeader';
 import Alert from '../../components/Alert';
 import ChatExportWindow from './ChatExportWindow';
+import * as emailjs from 'emailjs-com';
 
 const ChatSection = props => {
     const {
@@ -80,8 +81,39 @@ const ChatSection = props => {
     };
 
     const sendChatAsEmail = () => {
-        return getMeetingData();
+        let serviceId = '';
+        let userId = '';
+        let templateId = 'cs576';
+
+        firebase.getEmailServiceId().on('value', snapshot => {
+            serviceId = snapshot.val();
+        });
+
+        firebase.getEmailUserId().on('value', snapshot => {
+            userId = snapshot.val();
+        });
+
+        firebase.getEmailTemplateId().on('value', snapshot => {
+            templateId = snapshot.val();
+        });
+
+        var template_params = {
+            name: 'CS 576 export chat',
+            email: authUser.email,
+            phone: '',
+            message: getMeetingData,
+        };
+
+        emailjs.send(serviceId, templateId, template_params, userId).then(
+            function (response) {
+                handleExportChat();
+            },
+            function (err) {
+                console.log('FAILED...', err);
+            }
+        );
     };
+
 
     const handleExportChat = () => {
         setSaveChatConfOpen(!saveChatConfOpen);
