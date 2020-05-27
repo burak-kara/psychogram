@@ -14,7 +14,16 @@ const withAuthorization = condition => Component => {
                         this.props.history.push(ROUTES.UNAUTHORIZED);
                     }
                 },
-                () => this.props.history.push(ROUTES.UNAUTHORIZED)
+                () => {
+                    this.props.history.push({
+                        pathname: ROUTES.NOT_FOUND,
+                        state: {
+                            info: 'Bu Sayfaya Ulaşmak İçin Giriş Yapmalısın',
+                            returnPath: ROUTES.SIGN_IN,
+                            returnText: 'Giriş',
+                        },
+                    });
+                }
             );
         }
 
