@@ -64,101 +64,47 @@ const hasMixed = value =>
 
 const hasSpecial = value => new RegExp(/[!#@$%^&*)(+=._-]/).test(value);
 
-export const passCheck = passObj => {
-    var retObj = {
-        err: false,
+export const passCheck = object => {
+    const response = {
+        err: true,
         mess: '',
     };
 
-    let isMinLen = false;
-    let isMaxLen = false;
-    let isNumber = false;
-    let isMixChar = false;
-    let isSpecial = false;
+    const policy = object.policy;
+    const password = object.passwd;
 
-    let password = passObj.passwd;
+    const isNumber = hasNumber(password);
+    const isMixChar = hasMixed(password);
+    const isSpecial = hasSpecial(password);
 
-    if (Number(password.length) >= Number(passObj.policy.min)) isMinLen = true;
-    if (Number(password.length) <= Number(passObj.policy.max)) isMaxLen = true;
-
-    if (hasNumber(password)) isNumber = true;
-    if (hasMixed(password)) isMixChar = true;
-    if (hasSpecial(password)) isSpecial = true;
-
-    let isLength = isMinLen && isMaxLen;
-    let isStrength = false;
-
-    if (
-        passObj.policy.hasNumber &&
-        passObj.policy.hasMixChar &&
-        passObj.policy.hasSpecial
-    ) {
-        isStrength = isNumber && isMixChar && isSpecial;
-    } else if (
-        passObj.policy.hasNumber &&
-        passObj.policy.hasMixChar &&
-        !passObj.policy.hasSpecial
-    ) {
-        isStrength = isNumber && isMixChar;
-    } else if (
-        passObj.policy.hasNumber &&
-        !passObj.policy.hasMixChar &&
-        passObj.policy.hasSpecial
-    ) {
-        isStrength = isNumber && isSpecial;
-    } else if (
-        passObj.policy.hasNumber &&
-        !passObj.policy.hasMixChar &&
-        !passObj.policy.hasSpecial
-    ) {
-        isStrength = isNumber;
-    } else if (
-        !passObj.policy.hasNumber &&
-        passObj.policy.hasMixChar &&
-        passObj.policy.hasSpecial
-    ) {
-        isStrength = isMixChar && isSpecial;
-    } else if (
-        !passObj.policy.hasNumber &&
-        passObj.policy.hasMixChar &&
-        !passObj.policy.hasSpecial
-    ) {
-        isStrength = isMixChar;
-    } else if (
-        !passObj.policy.hasNumber &&
-        !passObj.policy.hasMixChar &&
-        passObj.policy.hasSpecial
-    ) {
-        isStrength = isSpecial;
-    } else if (
-        !passObj.policy.hasNumber &&
-        !passObj.policy.hasMixChar &&
-        !passObj.policy.hasSpecial
-    ) {
-        isStrength = true;
-    }
+    const isLength =
+        Number(password.length) >= Number(policy.min) &&
+        Number(password.length) <= Number(policy.max);
+    const isStrength =
+        (policy.hasNumber ? isNumber : true) &&
+        (policy.hasMixChar ? isMixChar : true) &&
+        (policy.hasSpecial ? isSpecial : true);
 
     if (!isLength) {
-        retObj.err = true;
-        retObj.mess =
+        response.mess =
             'Password length must be between ' +
-            passObj.policy.min +
+            object.policy.min +
             ' and ' +
-            passObj.policy.max;
+            object.policy.max;
     } else if (!isStrength) {
-        retObj.err = true;
-        if (passObj.policy.hasNumber && !isNumber)
-            retObj.mess = 'Password must contain at least one number';
-        else if (passObj.policy.hasMixChar && !isMixChar)
-            retObj.mess =
+        response.err = true;
+        if (policy.hasNumber && !isNumber)
+            response.mess = 'Password must contain at least one number';
+        else if (policy.hasMixChar && !isMixChar)
+            response.mess =
                 'Password must contain upper and lowercase characters';
-        else if (passObj.policy.hasSpecial && !isSpecial)
-            retObj.mess =
-                'Password must contain at least one special charcaters like [!#@$%^&*)(+=._-]';
+        else if (policy.hasSpecial && !isSpecial)
+            response.mess =
+                'Password must contain at least one special characters like [!#@$%^&*)(+=._-]';
     } else {
-        retObj.err = false;
-        retObj.mess = 'Password is OK';
+        response.err = false;
+        response.mess = 'Password is OK';
     }
 
-    return retObj;
+    return response;
 };
