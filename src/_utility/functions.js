@@ -64,50 +64,47 @@ const hasMixed = value =>
 
 const hasSpecial = value => new RegExp(/[!#@$%^&*)(+=._-]/).test(value);
 
-export const passCheck = passObj => {
+export const passCheck = object => {
     const response = {
-        err: false,
+        err: true,
         mess: '',
     };
 
-    let isMinLen = false;
-    let isMaxLen = false;
-    let isNumber = false;
-    let isMixChar = false;
-    let isSpecial = false;
+    const policy = object.policy;
+    const password = object.passwd;
 
-    let password = passObj.passwd;
+    const isNumber = hasNumber(password);
+    const isMixChar = hasMixed(password);
+    const isSpecial = hasSpecial(password);
 
-    if (Number(password.length) >= Number(passObj.policy.min)) isMinLen = true;
-    if (Number(password.length) <= Number(passObj.policy.max)) isMaxLen = true;
-
-    if (hasNumber(password)) isNumber = true;
-    if (hasMixed(password)) isMixChar = true;
-    if (hasSpecial(password)) isSpecial = true;
-
-    const isLength = isMinLen && isMaxLen;
+    const isLength =
+        Number(password.length) >= Number(policy.min) &&
+        Number(password.length) <= Number(policy.max);
     const isStrength =
-        passObj.policy.hasNumber &&
-        passObj.policy.hasMixChar &&
-        passObj.policy.hasSpecial;
+        (policy.hasNumber ? isNumber : true) &&
+        (policy.hasMixChar ? isMixChar : true) &&
+        (policy.hasSpecial ? isSpecial : true);
 
     if (!isLength) {
-        response.err = true;
-        response.mess = `Password length must be between ${passObj.policy.min} and ${passObj.policy.max}`;
-    } else if (!isStrength) {
-        response.mess = 'Password is OK';
-    } else if (passObj.policy.hasNumber && !isNumber) {
-        response.err = true;
-        response.mess = 'Password must contain at least one number';
-    } else if (passObj.policy.hasMixChar && !isMixChar) {
-        response.err = true;
-        response.mess = 'Password must contain upper and lowercase characters';
-    } else if (passObj.policy.hasSpecial && !isSpecial) {
-        response.err = true;
         response.mess =
-            'Password must contain at least one special characters like [!#@$%^&*)(+=._-]';
+            'Password length must be between ' +
+            object.policy.min +
+            ' and ' +
+            object.policy.max;
+    } else if (!isStrength) {
+        response.err = true;
+        if (policy.hasNumber && !isNumber)
+            response.mess = 'Password must contain at least one number';
+        else if (policy.hasMixChar && !isMixChar)
+            response.mess =
+                'Password must contain upper and lowercase characters';
+        else if (policy.hasSpecial && !isSpecial)
+            response.mess =
+                'Password must contain at least one special characters like [!#@$%^&*)(+=._-]';
     } else {
-        response.mess = 'Password is Strong';
+        response.err = false;
+        response.mess = 'Password is OK';
     }
+
     return response;
 };

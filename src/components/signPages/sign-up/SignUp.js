@@ -37,6 +37,9 @@ const INITIAL_STATE = {
     role: '',
     status: 'Grinning Face',
     field: '',
+    rating: 0,
+    totalRate: 0,
+    rateCount: 0,
 };
 
 class SignUpFormBase extends Component {
@@ -68,21 +71,26 @@ class SignUpFormBase extends Component {
             username,
             name,
             surname,
-            email,
-            passwordOne,
             phone,
+            email,
             birthday,
             description,
             profilePictureSource,
             location,
+            status,
+            field,
+            rating,
+            totalRate,
+            rateCount,
             isDoctor,
+            passwordOne,
         } = this.state;
 
         passObj.policy = this.state.policy;
         passObj.passwd = this.state.passwordOne;
         const checkResult = passCheck(passObj);
 
-        if (checkResult.err === false) {
+        if (!checkResult.err) {
             this.props.firebase
                 .doCreateUserWithEmailAndPassword(email, passwordOne)
                 .then(authUser => {
@@ -90,13 +98,18 @@ class SignUpFormBase extends Component {
                         username,
                         name,
                         surname,
-                        email,
                         phone,
-                        role: isDoctor ? ROLES.DOCTOR : ROLES.PATIENT,
+                        email,
                         birthday,
                         description,
                         profilePictureSource,
                         location,
+                        role: isDoctor ? ROLES.DOCTOR : ROLES.PATIENT,
+                        status,
+                        field,
+                        rating,
+                        totalRate,
+                        rateCount,
                     });
                 })
                 .then(() => {
