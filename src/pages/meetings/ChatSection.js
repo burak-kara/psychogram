@@ -6,6 +6,7 @@ import moment from 'moment';
 import ChatHeader from './ChatHeader';
 import Alert from '../../components/Alert';
 import ChatExportWindow from './ChatExportWindow';
+import * as emailjs from 'emailjs-com';
 
 const ChatSection = props => {
     const {
@@ -28,6 +29,8 @@ const ChatSection = props => {
     const [message, setMessage] = useState('');
     const [severity, setSeverity] = useState('');
     const [saveChatConfOpen, setSaveChatConfOpen] = useState(false);
+    const [emailUserId, setEmailUserId]= useState('');
+    const [emailTemplateId, setEmailTemplateId]= useState('');
 
     useEffect(() => {
         setNewMessage('');
@@ -38,6 +41,17 @@ const ChatSection = props => {
             //    TODO loading indicator
         }
     }, [firebase, currentMeetingKey]);
+
+
+    useEffect(() => {
+        firebase.getEmailUserId().on('value', snapshot => {
+            setEmailUserId(snapshot.val());
+        });
+
+        firebase.getEmailTemplateId().on('value', snapshot => {
+            setEmailTemplateId(snapshot.val());
+        });
+    }, [firebase]);
 
     const getMessages = () => {
         firebase.messages(currentMeetingKey).on('value', snapshot => {
@@ -56,7 +70,7 @@ const ChatSection = props => {
         });
     };
 
-    const getMeetingData = () => {
+    const getMeetingData = (whereFrom) => {
         let val = '';
 
         firebase.messages(currentMeetingKey).on('value', snapshot => {
@@ -72,16 +86,39 @@ const ChatSection = props => {
                     message.date +
                     ' ' +
                     message.message +
-                    '\r\n';
+                    (whereFrom == 'mail'?'<br />':'\r\n');
             });
-        });
 
+        });
         return val;
     };
 
     const sendChatAsEmail = () => {
-        return getMeetingData();
+        let messsage = getMeetingData('mail');
+        var template_params = {
+            name: 'CS 576 export chat',
+            email: authUser.email,
+            phone: '',
+            message: messsage,
+        };
+
+        emailjs
+            .send(
+                'default_service',
+                emailTemplateId,
+                template_params,
+                emailUserId
+            )
+            .then(
+                function (response) {
+                    handleExportChat();
+                },
+                function (err) {
+                    console.log('FAILED...', err);
+                }
+            );
     };
+
 
     const handleExportChat = () => {
         setSaveChatConfOpen(!saveChatConfOpen);

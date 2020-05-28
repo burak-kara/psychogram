@@ -122,6 +122,12 @@ class Firebase {
 
     policy = () => this.db.ref('policy');
 
+    getEmailServiceId = () => this.db.ref('emailServiceId');
+
+    getEmailUserId = () => this.db.ref('emailUserId');
+
+    getEmailTemplateId = () => this.db.ref('emailTemplateId');
+
     // Add new backend methods here
 }
 
