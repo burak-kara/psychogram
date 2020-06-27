@@ -5,7 +5,7 @@ Psychogram is a React project with firebase implementation.  The Psychogram is a
 You need to add your Firebase app info to start to use the app. 
 Modify configs under **src/_firebase/firebase.js**
 
-The app was developed by **5** people that **4 of them** have no idea about programming or version control or clean coding. 
+The app was developed by **5** people that 4 of them have no idea about programming or version control or clean coding. 
 The app has lots of fields that must be enhanced in terms of styling or functionality.
 
 But, it has following features: 
