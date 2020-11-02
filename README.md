@@ -1,17 +1,16 @@
 # Psychogram
 
-Psychogram is a React project with firebase implementation.  The Psychogram is a web app that provides a platform people that are professionals (doctors) and patients.
+The Psychogram is a React project with Firebase implementation.  The Psychogram is a web app that provides a platform for people that are professionals (doctors) and patients.
 
 You need to add your Firebase app info to start to use the app. 
 Modify configs under **src/_firebase/firebase.js**
 
-The app was developed by **5** people that 4 of them have no idea about programming or version control or clean coding. 
 The app has lots of fields that must be enhanced in terms of styling or functionality.
 
 But, it has following features: 
 - Real time chat
 - Image upload
-- Email verification using firebase
+- Email verification using Firebase
 - Admin panel
 - User panel
 - Doctor panel
