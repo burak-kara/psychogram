@@ -13,7 +13,7 @@
         "firebase": "^7.14.2",
         "jquery": "^3.5.1",
         "moment": "^2.24.0",
-        "node-sass": "^4.14.1",
+        "node-sass": "^9.0.0",
         "react": "^16.13.1",
         "react-accessible-accordion": "^3.0.1",
         "react-bootstrap": "^1.0.0-beta.17",
@@ -24,7 +24,7 @@
         "react-icons": "^3.9.0",
         "react-image-crop": "^8.6.2",
         "react-router-dom": "^5.1.2",
-        "react-scripts": "^3.4.1",
+        "react-scripts": "^5.0.1",
         "recompose": "^0.30.0",
         "resolve-url-loader": "^3.1.1",
         "semantic-ui-react": "^0.88.2"
